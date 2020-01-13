@@ -9,7 +9,7 @@ function Orders() {
     return (
         <div id="content">
             <div className="row">
-                <h2 className="mb-4">Orders</h2>
+                <h2 className="mb-4">Orders & Payments</h2>
                 <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
             </div>
             <div className="row">
