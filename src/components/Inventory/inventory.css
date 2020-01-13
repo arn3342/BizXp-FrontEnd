@@ -1,0 +1,45 @@
+.inlineContent{
+    display: inline;
+}
+.fontBold{
+    font-weight: 600;
+}
+.leftSpace{
+    padding-left: 15px;
+}
+.boxContainer{
+    padding: 15px;
+    border-color: #d7d7d7;
+    border-style: solid;
+    border-width: 2px;
+    display: inline-block; 
+}
+.hoverShadow{
+    transition: .400s;
+    cursor: pointer;
+    user-select: none;
+}
+.hoverShadow:hover{
+    box-shadow: 5px 10px 10px #e2f3ff;
+}
+.btn-Blue{
+    color: #028cea;
+    background: #fff;
+    height: 45px;
+    border: solid #028cea;
+    border-width: 2px;
+    border-radius: 30px;
+    transition: .400s;
+}
+.btn-Blue:hover{
+    color: #fff;
+    background: #028cea;
+    border: none;
+}
+.outOfStockBtn-Selected{
+    background: #028cea;
+    border: none;
+}
+.outOfStockBtn-Selected h4{
+    color: #fff !important;
+}
