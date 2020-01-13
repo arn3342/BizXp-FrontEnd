@@ -2,14 +2,14 @@ import React from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../Inventory/inventory.css'
+import '../payments/payments.css'
 
 var IsShowingOutOfStock = false;
-function Inventory() {
+function Payments() {
     return (
         <div id="content">
             <div className="row">
-                <h2 className="mb-4">Inventory</h2>
+                <h2 className="mb-4">Payments</h2>
                 <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add product</button>
             </div>
             <div className="row">
@@ -90,4 +90,4 @@ function ShowOutOfStock() {
         outOfStockBtn.classList.remove('outOfStockBtn-Selected');
     }
 }
-export default Inventory;
+export default Payments;
