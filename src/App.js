@@ -43,7 +43,7 @@ class App extends Component {
             </ul>
           </div>
         </nav>
-        <div id="content" className="p-4 p-md-5 pt-5">
+        <div id="content" className="componentContainer p-md-3">
           {this.state.showInventory && <Inventory />}
           {this.state.showPayments && <Payments />}
           {this.state.showOrders && <Orders />}

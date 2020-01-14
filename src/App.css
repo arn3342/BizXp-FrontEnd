@@ -91,7 +91,9 @@ address {
   margin-bottom: 1rem;
   font-style: normal;
   line-height: inherit; }
-
+.componentContainer{
+  padding: 20px 0px !important;
+}
 ol,
 ul,
 dl {
@@ -6589,7 +6591,15 @@ button.bg-dark:focus {
 .mt-2,
 .my-2 {
   margin-top: 0.5rem !important; }
-
+  .leftSpace{
+    margin-left: 20px;
+}
+.rightSpace{
+  margin-right: 20px;
+}
+.topSpace{
+  margin-top: 10px;
+}
 .mr-2,
 .mx-2 {
   margin-right: 0.5rem !important; }

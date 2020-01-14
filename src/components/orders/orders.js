@@ -3,51 +3,51 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
-
+import '../../App.css'
 var IsShowingOutOfStock = false;
 function Orders() {
     return (
         <div id="content">
-            <div className="row">
+            <div className="row leftSpace topSpace">
                 <h2 className="mb-4">Orders & Payments</h2>
-
             </div>
-            <div className="row">
+            <div className="row leftSpace">
                 {/* <div className="col-md-2">
                     <button className="btn-Blue btn-full-width" onClick={()=> ShowNewOrderFields()}><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
                 </div> */}
-                <nav id="nav-menu-container" style={{display: 'inline-block'}}>
-                    <ul class="nav-menu">
-                        <li><a href="index.html">Add Orders</a></li>
-                        <li><a href="#services">All Orders</a></li>
+                <nav id="nav-menu-container" style={{ display: 'inline-block' }}>
+                    <ul id="header-nav" className="nav-menu">
+                        <li onClick={(e) => { setActiveTabColor(e); ShowAddOrders(e) }}><a className="tab-active">New Order</a></li>
+                        <li onClick={(e) => { setActiveTabColor(e); ShowOrderList(e); }}><a>All Orders</a></li>
                     </ul>
                 </nav>
             </div>
             {/* table starts here */}
 
-            <div id="addProductFieldsContainer" className='row field-container' style={{ display: 'none' }}>
+            <div id="addProductFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                 <div className="col-md-4 inline-fields">
-                    <label>Product</label>
-                    <input className="input-fields"></input>
+                    <select name="products" className="input-fields">
+                        <option value="volvo">Select product...</option>
+                        <option value="volvo">Passenger Car Battery</option>
+                        <option value="saab">Optima Battery</option>
+                        <option value="fiat">Maxima Battery</option>
+                        <option value="audi">Other products will be shown here....</option>
+                    </select>
+                </div>
+                <div className="col-md-3 inline-fields">
+                    <input placeholder="Quantity" className="input-fields"></input>
                 </div>
                 <div className="col-md-4 inline-fields">
-                    <label>Quantity</label>
-                    <input className="input-fields"></input>
+                    <input placeholder="Buyer Name" className="input-fields"></input>
                 </div>
                 <div className="col-md-4 inline-fields">
-                    <label>Buyer Name</label>
-                    <input className="input-fields"></input>
+                    <input placeholder="Buyer Phone No." className="input-fields"></input>
                 </div>
-                <div className="col-md-4 inline-fields">
-                    <label>Buyer Phone</label>
-                    <input className="input-fields"></input>
-                </div>
-
-                <div className='row col-md-2' style={{ display: 'inherit', marginTop: '15px' }}>
-                    <button className="btn-Blue btn-full-width">Save</button>
+                <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
+                    <button className="btn-Blue btn-full-width">Add Order</button>
                 </div>
             </div>
-            <div className='dataContainer row' style={{ display: 'inherit' }}>
+            <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
                 <div className="headerContainer" style={{ marginTop: '20px' }}>
                     <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                         <tbody>
@@ -97,11 +97,30 @@ function Orders() {
             </div> */}
             </div>
             {/* table ends here */}
+            <div className="bottom-div div-shadow">
+                {/* <div className='col-md-2 inline-fields' style={{ float: 'right' }}> */}
+                    <button className="btn-Blue-active rightSpace" style={{width: '150px'}}>Finalize</button>
+                {/* </div> */}
+            </div>
         </div >
     )
 }
-function ShowNewOrderFields() {
-    document.getElementById('addProductFieldsContainer').style = "display: inherit"
+function ShowAddOrders(e) {
+
+}
+
+function setActiveTabColor(e) {
+    var navCChild = document.getElementById('header-nav').children;
+    for (var i = 0; i < navCChild.length; i++) {
+        var child = navCChild[i].getElementsByTagName('A')[0];
+        child.className = "";
+        console.log(child)
+    }
+    e.target.classList.add('tab-active')
+}
+
+function ShowOrderList() {
+
 }
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');

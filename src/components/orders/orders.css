@@ -5,7 +5,13 @@
     font-weight: 600;
 }
 .leftSpace{
-    padding-left: 15px;
+    margin-left: 20px;
+}
+.rightSpace{
+  margin-right: 20px;
+}
+.topSpace{
+  margin-top: 10px;
 }
 .boxContainer{
     padding: 15px;
@@ -28,15 +34,40 @@
     height: 45px;
     border: solid #028cea;
     border-width: 2px;
-    border-radius: 30px;
+    border-radius: 15px;
     transition: .400s;
+    font-size: 18px;
+    font-weight: 600;
+}
+.btn-Blue-active{
+  color: #fff;
+  background: #028cea;
+  height: 45px;
+  border: solid #028cea;
+  border-width: 2px;
+  border-radius: 30px;
+  transition: .400s;
+  font-size: 18px;
+  font-weight: 600;
+}
+.bottom-div{
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 80%;
+  text-align: right;
+  padding: 15px;
 }
 .btn-full-width{
   width: 100%;
 }
 .input-fields{
   margin-left: 8px;
-  
+  padding: 8px 15px;
+  border-radius: 30px;
+  border-color: #e4e4e4 !important;
+  border: solid;
+  width: 100%;
 }
 @media (max-width: 768px) {
   #nav-menu-container {
@@ -64,6 +95,14 @@
 .nav-menu > li {
   margin-left: 0px;
   display: inline-block;
+}
+.nav-menu > li > a{
+  padding: 5px 15px;
+  border-radius: 30px;
+}
+.tab-active{
+  background: #4287f5;
+  color: #fff !important;
 }
 
 .nav-menu ul {
@@ -219,11 +258,32 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 .inline-fields{
   display: inline-block;
-  margin-top: 10px;
+  margin: 10px;
+  padding: 0px;
+}
+
+.input-fields:focus{
+  border-color: #a1deff;
+}
+
+.input:focus {
+  border:1px solid red;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
 .field-container{
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 20px;
+  
+}
+
+.div-shadow{
   box-shadow:0px 1px 25px #e4e4e4;
 }
 .btn-Blue:hover{
