@@ -10,37 +10,49 @@ function Orders() {
         <div id="content">
             <div className="row">
                 <h2 className="mb-4">Orders & Payments</h2>
-                <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
+
             </div>
             <div className="row">
-                <div className="boxContainer col-md-4">
-                    <h4 className="mb-3">Total orders</h4>
-                    <h4 className="fontBold">500</h4>
+                <div className="col-md-2">
+                    <button className="btn-Blue btn-full-width"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
+                </div>
+                <div className="col-md-3">
+                    <button className="btn-Blue btn-full-width" disabled><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add Payment</button>
                 </div>
             </div>
             {/* table starts here */}
 
-            <div className='dataContainer row' style={{display: 'inherit'}}>
-            <div className="headerContainer" style={{ marginTop: '20px' }}>
-                <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
-                    <tbody>
-                        <tr className="column-container" style={{ paddingTop: '8px' }}>
-                            <th className="checkboxContainer">
-                                <input type="checkbox" />
-                                <span className="checkmark" style={{ margin: '-2px 15px 0px 5px' }}></span>
-                            </th>
-                            <th>Buyer Name<img className="sortIcon"/></th>
-                            <th>Buyer Number</th>
-                            <th>Product<img className="sortIcon"/></th>
-                            <th>Quantity<img className="sortIcon"/></th>
-                            <th>Paid<img className="sortIcon"/></th>
-                            <th>Due<img className="sortIcon"/></th>
-                            <th></th>
-                        </tr>
-                    </tbody>
-                </table>
+            <div className='row field-container' style={{ display: 'inherit' }}>
+                <div className="col-md-5">
+                    <label>Buyer Name</label>
+                    <input className="input-fields"></input>
+                </div>
+                <div className="col-md-5">
+                    <label>Buyer Phone</label>
+                    <input className="input-fields"></input>
+                </div>
             </div>
-            {/* <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+            <div className='dataContainer row' style={{ display: 'inherit' }}>
+                <div className="headerContainer" style={{ marginTop: '20px' }}>
+                    <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                        <tbody>
+                            <tr className="column-container" style={{ paddingTop: '8px' }}>
+                                <th className="checkboxContainer">
+                                    <input type="checkbox" />
+                                    <span className="checkmark" style={{ margin: '-2px 15px 0px 5px' }}></span>
+                                </th>
+                                <th>Buyer Name<img className="sortIcon" /></th>
+                                <th>Buyer Number</th>
+                                <th>Product<img className="sortIcon" /></th>
+                                <th>Quantity<img className="sortIcon" /></th>
+                                <th>Paid<img className="sortIcon" /></th>
+                                <th>Due<img className="sortIcon" /></th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {/* <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
                 <table id="tableData" className="table table-hover table-borderless">
                     <tbody>
                         <tr />
@@ -72,8 +84,8 @@ function Orders() {
                     </tbody>
                 </table>
             </div> */}
-        </div>
-        {/* table ends here */}
+            </div>
+            {/* table ends here */}
         </div >
     )
 }
