@@ -13,23 +13,38 @@ function Orders() {
 
             </div>
             <div className="row">
-                <div className="col-md-2">
-                    <button className="btn-Blue btn-full-width"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
-                </div>
-                <div className="col-md-3">
-                    <button className="btn-Blue btn-full-width" disabled><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add Payment</button>
-                </div>
+                {/* <div className="col-md-2">
+                    <button className="btn-Blue btn-full-width" onClick={()=> ShowNewOrderFields()}><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
+                </div> */}
+                <nav id="nav-menu-container" style={{display: 'inline-block'}}>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Add Orders</a></li>
+                        <li><a href="#services">All Orders</a></li>
+                    </ul>
+                </nav>
             </div>
             {/* table starts here */}
 
-            <div className='row field-container' style={{ display: 'inherit' }}>
-                <div className="col-md-5">
+            <div id="addProductFieldsContainer" className='row field-container' style={{ display: 'none' }}>
+                <div className="col-md-4 inline-fields">
+                    <label>Product</label>
+                    <input className="input-fields"></input>
+                </div>
+                <div className="col-md-4 inline-fields">
+                    <label>Quantity</label>
+                    <input className="input-fields"></input>
+                </div>
+                <div className="col-md-4 inline-fields">
                     <label>Buyer Name</label>
                     <input className="input-fields"></input>
                 </div>
-                <div className="col-md-5">
+                <div className="col-md-4 inline-fields">
                     <label>Buyer Phone</label>
                     <input className="input-fields"></input>
+                </div>
+
+                <div className='row col-md-2' style={{ display: 'inherit', marginTop: '15px' }}>
+                    <button className="btn-Blue btn-full-width">Save</button>
                 </div>
             </div>
             <div className='dataContainer row' style={{ display: 'inherit' }}>
@@ -37,10 +52,6 @@ function Orders() {
                     <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                         <tbody>
                             <tr className="column-container" style={{ paddingTop: '8px' }}>
-                                <th className="checkboxContainer">
-                                    <input type="checkbox" />
-                                    <span className="checkmark" style={{ margin: '-2px 15px 0px 5px' }}></span>
-                                </th>
                                 <th>Buyer Name<img className="sortIcon" /></th>
                                 <th>Buyer Number</th>
                                 <th>Product<img className="sortIcon" /></th>
@@ -89,7 +100,9 @@ function Orders() {
         </div >
     )
 }
-
+function ShowNewOrderFields() {
+    document.getElementById('addProductFieldsContainer').style = "display: inherit"
+}
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
     if (!IsShowingOutOfStock) {
