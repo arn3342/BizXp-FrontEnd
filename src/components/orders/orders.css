@@ -338,19 +338,22 @@ table tr:nth-child(2) td:first-child {
     color: #898989;
   }
   .table-warning td{
-    background-color: #cdcdcd;
+    background-color: #ffffff;
   }
   .table-success td{
     background-color:#B4FEC1
   }
 
   .table-warning{
+    background-color: #fff !important;
     /* background-color: #cdcdcd !important; */
     font-size: 1.1em !important;
     font-weight: 400 !important;
+    
   }
   .table-warning td{
     /* background-color: #9bc86a !important; */
+    background-color: #fff !important;
   }
   .status-button{
     cursor: pointer;
@@ -366,6 +369,13 @@ table tr:nth-child(2) td:first-child {
     max-width: 130px;
     padding: 4px 0px 4px 10px;
     box-shadow: 0px 1px 1px #888888;
+  }
+  table tr:last-child td:first-child{
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  table tr:last-child td:last-child{
+    border-bottom-right-radius: 0px !important;
   }
   .status-button img{
     height: 20px;

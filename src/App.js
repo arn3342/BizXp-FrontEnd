@@ -32,10 +32,7 @@ class App extends Component {
                 <a onClick={() => this.ShowInventory()}>Inventory</a>
               </li>
               <li>
-                <a onClick={() => this.ShowPayments()}>Payments</a>
-              </li>
-              <li>
-                <a onClick={() => this.ShowOrders()}>Orders</a>
+                <a onClick={() => this.ShowOrders()}>Orders & Payments</a>
               </li>
               <li>
                 <a onClick={() => this.ShowReports()}>Reports</a>
@@ -45,7 +42,6 @@ class App extends Component {
         </nav>
         <div id="content" className="componentContainer p-md-3">
           {this.state.showInventory && <Inventory />}
-          {this.state.showPayments && <Payments />}
           {this.state.showOrders && <Orders />}
           {this.state.showReports && <Reports />}
         </div>
