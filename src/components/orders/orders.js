@@ -18,13 +18,13 @@ function Orders() {
                 <nav id="nav-menu-container" style={{ display: 'inline-block' }}>
                     <ul id="header-nav" className="nav-menu">
                         <li onClick={(e) => { setActiveTabColor(e); ShowAddOrders(e) }}><a className="tab-active">New Order</a></li>
-                        <li onClick={(e) => { setActiveTabColor(e); ShowOrderList(e); }}><a>All Orders</a></li>
+                        <li onClick={(e) => { setActiveTabColor(e); ShowOrderList(e); }}><a>All Orders & Payments</a></li>
                     </ul>
                 </nav>
             </div>
             {/* table starts here */}
 
-            <div id="addProductFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
+            <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                 <div className="col-md-4 inline-fields">
                     <select name="products" className="input-fields">
                         <option value="volvo">Select product...</option>
@@ -44,7 +44,7 @@ function Orders() {
                     <input placeholder="Buyer Phone No." className="input-fields"></input>
                 </div>
                 <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                    <button className="btn-Blue btn-full-width">Add Order</button>
+                    <button className="btn-Blue btn-full-width" onClick={() => AddDummyOrder()}>Add Order</button>
                 </div>
             </div>
             <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
@@ -56,57 +56,58 @@ function Orders() {
                                 <th>Buyer Number</th>
                                 <th>Product<img className="sortIcon" /></th>
                                 <th>Quantity<img className="sortIcon" /></th>
-                                <th>Paid<img className="sortIcon" /></th>
-                                <th>Due<img className="sortIcon" /></th>
-                                <th></th>
+                                <th id="allOrderFields" className="fields-hidden">Paid<img className="sortIcon" /></th>
+                                <th id="allOrderFields" className="fields-hidden">Due<img className="sortIcon" /></th>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                {/* <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                <table id="tableData" className="table table-hover table-borderless">
-                    <tbody>
-                        <tr />
-                        <tr />
-                        {projectObject && (projectObject.map((projectItem, index) =>
-                            (<tr className="table-warning" key={projectItem.procoreNumber}>
-                                {this.SetRowColor(index)}
-                                <td className="checkboxContainer" style={{ width: '60px', background: this.rowColor }}>
-                                    <input type="checkbox" value='true'
-                                        // style={{pointerEvents: "none"}}
-                                        disabled={(projectItem.projectionsRunStatus || '').toLowerCase() == "inprogress"}
-                                        checked={this.state.ProcoreNumbers.indexOf(projectItem.procoreNumber) > -1}
-                                        onChange={(event) => this.handleChange(event, projectItem.procoreNumber)} />
-                                    <span className="checkmark"></span>
-                                </td>
-                                <td style={{ minWidth: "200px", background: this.rowColor }}>{projectItem.procoreNumber}</td>
-                                <td style={{ background: this.rowColor }}>{projectItem.name}</td>
-                                <td style={{ background: this.rowColor }}>{moment(projectItem.lastProjectionsModified).format("MM-DD-YYYY hh:mm")}</td>
-                                <td style={{ background: this.rowColor }}>
-                                    <div className="status-button">
-                                        {projectItem.projectionsRunStatus === 'error' && <img src={errorIcon} />}
-                                        {projectItem.projectionsRunStatus === 'done' && <img src={doneIcon} />}
-                                        {projectItem.projectionsRunStatus === 'inProgress' && <img src={progressIcon} />}
-                                        <span>{UppercaseFirst(projectItem.projectionsRunStatus)}</span>
-                                    </div>
-                                </td>
-                            </tr>)
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
+                <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+                    <table id="tableData" className="table table-hover table-borderless">
+                        <tbody id="dummyTableToAdd">
+                            <tr />
+                            <tr />
+                            {projectObject && (projectObject.map((projectItem, index) =>
+                                (<tr className="table-warning" key={projectItem.procoreNumber}>
+                                    {this.SetRowColor(index)}
+                                    <td className="checkboxContainer" style={{ width: '60px', background: this.rowColor }}>
+                                        <input type="checkbox" value='true'
+                                            // style={{pointerEvents: "none"}}
+                                            disabled={(projectItem.projectionsRunStatus || '').toLowerCase() == "inprogress"}
+                                            checked={this.state.ProcoreNumbers.indexOf(projectItem.procoreNumber) > -1}
+                                            onChange={(event) => this.handleChange(event, projectItem.procoreNumber)} />
+                                        <span className="checkmark"></span>
+                                    </td>
+                                    <td style={{ minWidth: "200px", background: this.rowColor }}>{projectItem.procoreNumber}</td>
+                                    <td style={{ background: this.rowColor }}>{projectItem.name}</td>
+                                    <td style={{ background: this.rowColor }}>{moment(projectItem.lastProjectionsModified).format("MM-DD-YYYY hh:mm")}</td>
+                                    <td style={{ background: this.rowColor }}>
+                                        <div className="status-button">
+                                            {projectItem.projectionsRunStatus === 'error' && <img src={errorIcon} />}
+                                            {projectItem.projectionsRunStatus === 'done' && <img src={doneIcon} />}
+                                            {projectItem.projectionsRunStatus === 'inProgress' && <img src={progressIcon} />}
+                                            <span>{UppercaseFirst(projectItem.projectionsRunStatus)}</span>
+                                        </div>
+                                    </td>
+                                </tr>)
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {/* table ends here */}
-            <div className="bottom-div div-shadow">
+            <div id="finalizeOrderContainer" className="bottom-div div-shadow">
                 {/* <div className='col-md-2 inline-fields' style={{ float: 'right' }}> */}
-                    <button className="btn-Blue-active rightSpace" style={{width: '150px'}}>Finalize</button>
+                <button className="btn-Blue-active rightSpace" style={{ width: '150px' }}>Finalize</button>
                 {/* </div> */}
             </div>
         </div >
     )
 }
 function ShowAddOrders(e) {
-
+    document.getElementById('addOrderFieldsContainer').style = 'display: inherit';
+    document.getElementById('finalizeOrderContainer').style = 'display: ';
+    document.querySelectorAll('[id=allOrderFields]').forEach(element => element.className = 'fields-hidden');
 }
 
 function setActiveTabColor(e) {
@@ -120,17 +121,12 @@ function setActiveTabColor(e) {
 }
 
 function ShowOrderList() {
+    document.getElementById('addOrderFieldsContainer').style = 'display: none';
+    document.getElementById('finalizeOrderContainer').style = 'display: none';
+    document.querySelectorAll('[id=allOrderFields]').forEach(element => element.className = 'fields-visible');
+}
+function AddDummyOrder() {
+    var tr = document.createElement('tr');
+}
 
-}
-function ShowOutOfStock() {
-    var outOfStockBtn = document.getElementById('outOfStockBtn');
-    if (!IsShowingOutOfStock) {
-        IsShowingOutOfStock = true;
-        outOfStockBtn.classList.add('outOfStockBtn-Selected');
-    }
-    else {
-        IsShowingOutOfStock = false;
-        outOfStockBtn.classList.remove('outOfStockBtn-Selected');
-    }
-}
 export default Orders;
