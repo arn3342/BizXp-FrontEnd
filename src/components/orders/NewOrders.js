@@ -1,15 +1,26 @@
 import React, { Component, useState } from 'react';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
 import '../../App.css'
 import NumberFormat from 'react-number-format';
-import { useAlert, withAlert } from 'react-alert'
+import Modal from 'react-modal';
+import closeIcon from '../../Images/close_icon.png'
 
-var IsShowingOutOfStock = false;
 var DummyOrders = []
 
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
+Modal.setAppElement('#root')
 class NewOrder extends Component {
     constructor(props) {
         super(props)
@@ -18,13 +29,28 @@ class NewOrder extends Component {
             showFinalizeModal: false,
             totalPrice: 0,
             totalDiscountPrice: 0,
-            totalDue: 0
+            totalDue: 0,
+            modalIsOpen: false
         }
     }
     render() {
         return (
             //#region 'Add New Order' component
             <div className="content">
+
+                {/* Modal starts here */}
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onAfterOpen={this.afterOpenModal}
+                    onRequestClose={this.closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal">
+                    <h2 ref={subtitle => this.subtitle = subtitle}>Success</h2>
+                    <div><h4>New order added successfully</h4></div>
+                </Modal>
+
+                {/* Modal ends here */}
+
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
                         <select id="dummyProduct" name="products" className="input-fields">
@@ -57,6 +83,7 @@ class NewOrder extends Component {
                                     <th>Buyer Number</th>
                                     <th>Product<img className="sortIcon" /></th>
                                     <th>Quantity<img className="sortIcon" /></th>
+                                    <th></th>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,6 +99,7 @@ class NewOrder extends Component {
                                         <td>{order.buyerPhone}</td>
                                         <td>{order.product}</td>
                                         <td>{order.quantity}</td>
+                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
                                         {/* <td style={{ background: this.rowColor }}>
                                     <div className="status-button">
                                         {projectItem.projectionsRunStatus === 'error' && <img src={errorIcon} />}
@@ -113,6 +141,22 @@ class NewOrder extends Component {
             //#endregion
         )
     }
+
+    openModal = () => {
+        console.log(this)
+        this.setState({ modalIsOpen: true });
+
+        DummyOrders = [];
+    }
+
+    afterOpenModal = () => {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#04be1a';
+    }
+
+    closeModal = () => {
+        this.setState({ modalIsOpen: false });
+    }
     SclaeTableHeader(index) {
         try {
             var columnHeaders = document.getElementById("columnHeaders");
@@ -125,22 +169,35 @@ class NewOrder extends Component {
         catch (error) { console.log(error) }
     }
 
+    removeOrder(index) {
+        DummyOrders.splice(index, 1);
+        this.CalculateTotalPrice();
+    }
     ConfirmOrder() {
-        const alert = useAlert()
-        alert.show('New Order Added Successfully!')
+        this.openModal();
+        setTimeout(this.closeModal, 1300);
+
+        this.setState({
+            dummyOrderArray: [],
+            showFinalizeModal: false,
+            totalPrice: 0,
+            totalDiscountPrice: 0,
+            totalDue: 0,
+            modalIsOpen: false
+        })
     }
 
-    CalculateDue(e){
+    CalculateDue(e) {
         var paidAmount = e.target.value;
-        
-        if(paidAmount != '' && paidAmount){
-            if(this.state.totalDiscountPrice && this.state.totalDiscountPrice != 0 && this.state.totalDiscountPrice != ''){
+
+        if (paidAmount != '' && paidAmount) {
+            if (this.state.totalDiscountPrice && this.state.totalDiscountPrice != 0 && this.state.totalDiscountPrice != '') {
                 var dueAmount = this.state.totalDiscountPrice - paidAmount;
                 this.setState({
                     totalDue: dueAmount
                 })
             }
-            else{
+            else {
                 var dueAmount = this.state.totalPrice - paidAmount;
                 this.setState({
                     totalDue: dueAmount
@@ -150,8 +207,8 @@ class NewOrder extends Component {
     }
     CalculateDiscount(e) {
         var discountPercent = e.target.value;
-        
-        if(discountPercent != '' && discountPercent){
+
+        if (discountPercent != '' && discountPercent) {
             var discountPercentage = document.getElementById('discountInput').value;
             var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercentage)
 
@@ -160,8 +217,27 @@ class NewOrder extends Component {
             })
             document.getElementById('discountDiv').classList.remove('hidden-div')
         }
-        else{
+        else {
             document.getElementById('discountDiv').classList.add('hidden-div')
+        }
+    }
+
+    CalculateTotalPrice() {
+        this.setState({
+            dummyOrderArray: DummyOrders
+        })
+        if (DummyOrders.length != 0) {
+            this.setState({
+                totalPrice: DummyOrders.map(data => data.price).reduce((a, b) => a + b)
+            })
+            return 1;
+        }
+        else {
+            this.setState({
+                totalPrice: 0
+            })
+            this.EnableElements();
+            return 0;
         }
     }
     componentDidUpdate() {
@@ -177,10 +253,12 @@ class NewOrder extends Component {
         order.price = 10000;
 
         DummyOrders.push(order);
-        this.setState({
-            dummyOrderArray: DummyOrders,
-            totalPrice: DummyOrders.map(data => data.price).reduce((a, b) => a + b)
-        })
+        this.CalculateTotalPrice();
     }
+
+    EnableElements = () => {
+        document.getElementById('dummyBuyer').disabled = false;
+    }
+
 }
-export default withAlert()(NewOrder);
+export default NewOrder;

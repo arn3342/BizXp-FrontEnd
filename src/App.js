@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Inventory from './components/Inventory/inventory';
-import Payments from './components/payments/payments'
 import Orders from './components/orders/orders';
 import Reports from './components/reports/reports';
+
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
@@ -40,7 +39,7 @@ class App extends Component {
             </ul>
           </div>
         </nav>
-        <div id="content" className="componentContainer p-md-3">
+        <div id="content" className="componentContainer p-md-3">          
           {this.state.showInventory && <Inventory />}
           {this.state.showOrders && <Orders />}
           {this.state.showReports && <Reports />}
@@ -48,7 +47,7 @@ class App extends Component {
       </div>
     );
   }
-
+  
   ShowInventory = () => {
     this.setState({
       showInventory: true,

@@ -6,6 +6,7 @@ import '../orders/orders.css'
 import '../../App.css'
 import NewOrder from './NewOrders';
 import OrderList from './OrderList';
+import Alert from '../Alert/alert';
 var IsShowingOutOfStock = false;
 
 var DummyOrders = []
