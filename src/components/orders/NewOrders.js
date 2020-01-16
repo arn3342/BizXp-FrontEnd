@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
 import '../../App.css'
-import FinalizeOrder from './FinalizeOrder';
 import NumberFormat from 'react-number-format';
-var IsShowingOutOfStock = false;
+import { useAlert, withAlert } from 'react-alert'
 
+var IsShowingOutOfStock = false;
 var DummyOrders = []
+
 class NewOrder extends Component {
     constructor(props) {
         super(props)
@@ -16,7 +17,8 @@ class NewOrder extends Component {
             dummyOrderArray: [],
             showFinalizeModal: false,
             totalPrice: 0,
-            totalDiscountPrice: 0
+            totalDiscountPrice: 0,
+            totalDue: 0
         }
     }
     render() {
@@ -55,7 +57,6 @@ class NewOrder extends Component {
                                     <th>Buyer Number</th>
                                     <th>Product<img className="sortIcon" /></th>
                                     <th>Quantity<img className="sortIcon" /></th>
-                                    <th></th>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,22 +93,22 @@ class NewOrder extends Component {
                     <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
                         <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Total price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalSellingPrice" value={this.state.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
                     </div>
-                    <div id="discountDiv" className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left', display: 'none' }}>
-                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.discountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
+                    <div id="discountDiv" className="col-sm-2 inline-fields hidden-div" style={{ marginRight: '20px', float: 'left' }}>
+                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDiscountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
                     </div>
                     <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
                         <input id="discountInput" placeholder="Discount" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
                     </div>
-                    <div className="col-md-3 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input id="dummyQuantity" placeholder="Paid amount" className="input-fields"></input>
+                    <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                        <input id="dummyQuantity" placeholder="Paid amount" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
                     </div>
-                    <div className="col-sm-3 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: </label>
+                    <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDue} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
                     </div>
-                    <button className="btn-Blue-active rightSpace" onClick={() => this.ShowFinalizeModal()} style={{ width: '150px' }}>Finalize</button>
+                    <button className="btn-Blue-active rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '150px' }}>Finalize</button>
                     {/* </div> */}
                 </div>
-                {this.state.showFinalizeModal && <FinalizeOrder />}
+
             </div>
             //#endregion
         )
@@ -124,28 +125,43 @@ class NewOrder extends Component {
         catch (error) { console.log(error) }
     }
 
-    ShowFinalizeModal() {
-        console.log('Modal Shown')
-        this.setState({
-            showFinalizeModal: true
-        })
+    ConfirmOrder() {
+        const alert = useAlert()
+        alert.show('New Order Added Successfully!')
     }
 
-    CalculateTotalPrice(){
-
+    CalculateDue(e){
+        var paidAmount = e.target.value;
+        
+        if(paidAmount != '' && paidAmount){
+            if(this.state.totalDiscountPrice && this.state.totalDiscountPrice != 0 && this.state.totalDiscountPrice != ''){
+                var dueAmount = this.state.totalDiscountPrice - paidAmount;
+                this.setState({
+                    totalDue: dueAmount
+                })
+            }
+            else{
+                var dueAmount = this.state.totalPrice - paidAmount;
+                this.setState({
+                    totalDue: dueAmount
+                })
+            }
+        }
     }
     CalculateDiscount(e) {
         var discountPercent = e.target.value;
         
         if(discountPercent != '' && discountPercent){
-            console.log('Discount comes here: ' + discountPercent)
             var discountPercentage = document.getElementById('discountInput').value;
-            var discount = Math.round((this.state.totalPrice / 100) * discountPercentage)
+            var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercentage)
 
             this.setState({
                 totalDiscountPrice: discount
             })
-            document.getElementById('discountDiv').style = 'display: '
+            document.getElementById('discountDiv').classList.remove('hidden-div')
+        }
+        else{
+            document.getElementById('discountDiv').classList.add('hidden-div')
         }
     }
     componentDidUpdate() {
@@ -167,4 +183,4 @@ class NewOrder extends Component {
         })
     }
 }
-export default NewOrder;
+export default withAlert()(NewOrder);
