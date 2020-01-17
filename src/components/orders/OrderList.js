@@ -94,7 +94,7 @@ class OrderList extends React.Component {
                                 </td>
                                 <td>20,000</td>
                                 <td>5,000</td>
-                                <td><button className="btn-blue" onClick={()=>this.pdfDownload()}>Report</button></td>
+                                <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td>
                             </tr>
                         </tbody>
                     </table>

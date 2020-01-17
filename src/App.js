@@ -6,12 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Inventory from './components/Inventory/inventory';
 import Orders from './components/orders/orders';
 import Reports from './components/reports/reports';
+import PDFReport from './components/PDF/ReportDummy';
 
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { showInventory: true, showOrders: false, showPayments: false, showReports: false }
+    this.state = { showInventory: true, showOrders: false, showPayments: false, showReports: false,showPDF:false }
   }
   render() {
     return (
@@ -41,19 +42,31 @@ class App extends Component {
         </nav>
         <div id="content" className="componentContainer p-md-3">          
           {this.state.showInventory && <Inventory />}
-          {this.state.showOrders && <Orders />}
-          {this.state.showReports && <Reports />}
+          {this.state.showOrders && <Orders showPDF={this.showPDF}/>}
+          {this.state.showReports && <Reports/>}
+          {this.state.showPDF && <PDFReport />}
         </div>
       </div>
     );
   }
   
+  showPDF=()=>
+  {
+      this.setState({
+        showInventory: false,
+        showOrders: false,
+        showPayments: false,
+        showReports: false,
+        showPDF:true
+      })
+  }
   ShowInventory = () => {
     this.setState({
       showInventory: true,
       showOrders: false,
       showPayments: false,
-      showReports: false
+      showReports: false,
+      showPDF:false
     })
   }
 
@@ -62,7 +75,8 @@ class App extends Component {
       showInventory: false,
       showOrders: true,
       showPayments: false,
-      showReports: false
+      showReports: false,
+      showPDF:false
     })
   }
 
@@ -71,7 +85,8 @@ class App extends Component {
       showInventory: false,
       showOrders: false,
       showPayments: true,
-      showReports: false
+      showReports: false,
+      showPDF:false
     })
   }
 
@@ -80,7 +95,8 @@ class App extends Component {
       showInventory: false,
       showOrders: false,
       showPayments: false,
-      showReports: true
+      showReports: true,
+      showPDF:false
     })
   }
 
