@@ -8,14 +8,36 @@ import '../Inventory/inventory.css'
 import '../orders/orders.css'
 import moment from 'moment';
 
-var DummyOrders = []
+var DummyOrders = [
+    {
+        productName: 'Maxima Battery',
+        quantity: '500',
+        buyingPrice: '3000',
+        SellingPrice: '4000',
+        StockAddeed: '1-17-2020'
+    },
+    {
+        productName: 'Passenger Battery',
+        quantity: '100',
+        buyingPrice: '4000',
+        SellingPrice: '6000',
+        StockAddeed: '1-17-2020'
+    },
+    {
+        productName: 'Maxima Battery',
+        quantity: '200',
+        buyingPrice: '2000',
+        SellingPrice: '3500',
+        StockAddeed: '1-17-2020'
+    }
+
+]
 var IsShowingOutOfStock = false;
 class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dummyOrderArray: [
-            ],
+            dummyOrderArray: DummyOrders,
             dummyStateSet: false
         }
     }
