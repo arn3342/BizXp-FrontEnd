@@ -25,7 +25,22 @@ class NewOrder extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dummyOrderArray: [],
+            dummyOrderArray: [
+                {
+                    product:'Optimus Battery',
+                    quantity:'2',
+                    buyer:'Mr. Kamal',
+                    buyerPhone:'016555****',
+                    price:'1000'
+                },
+                {
+                    product:'Energy Battery',
+                    quantity:'4',
+                    buyer:'Mr. Jamal',
+                    buyerPhone:'016555****',
+                    price:'10000'
+                }
+            ],
             showFinalizeModal: false,
             totalPrice: 0,
             totalDiscountPrice: 0,

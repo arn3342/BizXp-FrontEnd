@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import OrderReport from '../PDF/OrderReport';
+import FileSaver from 'file-saver';
+import { pdf } from '@react-pdf/renderer';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../orders/orders.css'
 import '../../App.css'
 import Calendar from 'react-calendar'
 import moment from 'moment'
 
-class OrderList extends Component {
+class OrderList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -91,7 +94,7 @@ class OrderList extends Component {
                                 </td>
                                 <td>20,000</td>
                                 <td>5,000</td>
-                                <td><button className="btn-blue">Report</button></td>
+                                <td><button className="btn-blue" onClick={()=>this.pdfDownload()}>Report</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -100,6 +103,19 @@ class OrderList extends Component {
         )
     }
 
+    pdfDownload = () =>
+    {
+        console.log("inside the pdfDownload");
+        var data = pdf(<OrderReport/>).toBlob();
+        console.log(data);
+        data.then(function(value)
+        {
+            console.log(value)
+            FileSaver.saveAs(value,'OrderReport.pdf');
+        })
+
+    }
+    
     DisplayCalendar(e, keyName) {
         this.setState({
             showStartCalendar: false,

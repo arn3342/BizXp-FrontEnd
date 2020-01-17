@@ -5,7 +5,7 @@
     font-weight: 600;
 }
 .leftSpace{
-    margin-left: 20px;
+    margin-left: 10px;
 }
 .rightSpace{
   margin-right: 20px;
@@ -331,7 +331,7 @@ table tr:nth-child(2) td:first-child {
     color: #1e8efe;
   }
   .table-hover tbody th:hover img{
-    opacity: 100;
+    opacity: 0;
   }
 
   .table-hover tbody th{
