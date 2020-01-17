@@ -58,10 +58,6 @@ class OrderList extends React.Component {
                                 <th></th>
                             </tr>
                         </tbody>
-                    </table>
-                </div>
-                <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                    <table id="tableData" className="table table-hover table-borderless">
                         <tbody id="dummyTableToAdd">
                             <tr />
                             <tr />
@@ -101,10 +97,30 @@ class OrderList extends React.Component {
                         </tbody>
                     </table>
                 </div>
+                <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+                    <table id="tableData" className="table table-hover table-borderless">
+                        
+                    </table>
+                </div>
             </div>
         )
     }
-
+    SclaeTableHeader() {
+        try {
+            var columnHeaders = document.getElementById("columnHeaders");
+            var columnCells = document.getElementById("tableData");
+            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
+                var col = columnHeaders.rows[0].cells[i];
+                console.log(col.offsetWidth)
+                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
+                console.log("New column width: " + columnCells.rows[2].cells[i].width)
+            }
+        }
+        catch (error) { console.log(error) }
+    }
+    componentDidMount() {
+        this.SclaeTableHeader();
+    }
     pdfDownload = () =>
     {
         console.log("inside the pdfDownload");

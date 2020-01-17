@@ -5,7 +5,8 @@ import closeIcon from '../../Images/close_icon.png'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../Inventory/inventory.css'
-
+import '../orders/orders.css'
+import moment from 'moment';
 
 var DummyOrders = []
 var IsShowingOutOfStock = false;
@@ -14,25 +15,19 @@ class Inventory extends React.Component {
         super(props);
         this.state = {
             dummyOrderArray: [
-                {
-                    productName:'Maxima Battery',
-                    quantity:'500',
-                    buyingPrice:'3000',
-                    SellingPrice:'4000',
-                    StockAddeed:'17.1.2020'
-                },
             ],
+            dummyStateSet: false
         }
     }
 
     AddDummyOrder = () => {
-        document.getElementById('dummyBuyer').setAttribute('disabled', true);
         var order = {};
-        order.productName = document.getElementById('dummyProduct').value;
+        order.productName = document.getElementById('dummyName').value;
         order.quantity = document.getElementById('dummyQuantity').value;
         order.buyingPrice = document.getElementById('dummyBuyer').value;
         order.SellingPrice = document.getElementById('dummyPhone').value;
-        
+        order.StockAddeed = moment(new Date()).format("MM-DD-YYYY")
+
 
         DummyOrders.push(order);
         this.CalculateTotalPrice();
@@ -64,13 +59,46 @@ class Inventory extends React.Component {
     EnableElements = () => {
         document.getElementById('dummyBuyer').disabled = false;
     }
+    SclaeTableHeader() {
+        try {
+            var columnHeaders = document.getElementById("columnHeaders");
+            var columnCells = document.getElementById("tableData");
+            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
+                var col = columnHeaders.rows[0].cells[i];
+                console.log("Header Column Width:" + col.offsetWidth)
+                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
+                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
+            }
+        }
+        catch (error) { console.log(error) }
+    }
+    componentDidUpdate() {
+        this.SclaeTableHeader();
+    }
+
+    addDummyProduct() {
+        if (!this.state.dummyStateSet) {
+            var dummyArray = []
+            var dummyProduct = {
+                productName: 'Maxima Battery',
+                quantity: '500',
+                buyingPrice: '3000',
+                SellingPrice: '4000',
+                StockAddeed: '17.1.2020'
+            }
+            dummyArray.push(dummyProduct)
+            this.setState({
+                dummyOrderArray: dummyArray,
+                dummyStateSet: true
+            })
+        }
+    }
     render() {
         return (
             <div id="content">
-                {/* <div className="row">
-                    <h2 className="mb-4 ml-4">Inventory</h2>
-                    <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add product</button>
-                </div> */}
+                <div className="row">
+                    <h2 className="mb-4 ml-4" onClick={() => this.addDummyProduct()}>Inventory</h2>
+                </div>
                 <div className="row">
                     <div className="boxContainer col-md-4 ml-4">
                         <h4 className="mb-3">Total products</h4>
@@ -84,8 +112,8 @@ class Inventory extends React.Component {
 
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
-                <div className="col-md-4 inline-fields">
-                        <input id="dummyQuantity" placeholder="Product Name" className="input-fields"></input>
+                    <div className="col-md-4 inline-fields">
+                        <input id="dummyName" placeholder="Product Name" className="input-fields"></input>
                     </div>
                     <div className="col-md-3 inline-fields">
                         <input id="dummyQuantity" placeholder="Quantity" className="input-fields"></input>
@@ -117,33 +145,47 @@ class Inventory extends React.Component {
                                     <th></th>
                                 </tr>
                             </tbody>
-                        </table>
-                    </div>
-                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                        <table id="tableData" className="table table-hover table-borderless">
-                            <tbody id="dummyTableToAdd">
+                            <tbody id="tableData">
                                 <tr />
                                 <tr />
                                 {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
                                     (<tr className="table-warning">
-                                        <td style={{width:'170px !important'}}>{order.productName}</td>
-                                        <td style={{width:'150px '}}>{order.quantity}</td>
-                                        <td style={{width:'234px'}}>{order.buyingPrice}</td>
-                                        <td style={{width:'232px'}}>{order.SellingPrice}</td>
-                                        <td style={{width:'120px'}}>{order.StockAddeed}</td>
+                                        <td>{order.productName}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{order.buyingPrice}</td>
+                                        <td>{order.SellingPrice}</td>
+                                        <td>{order.StockAddeed}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
                                     </tr>)
                                 ))}
                             </tbody>
                         </table>
                     </div>
+                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+                        <table id="tableData" className="table table-hover table-borderless">
+                            {/* <tbody id="tableData">
+                                <tr />
+                                <tr />
+                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                    (<tr className="table-warning">
+                                        <td>{order.productName}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{order.buyingPrice}</td>
+                                        <td>{order.SellingPrice}</td>
+                                        <td>{order.StockAddeed}</td>
+                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
+                                    </tr>)
+                                ))}
+                            </tbody> */}
+                        </table>
+                    </div>
                     {/* table ends here */}
                 </div >
-                </div>
-                )
-            }
-        }
-        
+            </div>
+        )
+    }
+}
+
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
     if (!IsShowingOutOfStock) {

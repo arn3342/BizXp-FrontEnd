@@ -26,20 +26,6 @@ class NewOrder extends Component {
         super(props)
         this.state = {
             dummyOrderArray: [
-                {
-                    product:'Optimus Battery',
-                    quantity:'2',
-                    buyer:'Mr. Kamal',
-                    buyerPhone:'01655516789',
-                    price:'1000'
-                },
-                {
-                    product:'Energy Battery',
-                    quantity:'4',
-                    buyer:'Mr. Jamal',
-                    buyerPhone:'01785694589',
-                    price:'10000'
-                }
             ],
             showFinalizeModal: false,
             totalPrice: 0,
@@ -101,10 +87,6 @@ class NewOrder extends Component {
                                     <th></th>
                                 </tr>
                             </tbody>
-                        </table>
-                    </div>
-                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                        <table id="tableData" className="table table-hover table-borderless">
                             <tbody id="dummyTableToAdd">
                                 <tr />
                                 <tr />
@@ -126,6 +108,11 @@ class NewOrder extends Component {
                                     </tr>)
                                 ))}
                             </tbody>
+                        </table>
+                    </div>
+                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+                        <table id="tableData" className="table table-hover table-borderless">
+                            
                         </table>
                     </div>
                 </div>
@@ -178,7 +165,9 @@ class NewOrder extends Component {
             var columnCells = document.getElementById("tableData");
             for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
                 var col = columnHeaders.rows[0].cells[i];
+                console.log("Header Column Width:" + col.offsetWidth)
                 columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
+                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
             }
         }
         catch (error) { console.log(error) }
@@ -273,6 +262,23 @@ class NewOrder extends Component {
 
     EnableElements = () => {
         document.getElementById('dummyBuyer').disabled = false;
+    }
+
+    SclaeTableHeader() {
+        try {
+            var columnHeaders = document.getElementById("columnHeaders");
+            var columnCells = document.getElementById("tableData");
+            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
+                var col = columnHeaders.rows[0].cells[i];
+                console.log(col.offsetWidth)
+                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
+                console.log("New column width: " + columnCells.rows[2].cells[i].width)
+            }
+        }
+        catch (error) { console.log(error) }
+    }
+    componentDidUpdate() {
+        //this.SclaeTableHeader();
     }
 
 }

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
 import '../../App.css'
-
-
 class Alert extends Component {
-
     render() {
         return (
             <div class="modal">
