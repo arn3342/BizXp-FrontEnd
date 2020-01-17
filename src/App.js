@@ -98,6 +98,7 @@ class App extends Component {
       showReports: true,
       showPDF:false
     })
+
   }
 
   ExpandCollapseMenu = () => {

@@ -15,19 +15,12 @@ class Inventory extends React.Component {
         this.state = {
             dummyOrderArray: [
                 {
-                    product:'Optimus Battery',
-                    quantity:'2',
-                    buyer:'Mr. Kamal',
-                    buyerPhone:'016555****',
-                    price:'1000'
+                    productName:'Maxima Battery',
+                    quantity:'500',
+                    buyingPrice:'3000',
+                    SellingPrice:'4000',
+                    StockAddeed:'17.1.2020'
                 },
-                {
-                    product:'Energy Battery',
-                    quantity:'4',
-                    buyer:'Mr. Jamal',
-                    buyerPhone:'016555****',
-                    price:'10000'
-                }
             ],
         }
     }
@@ -35,11 +28,11 @@ class Inventory extends React.Component {
     AddDummyOrder = () => {
         document.getElementById('dummyBuyer').setAttribute('disabled', true);
         var order = {};
-        order.product = document.getElementById('dummyProduct').value;
+        order.productName = document.getElementById('dummyProduct').value;
         order.quantity = document.getElementById('dummyQuantity').value;
-        order.buyer = document.getElementById('dummyBuyer').value;
-        order.buyerPhone = document.getElementById('dummyPhone').value;
-        order.price = 10000;
+        order.buyingPrice = document.getElementById('dummyBuyer').value;
+        order.SellingPrice = document.getElementById('dummyPhone').value;
+        
 
         DummyOrders.push(order);
         this.CalculateTotalPrice();
@@ -74,10 +67,10 @@ class Inventory extends React.Component {
     render() {
         return (
             <div id="content">
-                <div className="row">
+                {/* <div className="row">
                     <h2 className="mb-4 ml-4">Inventory</h2>
                     <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add product</button>
-                </div>
+                </div> */}
                 <div className="row">
                     <div className="boxContainer col-md-4 ml-4">
                         <h4 className="mb-3">Total products</h4>
@@ -91,26 +84,20 @@ class Inventory extends React.Component {
 
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
-                    <div className="col-md-4 inline-fields">
-                        <select id="dummyProduct" name="products" className="input-fields">
-                            <option value="volvo">Select product...</option>
-                            <option value="Passenger Car Battery">Passenger Car Battery</option>
-                            <option value="Optima Battery">Optima Battery</option>
-                            <option value="Maxima Battery">Maxima Battery</option>
-                            <option value="audi">Other products will be shown here....</option>
-                        </select>
+                <div className="col-md-4 inline-fields">
+                        <input id="dummyQuantity" placeholder="Product Name" className="input-fields"></input>
                     </div>
                     <div className="col-md-3 inline-fields">
                         <input id="dummyQuantity" placeholder="Quantity" className="input-fields"></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input id="dummyBuyer" placeholder="Buyer Name" className="input-fields"></input>
+                        <input id="dummyBuyer" placeholder="Buying Price" className="input-fields"></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input id="dummyPhone" placeholder="Buyer Phone No." className="input-fields"></input>
+                        <input id="dummyPhone" placeholder="Selling Price" className="input-fields"></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add Order</button>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add</button>
                     </div>
                 </div>
                 {/* Add Product Section Ends  here*/}
@@ -122,10 +109,11 @@ class Inventory extends React.Component {
                         <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                             <tbody>
                                 <tr className="column-container" style={{ paddingTop: '8px' }}>
-                                    <th>Buyer Name<img className="sortIcon" /></th>
-                                    <th>Buyer Number <img className="sortIcon" /></th>
-                                    <th>Product<img className="sortIcon" /></th>
-                                    <th>Quantity<img className="sortIcon" /></th>
+                                    <th>Product Name<img className="sortIcon" /></th>
+                                    <th>Quantity <img className="sortIcon" /></th>
+                                    <th>Buying Price(per unit)<img className="sortIcon" /></th>
+                                    <th>Selling Price(per unit)<img className="sortIcon" /></th>
+                                    <th>Stock Added</th>
                                     <th></th>
                                 </tr>
                             </tbody>
@@ -138,10 +126,11 @@ class Inventory extends React.Component {
                                 <tr />
                                 {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
                                     (<tr className="table-warning">
-                                        <td>{order.buyer}</td>
-                                        <td>{order.buyerPhone}</td>
-                                        <td>{order.product}</td>
-                                        <td>{order.quantity}</td>
+                                        <td style={{width:'170px !important'}}>{order.productName}</td>
+                                        <td style={{width:'150px '}}>{order.quantity}</td>
+                                        <td style={{width:'234px'}}>{order.buyingPrice}</td>
+                                        <td style={{width:'232px'}}>{order.SellingPrice}</td>
+                                        <td style={{width:'120px'}}>{order.StockAddeed}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
                                     </tr>)
                                 ))}

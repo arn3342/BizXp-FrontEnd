@@ -7,6 +7,7 @@ import '../orders/orders.css'
 import '../../App.css'
 import Calendar from 'react-calendar'
 import moment from 'moment'
+import image from '../../Images/PdfDemo.gif'
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -94,7 +95,8 @@ class OrderList extends React.Component {
                                 </td>
                                 <td>20,000</td>
                                 <td>5,000</td>
-                                <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td>
+                                {/* <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td> */}
+                                <td><a href="https://images.examples.com/wp-content/uploads/2017/05/Order-Receipt-Sample.jpg" type="button" className="btn btn-primary">Report</a></td>
                             </tr>
                         </tbody>
                     </table>
