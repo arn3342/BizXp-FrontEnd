@@ -30,14 +30,14 @@ class NewOrder extends Component {
                     product:'Optimus Battery',
                     quantity:'2',
                     buyer:'Mr. Kamal',
-                    buyerPhone:'016555****',
+                    buyerPhone:'01655516789',
                     price:'1000'
                 },
                 {
                     product:'Energy Battery',
                     quantity:'4',
                     buyer:'Mr. Jamal',
-                    buyerPhone:'016555****',
+                    buyerPhone:'01785694589',
                     price:'10000'
                 }
             ],
