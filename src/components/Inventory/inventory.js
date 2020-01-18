@@ -38,7 +38,9 @@ class Inventory extends React.Component {
         super(props);
         this.state = {
             dummyOrderArray: DummyOrders,
-            dummyStateSet: false
+            dummyStateSet: false,
+            totalProducts: DummyOrders.length,
+            totalOutOfStock: 0
         }
     }
 
@@ -52,26 +54,12 @@ class Inventory extends React.Component {
 
 
         DummyOrders.push(order);
-        this.CalculateTotalPrice();
+        this.CalculateStock();
     }
-
-    CalculateTotalPrice() {
+    CalculateStock(){
         this.setState({
-            dummyOrderArray: DummyOrders
+            totalProducts: DummyOrders.length
         })
-        if (DummyOrders.length != 0) {
-            this.setState({
-                totalPrice: DummyOrders.map(data => data.price).reduce((a, b) => a + b)
-            })
-            return 1;
-        }
-        else {
-            this.setState({
-                totalPrice: 0
-            })
-            this.EnableElements();
-            return 0;
-        }
     }
     removeOrder(index) {
         DummyOrders.splice(index, 1);
@@ -97,38 +85,20 @@ class Inventory extends React.Component {
     componentDidUpdate() {
         this.SclaeTableHeader();
     }
-
-    addDummyProduct() {
-        if (!this.state.dummyStateSet) {
-            var dummyArray = []
-            var dummyProduct = {
-                productName: 'Maxima Battery',
-                quantity: '500',
-                buyingPrice: '3000',
-                SellingPrice: '4000',
-                StockAddeed: '17.1.2020'
-            }
-            dummyArray.push(dummyProduct)
-            this.setState({
-                dummyOrderArray: dummyArray,
-                dummyStateSet: true
-            })
-        }
-    }
     render() {
         return (
             <div id="content">
-                <div className="row">
-                    <h2 className="mb-4 ml-4" onClick={() => this.addDummyProduct()}>Inventory</h2>
+                <div className="row leftSpace topSpace">
+                    <h2 className="mb-4" onClick={() => this.addDummyProduct()}>Inventory</h2>
                 </div>
-                <div className="row">
-                    <div className="boxContainer col-md-4 ml-4">
+                <div className="row leftSpace">
+                    <div className="boxContainer col-md-4">
                         <h4 className="mb-3">Total products</h4>
-                        <h4 className="fontBold">500</h4>
+                        <h4 className="fontBold">{this.state.totalProducts}</h4>
                     </div>
                     <div id="outOfStockBtn" className="boxContainer hoverShadow col-md-4" onClick={() => ShowOutOfStock()} style={{ marginLeft: '15px' }}>
                         <h4 id="" className="mb-3">Out of stock</h4>
-                        <h4 className="fontBold">500</h4>
+                        <h4 className="fontBold">{this.state.totalOutOfStock}</h4>
                     </div>
                 </div>
 

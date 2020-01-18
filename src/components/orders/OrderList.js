@@ -91,8 +91,8 @@ class OrderList extends React.Component {
                                 </td>
                                 <td>20,000</td>
                                 <td>5,000</td>
-                                <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td>
-                                {/* <td><a href="https://images.examples.com/wp-content/uploads/2017/05/Order-Receipt-Sample.jpg" type="button" target="_blank" className="btn btn-primary">Report</a></td> */}
+                                {/* <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td> */}
+                                <td><a href="https://images.examples.com/wp-content/uploads/2017/05/Order-Receipt-Sample.jpg" type="button" target="_blank" className="btn btn-primary">Report</a></td>
                             </tr>
                         </tbody>
                     </table>

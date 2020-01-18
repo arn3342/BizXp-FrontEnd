@@ -145,9 +145,9 @@ class NewOrder extends Component {
     }
 
     openModal = () => {
-        console.log(this)
+        
         this.setState({ modalIsOpen: true });
-
+        console.log(this.state.modalIsOpen)
         DummyOrders = [];
     }
 
@@ -186,8 +186,7 @@ class NewOrder extends Component {
             showFinalizeModal: false,
             totalPrice: 0,
             totalDiscountPrice: 0,
-            totalDue: 0,
-            modalIsOpen: false
+            totalDue: 0
         })
     }
 
