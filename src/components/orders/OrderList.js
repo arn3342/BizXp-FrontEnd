@@ -1,6 +1,5 @@
 import React from 'react';
 import OrderReport from '../PDF/OrderReport';
-import FileSaver from 'file-saver';
 import { pdf } from '@react-pdf/renderer';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../orders/orders.css'
@@ -129,7 +128,7 @@ class OrderList extends React.Component {
         data.then(function(value)
         {
             console.log(value)
-            FileSaver.saveAs(value,'OrderReport.pdf');
+            //FileSaver.saveAs(value,'OrderReport.pdf');
         })
 
     }
