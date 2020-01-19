@@ -67,6 +67,10 @@ class Dashboard extends Component {
                         <h4 className="mb-4" onClick={() => this.addDummyProduct()}>Top 3 products</h4>
                     </div>
                 </div>
+                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
+                    <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
+                    {/* </div> */}
+                </div>
             </div >
         );
     }
