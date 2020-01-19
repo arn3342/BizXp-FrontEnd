@@ -1,82 +1,181 @@
 import React from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import '../orders/orders.css';
+import closeIcon from '../../Images/close_icon.png'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../Inventory/inventory.css'
+import '../orders/orders.css'
+import moment from 'moment';
 
+var DummyOrders = [
+    {
+        productName: 'Maxima Battery',
+        quantity: '500',
+        buyingPrice: '3000',
+        SellingPrice: '4000',
+        StockAddeed: '1-17-2020'
+    },
+    {
+        productName: 'Passenger Battery',
+        quantity: '100',
+        buyingPrice: '4000',
+        SellingPrice: '6000',
+        StockAddeed: '1-17-2020'
+    },
+    {
+        productName: 'Maxima Battery',
+        quantity: '200',
+        buyingPrice: '2000',
+        SellingPrice: '3500',
+        StockAddeed: '1-17-2020'
+    }
+
+]
 var IsShowingOutOfStock = false;
-function Inventory() {
-    return (
-        <div id="content">
-            <div className="row">
-                <h2 className="mb-4">Inventory</h2>
-                <button className="col-md-2 ml-auto btn-Blue"><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add product</button>
-            </div>
-            <div className="row">
-                <div className="boxContainer col-md-4">
-                    <h4 className="mb-3">Total products</h4>
-                    <h4 className="fontBold">500</h4>
-                </div>
-                <div id="outOfStockBtn" className="boxContainer hoverShadow col-md-4" onClick={() => ShowOutOfStock()} style={{ marginLeft: '15px' }}>
-                    <h4 id="" className="mb-3">Out of stock</h4>
-                    <h4 className="fontBold">500</h4>
-                </div>
-            </div>
-            {/* table starts here */}
+class Inventory extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dummyOrderArray: DummyOrders,
+            dummyStateSet: false,
+            totalProducts: DummyOrders.length,
+            totalOutOfStock: 0
+        }
+    }
 
-            <div className='dataContainer row' style={{display: 'inherit'}}>
-            <div className="headerContainer" style={{ marginTop: '20px' }}>
-                <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
-                    <tbody>
-                        <tr className="column-container" style={{ paddingTop: '8px' }}>
-                            <th className="checkboxContainer">
-                                <input type="checkbox" />
-                                <span className="checkmark" style={{ margin: '-2px 15px 0px 5px' }}></span>
-                            </th>
-                            <th>Product<img className="sortIcon"/></th>
-                            <th>Buying Date<img className="sortIcon"/></th>
-                            <th>Vendor<img className="sortIcon" /></th>
-                            <th>Quantity<img className="sortIcon" /></th>
-                        </tr>
-                    </tbody>
-                </table>
+    AddDummyOrder = () => {
+        var order = {};
+        order.productName = document.getElementById('dummyName').value;
+        order.quantity = document.getElementById('dummyQuantity').value;
+        order.buyingPrice = document.getElementById('dummyBuyer').value;
+        order.SellingPrice = document.getElementById('dummyPhone').value;
+        order.StockAddeed = moment(new Date()).format("MM-DD-YYYY")
+
+
+        DummyOrders.push(order);
+        this.CalculateStock();
+    }
+    CalculateStock(){
+        this.setState({
+            totalProducts: DummyOrders.length
+        })
+    }
+    removeOrder(index) {
+        DummyOrders.splice(index, 1);
+        this.CalculateTotalPrice();
+    }
+
+    EnableElements = () => {
+        document.getElementById('dummyBuyer').disabled = false;
+    }
+    SclaeTableHeader() {
+        try {
+            var columnHeaders = document.getElementById("columnHeaders");
+            var columnCells = document.getElementById("tableData");
+            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
+                var col = columnHeaders.rows[0].cells[i];
+                console.log("Header Column Width:" + col.offsetWidth)
+                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
+                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
+            }
+        }
+        catch (error) { console.log(error) }
+    }
+    componentDidUpdate() {
+        this.SclaeTableHeader();
+    }
+    render() {
+        return (
+            <div id="content">
+                <div className="row leftSpace topSpace">
+                    <h2 className="mb-4" onClick={() => this.addDummyProduct()}>Inventory</h2>
+                </div>
+                <div className="row leftSpace">
+                    <div className="boxContainer col-md-4">
+                        <h4 className="mb-3">Total products</h4>
+                        <h4 className="fontBold">{this.state.totalProducts}</h4>
+                    </div>
+                    <div id="outOfStockBtn" className="boxContainer hoverShadow col-md-4" onClick={() => ShowOutOfStock()} style={{ marginLeft: '15px' }}>
+                        <h4 id="" className="mb-3">Out of stock</h4>
+                        <h4 className="fontBold">{this.state.totalOutOfStock}</h4>
+                    </div>
+                </div>
+
+                {/* Add Product Section Starts here*/}
+                <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
+                    <div className="col-md-4 inline-fields">
+                        <input id="dummyName" placeholder="Product Name" className="input-fields"></input>
+                    </div>
+                    <div className="col-md-3 inline-fields">
+                        <input id="dummyQuantity" placeholder="Quantity" className="input-fields"></input>
+                    </div>
+                    <div className="col-md-4 inline-fields">
+                        <input id="dummyBuyer" placeholder="Buying Price" className="input-fields"></input>
+                    </div>
+                    <div className="col-md-4 inline-fields">
+                        <input id="dummyPhone" placeholder="Selling Price" className="input-fields"></input>
+                    </div>
+                    <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add</button>
+                    </div>
+                </div>
+                {/* Add Product Section Ends  here*/}
+
+
+                {/* table starts here */}
+                <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
+                    <div className="headerContainer" style={{ marginTop: '20px' }}>
+                        <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                            <tbody>
+                                <tr className="column-container" style={{ paddingTop: '8px' }}>
+                                    <th>Product Name<img className="sortIcon" /></th>
+                                    <th>Quantity <img className="sortIcon" /></th>
+                                    <th>Buying Price(per unit)<img className="sortIcon" /></th>
+                                    <th>Selling Price(per unit)<img className="sortIcon" /></th>
+                                    <th>Stock Added</th>
+                                    <th></th>
+                                </tr>
+                            </tbody>
+                            <tbody id="tableData">
+                                <tr />
+                                <tr />
+                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                    (<tr className="table-warning">
+                                        <td>{order.productName}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{order.buyingPrice}</td>
+                                        <td>{order.SellingPrice}</td>
+                                        <td>{order.StockAddeed}</td>
+                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
+                                    </tr>)
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
+                        <table id="tableData" className="table table-hover table-borderless">
+                            {/* <tbody id="tableData">
+                                <tr />
+                                <tr />
+                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                    (<tr className="table-warning">
+                                        <td>{order.productName}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{order.buyingPrice}</td>
+                                        <td>{order.SellingPrice}</td>
+                                        <td>{order.StockAddeed}</td>
+                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
+                                    </tr>)
+                                ))}
+                            </tbody> */}
+                        </table>
+                    </div>
+                    {/* table ends here */}
+                </div >
             </div>
-            {/* <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                <table id="tableData" className="table table-hover table-borderless">
-                    <tbody>
-                        <tr />
-                        <tr />
-                        {projectObject && (projectObject.map((projectItem, index) =>
-                            (<tr className="table-warning" key={projectItem.procoreNumber}>
-                                {this.SetRowColor(index)}
-                                <td className="checkboxContainer" style={{ width: '60px', background: this.rowColor }}>
-                                    <input type="checkbox" value='true'
-                                        // style={{pointerEvents: "none"}}
-                                        disabled={(projectItem.projectionsRunStatus || '').toLowerCase() == "inprogress"}
-                                        checked={this.state.ProcoreNumbers.indexOf(projectItem.procoreNumber) > -1}
-                                        onChange={(event) => this.handleChange(event, projectItem.procoreNumber)} />
-                                    <span className="checkmark"></span>
-                                </td>
-                                <td style={{ minWidth: "200px", background: this.rowColor }}>{projectItem.procoreNumber}</td>
-                                <td style={{ background: this.rowColor }}>{projectItem.name}</td>
-                                <td style={{ background: this.rowColor }}>{moment(projectItem.lastProjectionsModified).format("MM-DD-YYYY hh:mm")}</td>
-                                <td style={{ background: this.rowColor }}>
-                                    <div className="status-button">
-                                        {projectItem.projectionsRunStatus === 'error' && <img src={errorIcon} />}
-                                        {projectItem.projectionsRunStatus === 'done' && <img src={doneIcon} />}
-                                        {projectItem.projectionsRunStatus === 'inProgress' && <img src={progressIcon} />}
-                                        <span>{UppercaseFirst(projectItem.projectionsRunStatus)}</span>
-                                    </div>
-                                </td>
-                            </tr>)
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
-        </div>
-        {/* table ends here */}
-        </div >
-    )
+        )
+    }
 }
 
 function ShowOutOfStock() {

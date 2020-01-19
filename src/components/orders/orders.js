@@ -6,8 +6,6 @@ import '../orders/orders.css'
 import '../../App.css'
 import NewOrder from './NewOrders';
 import OrderList from './OrderList';
-import Alert from '../Alert/alert';
-var IsShowingOutOfStock = false;
 
 var DummyOrders = []
 class Orders extends Component {
@@ -15,7 +13,8 @@ class Orders extends Component {
         super(props)
         this.state = {
             showAddOrders: true,
-            ShowOrderList: false
+            ShowOrderList: false,
+            ShowReport:false,
         }
     }
     render() {
@@ -37,7 +36,7 @@ class Orders extends Component {
                 </div>
                 {/* table starts here */}
                 {this.state.showAddOrders && <NewOrder/>}
-                {this.state.ShowOrderList && <OrderList/>}
+                {this.state.ShowOrderList && <OrderList showPDF={this.props.showPDF}/>}
             </div >
         );
     }
@@ -63,7 +62,8 @@ class Orders extends Component {
         // document.querySelectorAll('[id=allOrderFields]').forEach(element => element.className = 'fields-hidden');
         this.setState({
             showAddOrders: true,
-            ShowOrderList: false
+            ShowOrderList: false,
+            ShowReport:false,
         })
     }
 
@@ -73,7 +73,8 @@ class Orders extends Component {
         // document.querySelectorAll('[id=allOrderFields]').forEach(element => element.className = 'fields-visible');
         this.setState({
             showAddOrders: false,
-            ShowOrderList: true
+            ShowOrderList: true,
+            ShowReport:false,
         })
     }
 
