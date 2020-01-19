@@ -177,14 +177,14 @@ class NewOrder extends Component {
         this.openModal();
         setTimeout(this.closeModal, 1300);
 
-        this.setState({
-            dummyOrderArray: [],
-            showFinalizeModal: false,
-            totalPrice: 0,
-            totalDiscountPrice: 0,
-            totalDue: 0,
-            modalIsOpen: false
-        })
+        // this.setState({
+        //     dummyOrderArray: [],
+        //     showFinalizeModal: false,
+        //     totalPrice: 0,
+        //     totalDiscountPrice: 0,
+        //     totalDue: 0,
+        //     modalIsOpen: false
+        // })
     }
 
     CalculateDue(e) {
