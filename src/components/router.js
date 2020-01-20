@@ -5,35 +5,37 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    Redirect
 } from "react-router-dom";
 import App from '../App';
+import Login from './Login/login';
 
 class AppRouter extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            totalClients: 0,
-            clients: [
-                {
-                    clientName: 'Aousaf Rashid',
-                    phone: '01611416466',
-                    email: 'nabilrashid44@gmail.com',
-                    address: '11/B, Khilgaon, Dhaka',
-                    totalOrders: '115'
-                }
-            ]
+            showMain: false,
+            defaultRedirect: 'login'
         }
     }
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route exact path="/home" component={App} />
-                    <Route exact path="/login" component={App}/>
+                    <Redirect exact from="/" to={this.state.defaultRedirect} />
+                    <Route exact path="/home" component={App}/>
+                    {this.state.showMain && <Redirect to="/home"/>}
+                    <Route exact path="/login" component={() => <Login loginSuccess={() => this.navigateToMain()}/>} />
                 </Switch>
             </Router>
         )
+    }
+    navigateToMain(){
+        this.setState({
+            showMain: true
+        })
+        document.body.style.background = 'none'
     }
 }
 export default AppRouter;
