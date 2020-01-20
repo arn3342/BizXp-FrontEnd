@@ -63,7 +63,7 @@ class App extends Component {
                   </li>
                   <li>
                     <img src={clientIcon}></img>
-                    <a onClick={() => this.ShowOrders()}>Clients</a>
+                    <a onClick={() => this.ShowClients()}>Clients</a>
                   </li>
                 </ul>
               </div>
@@ -98,7 +98,8 @@ class App extends Component {
       showOrders: false,
       showPayments: false,
       showDashboard: false,
-      showPDF: false
+      showPDF: false,
+      showClients: false
     })
   }
 
@@ -108,7 +109,18 @@ class App extends Component {
       showOrders: true,
       showPayments: false,
       showDashboard: false,
-      showPDF: false
+      showPDF: false,
+      showClients: false
+    })
+  }
+  ShowClients = () => {
+    this.setState({
+      showInventory: false,
+      showOrders: flase,
+      showPayments: false,
+      showDashboard: false,
+      showPDF: false,
+      showClients: true
     })
   }
 

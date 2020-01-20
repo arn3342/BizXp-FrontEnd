@@ -7,7 +7,7 @@ import '../../App.css'
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import '../Dashboard/dashboard.css'
-class Dashboard extends Component {
+class Clients extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -150,4 +150,4 @@ class Dashboard extends Component {
         }
     }
 }
-export default Dashboard;
+export default Clients;
