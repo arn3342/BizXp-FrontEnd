@@ -116,7 +116,7 @@ class App extends Component {
   ShowClients = () => {
     this.setState({
       showInventory: false,
-      showOrders: flase,
+      showOrders: false,
       showPayments: false,
       showDashboard: false,
       showPDF: false,
