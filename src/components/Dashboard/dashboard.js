@@ -6,6 +6,7 @@ import '../orders/orders.css'
 import '../../App.css'
 import Calendar from 'react-calendar';
 import moment from 'moment';
+import '../Dashboard/dashboard.css'
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -64,8 +65,27 @@ class Dashboard extends Component {
                         </div>
                     </div>
                     <div className="row leftSpace pt-3">
-                        <h4 className="mb-4" onClick={() => this.addDummyProduct()}>Top 3 products</h4>
+                        <h4 className="mb-4">Top 3 products</h4>
                     </div>
+                    <div className="row leftSpace">
+                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
+                            <h4 id="" className="mb-3">Maxima Battery</h4>
+                            <h4 className="fontBold">300 units sold</h4>
+                        </div>
+                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
+                            <h4 id="" className="mb-3">Passenger Battery</h4>
+                            <h4 className="fontBold">300 units sold</h4>
+                        </div>
+                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
+                            <h4 id="" className="mb-3">Ultra Battery</h4>
+                            <h4 className="fontBold">300 units sold</h4>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
+                    <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
+                    {/* </div> */}
                 </div>
                 <div id="finalizeOrderContainer" className="bottom-div div-shadow">
                     <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
