@@ -96,11 +96,6 @@ class OrderList extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                    <table id="tableData" className="table table-hover table-borderless">
-                        
-                    </table>
-                </div>
             </div>
         )
     }

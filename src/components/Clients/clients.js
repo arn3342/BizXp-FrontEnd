@@ -5,20 +5,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
 import '../../App.css'
 import Calendar from 'react-calendar';
+import '../Clients/clients.css'
 import moment from 'moment';
 import '../Dashboard/dashboard.css'
 class Clients extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            showAddOrders: true,
-            ShowOrderList: false,
-            ShowReport: false,
-            startDate: new Date(),
-            showStartCalendar: false,
-            endDate: new Date(),
-            showEndCalendar: false,
-            summaryFrom: 'of ' + moment(new Date()).format('MM-DD-YYYY')
+            totalClients: 0,
+            clients: [
+                {
+                    clientName: 'Aousaf Rashid',
+                    phone: '01611416466',
+                    email: 'nabilrashid44@gmail.com',
+                    address: '11/B, Khilgaon, Dhaka',
+                    totalOrders: '115'
+                }
+            ]
         }
     }
     render() {
@@ -26,66 +29,63 @@ class Clients extends Component {
             <div id="content">
                 <div id="content">
                     <div className="row leftSpace topSpace">
-                        <h2 className="mb-4" onClick={() => this.addDummyProduct()}>Dashboard</h2>
+                        <h2 className="mb-4">Clients</h2>
                     </div>
                     <div className="row leftSpace">
-                        <div className="col-md-3">
-                            <button id="showStartCalendar" className="btn-Blue" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>Start date: {moment(this.state.startDate).format("MM-DD-YYYY")}</button>
-                            <div className="topSpace" style={{ display: this.state.showStartCalendar ? 'block' : 'none' }}>
-                                <Calendar id="showStartCalendar" value={this.state.startDate}
-                                    //  onChange={(e) => {this.onChange()}}
-                                    onChange={(e) => { this.onChange(e, 'showStartCalendar'); this.DisplayCalendar('', 'showStartCalendar') }}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <button id="showEndCalendar" className="btn-Blue" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>End date: {moment(this.state.endDate).format("MM-DD-YYYY")}</button>
-                            <div className="topSpace" style={{ display: this.state.showEndCalendar ? 'block' : 'none' }}>
-                                <Calendar id="showEndCalendar" value={this.state.startDate}
-                                    onChange={(e) => { this.onChange(e, 'showEndCalendar'); this.DisplayCalendar('', 'showEndCalendar') }}
-                                />
-                            </div>
+                        <div className="boxContainer col-md-4">
+                            <h4 className="mb-3">Total clients</h4>
+                            <h4 className="fontBold">{this.state.totalClients}</h4>
                         </div>
                     </div>
-                    <div className="row leftSpace pt-4">
-                        <h4>Showing summary {this.state.summaryFrom}</h4>
-                    </div>
-                    <div className="row leftSpace pt-2">
-                        <div className="boxContainer col-md-3">
-                            <h4 className="mb-3">Total sales</h4>
-                            <h4 className="fontBold">0</h4>
+                    <br></br>
+                    {/* Add Product Section Starts here*/}
+                    <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
+                        <div className="col-md-4 inline-fields">
+                            <input id="dummyName" placeholder="Client Name" className="input-fields"></input>
                         </div>
-                        <div id="outOfStockBtn" className="boxContainer col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Total profit</h4>
-                            <h4 className="fontBold">0</h4>
+                        <div className="col-md-3 inline-fields">
+                            <input id="dummyQuantity" placeholder="Phone no." className="input-fields"></input>
                         </div>
-                        <div id="outOfStockBtn" className="boxContainer col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Due pending</h4>
-                            <h4 className="fontBold">0</h4>
+                        <div className="col-md-4 inline-fields">
+                            <input id="dummyBuyer" placeholder="Email" className="input-fields"></input>
                         </div>
-                    </div>
-                    <div className="row leftSpace pt-3">
-                        <h4 className="mb-4">Top 3 products</h4>
-                    </div>
-                    <div className="row leftSpace">
-                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Maxima Battery</h4>
-                            <h4 className="fontBold">300 units sold</h4>
+                        <div className="col-md-4 inline-fields">
+                            <input id="dummyPhone" placeholder="Address" className="input-fields"></input>
                         </div>
-                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Passenger Battery</h4>
-                            <h4 className="fontBold">300 units sold</h4>
-                        </div>
-                        <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Ultra Battery</h4>
-                            <h4 className="fontBold">300 units sold</h4>
+                        <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
+                            <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add client</button>
                         </div>
                     </div>
-                    
-                </div>
-                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
-                    <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
-                    {/* </div> */}
+                    {/* Add Product Section Ends  here*/}
+
+                    <div className="headerContainer" style={{ marginTop: '20px' }}>
+                        <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                            <tbody>
+                                <tr className="column-container" style={{ paddingTop: '8px' }}>
+                                    <th>Client Name<img className="sortIcon" /></th>
+                                    <th>Phone Number</th>
+                                    <th>Email<img className="sortIcon" alt="sortIcon" /></th>
+                                    <th>Address<img className="sortIcon" alt="sortIcon" /></th>
+                                    <th id="allOrderFields">Total orders<img className="sortIcon" alt="sortIcon" /></th>
+                                    <th></th>
+                                </tr>
+                            </tbody>
+                            <tbody id="dummyTableToAdd">
+                                <tr />
+                                <tr />
+                                {this.state.clients && (this.state.clients.map((client, index) =>
+                                    (<tr className="table-warning">
+                                        <td>{client.clientName}</td>
+                                        <td>{client.phone}</td>
+                                        <td>{client.email}</td>
+                                        <td>{client.address}</td>
+                                        <td>{client.totalOrders}</td>
+                                        <td><button className="btn-Blue-active-small">Show orders</button></td>
+                                    </tr>)
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div >
         );

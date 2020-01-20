@@ -13,18 +13,19 @@ import inventoryIcon from '../src/Images/inventory_icon.png'
 import orderIcon from '../src/Images/order_icon.png'
 import clientIcon from '../src/Images/client_icon.png'
 import Dashboard from './components/Dashboard/dashboard';
+import Clients from './components/Clients/clients';
 
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showPDF: false }
+    this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false }
   }
   render() {
     return (
       <div className="wrapper d-flex align-items-stretch">
         <div id="sidebar" className="col-md-2.5" style={{padding: 'opx', width: '300px'}}>
-          <nav id="sidebar" style={{position: 'fixed'}}>
+          <nav id="sidebar" className="full-height" style={{position: 'fixed'}}>
             <div className="custom-menu">
               <button type="button" id="sidebarCollapse" onClick={() => this.ExpandCollapseMenu()} className="btn btn-primary">
                 {/* <i className="fa fa-bars"></i> */}
@@ -32,7 +33,7 @@ class App extends Component {
                 <span className="sr-only">Toggle Menu</span>
               </button>
             </div>
-            <div className="menuContainer">
+            <div className="menuContainer full-height">
               <div className="logoContainer">
                 <h4><a href="index.html" className="logo">Business<b>Expert</b></a></h4>
               </div>
@@ -47,8 +48,8 @@ class App extends Component {
                 </div>
                 </div>
               </div>
-              <div className="p-4">
-                <ul className="list-unstyled components mb-5">
+              <div className="p-4 full-height">
+                <ul className="list-unstyled components mb-5 full-height">
                   <li className="active">
                     <img src={dashboardIcon}></img>
                     <a onClick={() => this.ShowDashboard()}>Dashboard</a>
@@ -65,6 +66,10 @@ class App extends Component {
                     <img src={clientIcon}></img>
                     <a onClick={() => this.ShowClients()}>Clients</a>
                   </li>
+                  <li className="bottom-content">
+                    {/* <img src={clientIcon}></img> */}
+                    <a onClick={() => this.ShowClients()}>Support: +8801611416466</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -75,7 +80,7 @@ class App extends Component {
           {this.state.showInventory && <Inventory />}
           {this.state.showOrders && <Orders showPDF={this.showPDF} />}
           {this.state.showDashboard && <Dashboard />}
-          {this.state.showPDF && <PDFReport />}
+          {this.state.showClients && <Clients />}
         </div>
       </div>
     );

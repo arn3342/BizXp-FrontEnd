@@ -50,6 +50,16 @@
   font-size: 18px;
   font-weight: 600;
 }
+.btn-Blue-active-small{
+  color: #fff;
+  background: #028cea;
+  border: 0;
+  padding: 8px 20px;
+  border-radius: 30px;
+  transition: .400s;
+  font-size: 0.90rem;
+  font-weight: 600;
+}
 .bottom-div{
   position: fixed;
   bottom: 0;

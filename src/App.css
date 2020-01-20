@@ -397,7 +397,13 @@ h6, .h6 {
   font-weight: 300;
   line-height: 1.2;
 }
-
+.bottom-content{
+  bottom: 0;
+  position: absolute;
+}
+.full-height{
+  height: 100%;
+}
 .display-3 {
   font-size: 4.5rem;
   font-weight: 300;

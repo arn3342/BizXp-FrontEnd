@@ -89,7 +89,7 @@ class Inventory extends React.Component {
         return (
             <div id="content">
                 <div className="row leftSpace topSpace">
-                    <h2 className="mb-4" onClick={() => this.addDummyProduct()}>Inventory</h2>
+                    <h2 className="mb-4">Inventory</h2>
                 </div>
                 <div className="row leftSpace">
                     <div className="boxContainer col-md-4">
