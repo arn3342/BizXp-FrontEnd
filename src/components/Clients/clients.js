@@ -28,13 +28,13 @@ class Clients extends Component {
         return (
             <div id="content">
                 <div id="content">
-                    <div className="row leftSpace topSpace">
-                        <h2 className="mb-4">Clients</h2>
+                    <div className="row component-header-container">
+                        <h2 className="component-header-title">Clients</h2>
                     </div>
-                    <div className="row leftSpace">
-                        <div className="boxContainer col-md-4">
-                            <h4 className="mb-3">Total clients</h4>
-                            <h4 className="fontBold">{this.state.totalClients}</h4>
+                    <div className="row leftSpace  pt-3">
+                        <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
+                            <h4 id="" className="mb-3 box-title">Total cleints</h4>
+                            <h4 className="fontBold box-content">{this.state.totalClients}</h4>
                         </div>
                     </div>
                     <br></br>

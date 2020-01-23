@@ -1,16 +1,19 @@
 .top-product-container{
+    cursor: pointer;
     margin-left: 15px;
-    background-image: linear-gradient(to right, #4287f5 , #986efa);
-    border-radius: 15px;
-    box-shadow: 2px 2px 15px #986efa;
+    background: #fff;
+    box-shadow: 2px 2px 15px #d6f0ff;
     border: none;
     display: inline-block;
     padding: 20px;
 }
 .top-product-container h4{
-    color: #fff;
+    color: #00a2ff;
     font-size: 1.3rem;
 }
 h4{
     font-size: 1.3rem;
+}
+.progress{
+    height: 0.4rem !important;
 }

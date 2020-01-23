@@ -56,7 +56,7 @@ class Inventory extends React.Component {
         DummyOrders.push(order);
         this.CalculateStock();
     }
-    CalculateStock(){
+    CalculateStock() {
         this.setState({
             totalProducts: DummyOrders.length
         })
@@ -88,17 +88,20 @@ class Inventory extends React.Component {
     render() {
         return (
             <div id="content">
-                <div className="row leftSpace topSpace">
-                    <h2 className="mb-4">Inventory</h2>
-                </div>
-                <div className="row leftSpace">
-                    <div className="boxContainer col-md-4">
-                        <h4 className="mb-3">Total products</h4>
-                        <h4 className="fontBold">{this.state.totalProducts}</h4>
+                <div className="row component-header-container">
+                        <h2 className="component-header-title">Inventory</h2>
                     </div>
-                    <div id="outOfStockBtn" className="boxContainer hoverShadow col-md-4" onClick={() => ShowOutOfStock()} style={{ marginLeft: '15px' }}>
-                        <h4 id="" className="mb-3">Out of stock</h4>
-                        <h4 className="fontBold">{this.state.totalOutOfStock}</h4>
+                <div className="row leftSpace pt-3">
+                    <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
+                        <h4 id="" className="mb-3 box-title">Total products</h4>
+                        <h4 className="fontBold box-content">{this.state.dummyOrderArray.length}</h4>
+                    </div>
+                    <div id="outOfStockBtn" className="box-Container col-md-4" style={{ marginLeft: '15px', background: '#ff3b3b' }}>
+                        <h4 id="" className="mb-3 box-title">Out of stock</h4>
+                        <div className="row">
+                            <h4 className="fontBold box-content col-md-3">0</h4>
+                            <button className="box-button col-md-8" style={{ color: '#ff3b3b', marginTop: '0' }}>Show products</button>
+                        </div>
                     </div>
                 </div>
 

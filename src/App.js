@@ -24,6 +24,10 @@ class App extends Component {
     super(props)
     this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false }
   }
+
+  componentDidMount(){
+    document.body.style.background = 'none'
+  }
   render() {
     return (
         <div className="App">

@@ -18,5 +18,5 @@ import AppRouter from './components/router';
 import { Provider } from 'react-redux';
 import store from './store';
 
-render(<Provider store={store}><Login/></Provider>, document.getElementById('root'));
+render(<Provider store={store}><AppRouter/></Provider>, document.getElementById('root'));
 serviceWorker.unregister();

@@ -39,7 +39,6 @@ class AppRouter extends Component {
         this.setState({
             showMain: true
         })
-        document.body.style.background = 'none'
     }
 }
 export default AppRouter;
