@@ -58,8 +58,6 @@ class OrderList extends React.Component {
                             </tr>
                         </tbody>
                         <tbody id="dummyTableToAdd">
-                            <tr />
-                            <tr />
                             {/* {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
                                 (<tr className="table-warning">
                                     <td>{order.orderDate}</td>

@@ -317,6 +317,9 @@ button:focus {
 .outOfStockBtn-Selected h4{
     color: #fff !important;
 }
+
+
+/* Table styles start from here */
 table tr:nth-child(2) td:first-child {
     border-top-left-radius: 16px;
   }
@@ -368,6 +371,22 @@ table tr:nth-child(2) td:first-child {
     /* background-color: #9bc86a !important; */
     background-color: #fff !important;
   }
+
+  table tr:last-child td:first-child{
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  table tr:last-child td:last-child{
+    border-bottom-right-radius: 0px !important;
+  }
+
+  #tableContainer thead th {
+    position: sticky;
+  }
+  #tableContainer{
+    border: 1px solid #ececec;
+    border-top: 0px;
+  }
   .status-button{
     cursor: pointer;
     border-radius: 5px;
@@ -382,13 +401,6 @@ table tr:nth-child(2) td:first-child {
     max-width: 130px;
     padding: 4px 0px 4px 10px;
     box-shadow: 0px 1px 1px #888888;
-  }
-  table tr:last-child td:first-child{
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-  }
-  table tr:last-child td:last-child{
-    border-bottom-right-radius: 0px !important;
   }
   .status-button img{
     height: 20px;
@@ -422,13 +434,6 @@ table tr:nth-child(2) td:first-child {
     opacity: 0;
   }
 
-  #tableContainer thead th {
-    position: sticky;
-  }
-  #tableContainer{
-    border: 1px solid #ececec;
-    border-top: 0px;
-  }
   .headerContainer{
     border: 1px solid #ececec;
     border-bottom: 0px;
@@ -519,3 +524,4 @@ table tr:nth-child(2) td:first-child {
     background: #2398fb;
     width: 12px;
   }
+/* Table styles end here */
