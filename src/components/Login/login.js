@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import loginBg from '../../Images/bg_login.jpg'
 import '../Login/login.css'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { fetchEmoloyees } from '../../actions/loginActions';
+import { bindActionCreators } from 'redux';
 
-class Login extends Component {
+class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            employees:[],
             username: '',
             password: ''
         }
+        this.ValidateLogin = this.ValidateLogin.bind(this);
     }
     render() {
         return (
@@ -23,9 +28,12 @@ class Login extends Component {
     }
     ValidateLogin() {
         if (this.state.username == 'admin' && this.state.password == 'admin') {
-            this.props.loginSuccess();
-            console.log('called new')
+            // this.props.loginSuccess();
+            console.log('data comes here', this.props.isSuccess)
         }
+    }
+    componentDidMount() {
+        this.props.fetchEmoloyees();
     }
     onChange(e) {
         this.setState({
@@ -33,4 +41,14 @@ class Login extends Component {
         })
     }
 }
-export default Login;
+
+const mapStateToProps = state => ({
+    employees: state.loginReducer.employees, isSuccess: state.loginReducer.isSuccess
+})
+// function mapDispatchToProps(dispatch){
+//     return{ 
+//         fetchEmoloyees: bindActionCreators(fetchEmoloyees, dispatch)
+//     };
+// }
+// export default Login;
+export default connect(mapStateToProps, {fetchEmoloyees})(Login);
