@@ -15,6 +15,9 @@ import clientIcon from '../src/Images/client_icon.png'
 import Dashboard from './components/Dashboard/dashboard';
 import Clients from './components/Clients/clients';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
@@ -23,7 +26,8 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="wrapper d-flex align-items-stretch">
+        <div className="App">
+        <div className="wrapper d-flex align-items-stretch">
         <div id="sidebar" className="col-md-2.5" style={{padding: 'opx', width: '300px'}}>
           <nav id="sidebar" className="full-height" style={{position: 'fixed'}}>
             <div className="custom-menu">
@@ -83,6 +87,8 @@ class App extends Component {
           {this.state.showClients && <Clients />}
         </div>
       </div>
+        </div>
+      
     );
   }
 
@@ -163,3 +169,7 @@ class App extends Component {
   }
 }
 export default App;
+// export default App;
+// if (window.Cypress) {
+//   window.store = store;
+// }

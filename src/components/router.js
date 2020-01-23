@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import App from '../App';
 import Login from './Login/login';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 class AppRouter extends Component {
     constructor(props) {
@@ -21,6 +23,7 @@ class AppRouter extends Component {
     }
     render() {
         return (
+<Provider store={store}>
             <Router>
                 <Switch>
                     <Redirect exact from="/" to={this.state.defaultRedirect} />
@@ -29,6 +32,7 @@ class AppRouter extends Component {
                     <Route exact path="/login" component={() => <Login loginSuccess={() => this.navigateToMain()}/>} />
                 </Switch>
             </Router>
+            </Provider>
         )
     }
     navigateToMain(){
