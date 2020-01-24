@@ -252,18 +252,6 @@ class NewOrder extends Component {
     componentDidUpdate() {
         this.SclaeTableHeader();
     }
-    AddDummyOrder = () => {
-        document.getElementById('dummyBuyer').setAttribute('disabled', true);
-        var order = {};
-        order.product = document.getElementById('dummyProduct').value;
-        order.quantity = document.getElementById('dummyQuantity').value;
-        order.buyer = document.getElementById('dummyBuyer').value;
-        order.buyerPhone = document.getElementById('dummyPhone').value;
-        order.price = 10000;
-
-        DummyOrders.push(order);
-        this.CalculateTotalPrice();
-    }
 
     EnableElements = () => {
         document.getElementById('dummyBuyer').disabled = false;
