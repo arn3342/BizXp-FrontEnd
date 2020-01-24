@@ -145,7 +145,8 @@ class App extends Component {
       showOrders: false,
       showPayments: true,
       showDashboard: false,
-      showPDF: false
+      showPDF: false,
+      showClients: false
     })
   }
 
@@ -155,7 +156,8 @@ class App extends Component {
       showOrders: false,
       showPayments: false,
       showDashboard: true,
-      showPDF: false
+      showPDF: false,
+      showClients: false
     })
 
   }
@@ -173,7 +175,3 @@ class App extends Component {
   }
 }
 export default App;
-// export default App;
-// if (window.Cypress) {
-//   window.store = store;
-// }

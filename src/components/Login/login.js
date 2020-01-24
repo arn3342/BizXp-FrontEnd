@@ -22,6 +22,7 @@ class Login extends React.Component {
         return (
             <div class="login-card" style={{backgroundImage: loginBg}}>
                 <img style={{width: '80%'}} src={bizxpLogo}></img>
+                <br />
                 <img className="user-logo" src={userIcon}></img><br />
                 <input type="text" name="username" placeholder="Username" onChange={(e) => this.onChange(e)} />
                 <input type="password" name="password" placeholder="Password" onChange={(e) => this.onChange(e)} />
