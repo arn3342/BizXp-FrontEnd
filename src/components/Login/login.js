@@ -21,11 +21,13 @@ class Login extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log("outside check",this.props.user.id);
         if (this.props.user.id && this.props.user.id != '0') {
+            console.log("inside check",this.props.user.id);
             this.props.loginSuccess();
         }
     }
-    render() {
+    render() {        
         return (
             <div className="login-card" style={{ backgroundImage: loginBg }}>
                 <img style={{ width: '80%' }} src={bizxpLogo}></img>
@@ -41,11 +43,12 @@ class Login extends React.Component {
     }
 
     ValidateLogin() {
+        var self = this.state;
         this.setState({
             loginState: 'fetching'
         })
 
-        setTimeout(this.props.fetchUserById(1), 1000);
+        setTimeout(this.props.validateLogin(self.username,self.password), 1000);
     }
 
     onChange(e) {

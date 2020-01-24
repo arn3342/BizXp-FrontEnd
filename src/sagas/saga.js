@@ -7,11 +7,15 @@ import {
 import { fetchUserById } from '../actions/loginActions';
 
 export default function* rootWatcher(){    
-    yield takeEvery(VALIDATE_LOGIN, fetchEmployeesAsync);
+    yield takeEvery(VALIDATE_LOGIN, validateLoginAsync);
     yield takeEvery(FETCH_USER_BY_ID, fetchUserByIdAsync);
     // yield takeEvery(ADD_EMPLOYEE, addEmployeeAsync);
     // yield takeEvery(EDIT_EMPLOYEE, editEmployeeAsync);
     // yield takeEvery(DELETE_EMPLOYEE, deleteEmployeeAsync);
+}
+
+function* validateUserAsync(action){
+
 }
 
 function* fetchEmployeesAsync(){
@@ -32,6 +36,8 @@ function* fetchEmployeesAsync(){
 }
 
 function* validateLoginAsync(action){
+    console.log(action.payload);
+    //https://localhost:44304/api/user/ValidateLogin?Email=admin&Password=admin
     const data = yield  fetch('https://jsonplaceholder.typicode.com/todos/1', {
         method: 'GET',
         headers: {
