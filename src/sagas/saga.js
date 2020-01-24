@@ -70,7 +70,7 @@ function* fetchUserByIdAsync(action){
     }
 }
 function* addProductAsync(action){    
-    const apiResult = yield fetch('http://localhost:44304/api/Product/addProduct', {
+    const apiResult = yield fetch('http://localhost:44304/api/Product/CreateProduct', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
