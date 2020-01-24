@@ -10,6 +10,7 @@ import '../orders/orders.css'
 import moment from 'moment';
 
 import { addProduct } from '../../actions/inventoryActions';
+import Axios from 'axios';
 
 var DummyOrders = [
     {
@@ -201,16 +202,27 @@ class Inventory extends React.Component {
         var today = new Date();
         let productData = {
             Product_Id : 1,
-            Name: self.productName,
+            Name: self.productName.toString(),
             ProductCategory_Id : 1,
             Vendor_id: 1,
             Shop_id: 1,
-            Unit_price : self.productSellingPrice,
+            Unit_price : self.productSellingPrice.toString(),
             Created_date: moment(today).format('MM-DD-YYYY'),            
             is_delete: false,
             Expire_date: moment(today).format('MM-DD-YYYY'),
             User_Id: 1
         }
+
+        console.log('data is here', productData)
+        Axios.post('https://localhost:44304/api/Product/CreateProduct/', productData)
+        .then(res => {
+            if(res.status == 201){
+                //successful
+            }
+            else{
+                //unsuccessful
+            }
+        })
         //this.props.addProduct(productData);
     }
 }
