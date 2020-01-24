@@ -69,7 +69,8 @@ function* fetchUserByIdAsync(action){
         yield put({ type: FETCH_USER_BY_ID_ASYNC, payload: data })
     }
 }
-function* addProductAsync(action){    
+function* addProductAsync(action){  
+    console.log(action.payload);
     const apiResult = yield fetch('http://localhost:44304/api/Product/addProduct', {
         method: 'POST',
         headers: {
