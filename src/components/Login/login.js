@@ -20,13 +20,13 @@ class Login extends React.Component {
     }
     render() {
         return (
-            <div class="login-card" style={{backgroundImage: loginBg}}>
+            <div className="login-card" style={{backgroundImage: loginBg}}>
                 <img style={{width: '80%'}} src={bizxpLogo}></img>
                 <br />
                 <img className="user-logo" src={userIcon}></img><br />
                 <input type="text" name="username" placeholder="Username" onChange={(e) => this.onChange(e)} />
                 <input type="password" name="password" placeholder="Password" onChange={(e) => this.onChange(e)} />
-                <button onClick={() => this.ValidateLogin()} class="login login-submit">Log In</button>
+                <button onClick={() => this.ValidateLogin()} className="login login-submit">Log In</button>
             </div>
         )
     }
