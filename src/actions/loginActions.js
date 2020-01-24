@@ -1,43 +1,49 @@
 import {
-    FETCH_EMPLOYEES,
-    EDIT_MODE,
-    FETCH_EMPLOYEE_BY_ID,
-    CLEAR_STATE,
-    ADD_EMPLOYEE,
-    EDIT_EMPLOYEE,
-    DELETE_EMPLOYEE
+    VALIDATE_LOGIN,
+    FETCH_USER_BY_ID
+  
 } from './types';
 
-export const fetchEmoloyees = (employees) => 
+export const fetchEmployees = (employees) => 
     ({
-        type: FETCH_EMPLOYEES,
+        type: VALIDATE_LOGIN,
         payload: employees
     });
 
-export const enableEditMode = () => ({
-    type: EDIT_MODE
-});
 
-export const FetchEmployeeById = id =>({
-    type: FETCH_EMPLOYEE_BY_ID,
-    payload: id
+export const validateLogin = (username, pass) =>({
+    type: VALIDATE_LOGIN,
+    payload: {username: username, pass: pass}
 })
 
-export const clearState = () =>({
-    type: CLEAR_STATE
+export const fetchUserById = id =>({
+    type: FETCH_USER_BY_ID,
+    payload: id,
 })
+// export const enableEditMode = () => ({
+//     type: EDIT_MODE
+// });
 
-export const addEmployee = (employee) => ({
-    type: ADD_EMPLOYEE,
-    payload: employee
-})
+// export const FetchEmployeeById = id =>({
+//     type: FETCH_EMPLOYEE_BY_ID,
+//     payload: id
+// })
 
-export const editEmployee = employee =>({
-    type: EDIT_EMPLOYEE,
-    payload: employee
-})
+// export const clearState = () =>({
+//     type: CLEAR_STATE
+// })
 
-export const deleteEmployee = id =>({
-    type: DELETE_EMPLOYEE,
-    payload: id
-})
+// export const addEmployee = (employee) => ({
+//     type: ADD_EMPLOYEE,
+//     payload: employee
+// })
+
+// export const editEmployee = employee =>({
+//     type: EDIT_EMPLOYEE,
+//     payload: employee
+// })
+
+// export const deleteEmployee = id =>({
+//     type: DELETE_EMPLOYEE,
+//     payload: id
+// })
