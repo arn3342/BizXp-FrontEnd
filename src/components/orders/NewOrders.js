@@ -56,10 +56,12 @@ class NewOrder extends Component {
                     <div className="col-md-4 inline-fields">
                         <select id="dummyProduct" name="products" className="input-fields">
                             <option value="volvo">Select product...</option>
+                            {/* below has to be mapped */}
                             <option value="Passenger Car Battery">Passenger Car Battery</option>
                             <option value="Optima Battery">Optima Battery</option>
                             <option value="Maxima Battery">Maxima Battery</option>
                             <option value="audi">Other products will be shown here....</option>
+
                         </select>
                     </div>
                     <div className="col-md-3 inline-fields">
@@ -142,6 +144,10 @@ class NewOrder extends Component {
             </div>
             //#endregion
         )
+    }
+
+    componentDidMount(){
+        //this.state.products
     }
 
     openModal = () => {

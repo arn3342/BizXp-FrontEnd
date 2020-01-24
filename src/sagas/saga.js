@@ -1,7 +1,8 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import {
     VALIDATE_LOGIN, VALIDATE_LOGIN_ASYNC,VALIDATE_LOGIN_ASYNC_ERROR,
-    FETCH_USER_BY_ID, FETCH_USER_BY_ID_ASYNC
+    FETCH_USER_BY_ID, FETCH_USER_BY_ID_ASYNC,
+    ADD_PRODUCT, ADD_PRODUCT_ASYNC,
    
 } from '../actions/types';
 import { fetchUserById } from '../actions/loginActions';
@@ -9,7 +10,7 @@ import { fetchUserById } from '../actions/loginActions';
 export default function* rootWatcher(){    
     yield takeEvery(VALIDATE_LOGIN, validateLoginAsync);
     yield takeEvery(FETCH_USER_BY_ID, fetchUserByIdAsync);
-    // yield takeEvery(ADD_EMPLOYEE, addEmployeeAsync);
+    yield takeEvery(ADD_PRODUCT, addProductAsync);
     // yield takeEvery(EDIT_EMPLOYEE, editEmployeeAsync);
     // yield takeEvery(DELETE_EMPLOYEE, deleteEmployeeAsync);
 }
@@ -35,8 +36,7 @@ function* fetchEmployeesAsync(){
     }    
 }
 
-function* validateLoginAsync(action){
-    
+function* validateLoginAsync(action){    
     const data = yield  fetch("https:localhost:44304/api/user/ValidateLogin?email=" + action.payload.username + "&pass="  +action.payload.pass, {
         method: 'GET',
         headers: {
@@ -68,4 +68,17 @@ function* fetchUserByIdAsync(action){
     else{
         yield put({ type: FETCH_USER_BY_ID_ASYNC, payload: data })
     }
+}
+function* addProductAsync(action){    
+    const apiResult = yield fetch('http://localhost:44304/api/Product/addProduct', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'Accept': "application/json"
+        },
+        body: JSON.stringify(action.payload),      
+    })
+    .then(response => response.json())
+    .then((product) =>{return product})
+    yield put({type: ADD_PRODUCT_ASYNC, payload: apiResult});
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../orders/orders.css';
 import closeIcon from '../../Images/close_icon.png'
@@ -7,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../Inventory/inventory.css'
 import '../orders/orders.css'
 import moment from 'moment';
+
+import { addProduct } from '../../actions/inventoryActions';
 
 var DummyOrders = [
     {
@@ -37,7 +40,22 @@ class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            product: {
+                productName: "",
+                productQuantity: "",
+                productBuyingPrice: "",
+                productSellingPrice: "",
+                dummyStateSet: false,
+                totalProducts: DummyOrders.length,
+                totalOutOfStock: 0
+                
+              },
             dummyOrderArray: DummyOrders,
+
+            productName: '',
+            productQuantity: '',
+            productBuyingPrice: '',
+            productSellingPrice:'',
             dummyStateSet: false,
             totalProducts: DummyOrders.length,
             totalOutOfStock: 0
@@ -86,9 +104,9 @@ class Inventory extends React.Component {
             var columnCells = document.getElementById("tableData");
             for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
                 var col = columnHeaders.rows[0].cells[i];
-                console.log("Header Column Width:" + col.offsetWidth)
+                // console.log("Header Column Width:" + col.offsetWidth)
                 columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
+                // console.log("Row column width: " + columnCells.rows[2].cells[i].width)
             }
         }
         catch (error) { console.log(error) }
@@ -119,19 +137,19 @@ class Inventory extends React.Component {
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
-                        <input id="dummyName" placeholder="Product Name" className="input-fields"></input>
+                        <input onChange={(e) => this.onCHange(e)} placeholder="Product Name" className="input-fields" name="productName" value={this.state.productName}></input>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <input id="dummyQuantity" placeholder="Quantity" className="input-fields"></input>
+                        <input onChange={(e) => this.onCHange(e)} placeholder="Quantity" className="input-fields" name="productQuantity" value={this.state.productQuantity}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input id="dummyBuyer" placeholder="Buying Price" className="input-fields"></input>
+                        <input onChange={(e) => this.onCHange(e)} placeholder="Buying Price" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input id="dummyPhone" placeholder="Selling Price" className="input-fields"></input>
+                        <input onChange={(e) => this.onCHange(e)} placeholder="Selling Price" className="input-fields" name="productSellingPrice" value={this.state.productSellingPrice}></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add</button>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewProduct()}>Add</button>
                     </div>
                 </div>
                 {/* Add Product Section Ends  here*/}
@@ -167,28 +185,32 @@ class Inventory extends React.Component {
                             </tbody>
                         </table>
                     </div>
-                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                        <table id="tableData" className="table table-hover table-borderless">
-                            {/* <tbody id="tableData">
-                                <tr />
-                                <tr />
-                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
-                                    (<tr className="table-warning">
-                                        <td>{order.productName}</td>
-                                        <td>{order.quantity}</td>
-                                        <td>{order.buyingPrice}</td>
-                                        <td>{order.SellingPrice}</td>
-                                        <td>{order.StockAddeed}</td>
-                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
-                                    </tr>)
-                                ))}
-                            </tbody> */}
-                        </table>
-                    </div>
                     {/* table ends here */}
                 </div >
             </div>
         )
+    }
+    onCHange(e){
+        this.setState({
+            [e.target.name] : [e.target.value]
+        })
+    }
+
+    AddNewProduct(){
+        var self = this.state;
+        let productData = {
+            Product_Id : 1,
+            Name: self.productName,
+            ProductCategory_Id : 1,
+            Vendor_id: 1,
+            Shop_id: 1,
+            Unit_price : self.productSellingPrice,
+            Created_date: moment(new Date()).format('MM-DD-YYYY'),            
+            is_delete: false,
+            Expire_date: moment(new Date().format('MM-DD-YYYY')),
+            User_Id: 1
+        }
+        this.props.addProduct(productData);
     }
 }
 function ShowOutOfStock() {
@@ -202,4 +224,10 @@ function ShowOutOfStock() {
         outOfStockBtn.classList.remove('outOfStockBtn-Selected');
     }
 }
-export default Inventory;
+
+const mapStateToProps = state => ({
+    products: state.inventoryReducer.products,
+    isSuccess: state.inventoryReducer.isSuccess,
+})
+
+export default connect(mapStateToProps, { addProduct })(Inventory);
