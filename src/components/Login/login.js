@@ -48,7 +48,7 @@ class Login extends React.Component {
             loginState: 'fetching'
         })
 
-        setTimeout(this.props.validateLogin(self.username,self.password), 1000);
+        this.props.validateLogin(self.username,self.password);
     }
 
     onChange(e) {

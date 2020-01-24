@@ -36,9 +36,8 @@ function* fetchEmployeesAsync(){
 }
 
 function* validateLoginAsync(action){
-    console.log(action.payload);
-    //https://localhost:44304/api/user/ValidateLogin?Email=admin&Password=admin
-    const data = yield  fetch('https://jsonplaceholder.typicode.com/todos/1', {
+    
+    const data = yield  fetch("https:localhost:44304/api/user/ValidateLogin?email=" + action.payload.username + "&pass="  +action.payload.pass, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
