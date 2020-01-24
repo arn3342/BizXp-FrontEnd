@@ -65,7 +65,18 @@ class Inventory extends React.Component {
         DummyOrders.splice(index, 1);
         this.CalculateTotalPrice();
     }
+    // CalculateOutOfStock = () => {
+    //     var productInState = this.state.dummyOrderArray;
+    //     var outOfStockCount = 0;
+    //     for(var i = 0; i < productInState.length; i++){
+    //         var product = productInState[i];
+    //         if(product.quantity === 0){
+    //             outOfStockProcuts += 1;
+    //         }
+    //     }
 
+    //     //const distictProducts = [..new Set[array.mapx => )]
+    // }
     EnableElements = () => {
         document.getElementById('dummyBuyer').disabled = false;
     }
@@ -89,8 +100,8 @@ class Inventory extends React.Component {
         return (
             <div id="content">
                 <div className="row component-header-container">
-                        <h2 className="component-header-title">Inventory</h2>
-                    </div>
+                    <h2 className="component-header-title">Inventory</h2>
+                </div>
                 <div className="row leftSpace pt-3">
                     <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
                         <h4 id="" className="mb-3 box-title">Total products</h4>
@@ -180,7 +191,6 @@ class Inventory extends React.Component {
         )
     }
 }
-
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
     if (!IsShowingOutOfStock) {
