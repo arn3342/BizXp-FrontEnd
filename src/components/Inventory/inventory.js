@@ -211,7 +211,7 @@ class Inventory extends React.Component {
             Expire_date: moment(today).format('MM-DD-YYYY'),
             User_Id: 1
         }
-        this.props.addProduct(productData);
+        //this.props.addProduct(productData);
     }
 }
 function ShowOutOfStock() {
