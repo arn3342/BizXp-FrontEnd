@@ -75,22 +75,22 @@ class Dashboard extends Component {
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
                             <h4 id="" className="mb-3">Maxima Battery</h4>
                             <h4 className="fontBold">300 units sold</h4>
-                            <div class="progress topSpace">
-                                <div class="progress-bar bg-info" role="progressbar" style={{width: '100%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '100%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
                             <h4 id="" className="mb-3">Passenger Battery</h4>
                             <h4 className="fontBold">200 units sold</h4>
-                            <div class="progress topSpace">
-                                <div class="progress-bar bg-info" role="progressbar" style={{width: '80%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '80%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
                             <h4 className="mb-3">Ultra Battery</h4>
                             <h4 className="fontBold">140 units sold</h4>
-                            <div class="progress topSpace">
-                                <div class="progress-bar bg-info" role="progressbar" style={{width: '65%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '65%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
