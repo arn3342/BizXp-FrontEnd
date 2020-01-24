@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import loginBg from '../../Images/bg_login.jpg'
 import '../Login/login.css'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,6 +10,7 @@ class Login extends Component {
             password: ''
         }
     }
+    
     render() {
         return (
             <div class="login-card">
