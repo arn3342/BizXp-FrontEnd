@@ -198,6 +198,7 @@ class Inventory extends React.Component {
 
     AddNewProduct(){
         var self = this.state;
+        var today = new Date();
         let productData = {
             Product_Id : 1,
             Name: self.productName,
@@ -205,9 +206,9 @@ class Inventory extends React.Component {
             Vendor_id: 1,
             Shop_id: 1,
             Unit_price : self.productSellingPrice,
-            Created_date: moment(new Date()).format('MM-DD-YYYY'),            
+            Created_date: moment(today).format('MM-DD-YYYY'),            
             is_delete: false,
-            Expire_date: moment(new Date().format('MM-DD-YYYY')),
+            Expire_date: moment(today).format('MM-DD-YYYY')),
             User_Id: 1
         }
         this.props.addProduct(productData);
