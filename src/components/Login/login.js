@@ -19,61 +19,40 @@ class Login extends React.Component {
         }
         this.ValidateLogin = this.ValidateLogin.bind(this);
     }
-<<<<<<< HEAD
+
+    componentDidUpdate(prevProps) {
+        if (this.props.user.id && this.props.user.id != '0') {
+            this.props.loginSuccess();
+        }
+    }
     render() {
         return (
-            <div className="login-card" style={{backgroundImage: loginBg}}>
-                <img style={{width: '80%'}} src={bizxpLogo}></img>
-                <br />
+            <div className="login-card" style={{ backgroundImage: loginBg }}>
+                <img style={{ width: '80%' }} src={bizxpLogo}></img>
                 <img className="user-logo" src={userIcon}></img><br />
                 <input type="text" name="username" placeholder="Username" onChange={(e) => this.onChange(e)} />
                 <input type="password" name="password" placeholder="Password" onChange={(e) => this.onChange(e)} />
-                <button onClick={() => this.ValidateLogin()} className="login login-submit">Log In</button>
+                <button onClick={() => this.ValidateLogin()} className="login login-submit">
+                    <div style={{display: this.state.loginState == 'fetching' ? '' : 'none', height: '1rem', width: '1rem'}} class="spinner-border"></div>
+                    <label style={{display: this.state.loginState == 'fetching' ? 'none' : '', margin: '0'}}>Log In</label>
+                </button>
             </div>
         )
     }
+
     ValidateLogin() {
-        if (this.state.username == 'admin' && this.state.password == 'admin') {
-            this.props.loginSuccess();
-            console.log('data comes here', this.props.isSuccess)
-        }
+        this.setState({
+            loginState: 'fetching'
+        })
+
+        setTimeout(this.props.fetchUserById(1), 1000);
     }
-    componentDidMount() {
-        this.props.fetchEmoloyees();
-    }
+
     onChange(e) {
         this.setState({
             [e.target.name]: [e.target.value]
         })
-=======
-
-componentDidUpdate(prevProps){
-    if(this.props.user.id){
-        this.props.loginSuccess();
->>>>>>> fa980e97b8ca6e5eeb36bece13ab3ffe58068f15
     }
-}
-render() {
-    return (
-        <div  className="login-card" style={{ backgroundImage: loginBg }}>
-            <img style={{ width: '80%' }} src={bizxpLogo}></img>
-            <img className="user-logo" src={userIcon}></img><br />
-            <input type="text" name="username" placeholder="Username" onChange={(e) => this.onChange(e)} />
-            <input type="password" name="password" placeholder="Password" onChange={(e) => this.onChange(e)} />
-            <button onClick={() => this.ValidateLogin()} className="login login-submit">Log In</button>
-        </div>
-    )
-}
-
-ValidateLogin() {
-    this.props.fetchUserById(1);
-}
-
-onChange(e) {
-    this.setState({
-        [e.target.name]: [e.target.value]
-    })
-}
 }
 
 
@@ -81,10 +60,4 @@ const mapStateToProps = state => ({
     employees: state.loginReducer.employees, isSuccess: state.loginReducer.isSuccess, user: state.loginReducer.user
 
 })
-// function mapDispatchToProps(dispatch){
-//     return{ 
-//         validateLogin: bindActionCreators(validateLogin, dispatch)
-//     };
-// }
-// export default Login;
 export default connect(mapStateToProps, { validateLogin, fetchUserById, fetchEmployees })(Login);
