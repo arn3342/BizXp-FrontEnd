@@ -41,6 +41,7 @@ class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            productList: [],
             product: {
                 productName: "",
                 productQuantity: "",
@@ -63,18 +64,18 @@ class Inventory extends React.Component {
         }
     }
 
-    AddDummyOrder = () => {
-        var order = {};
-        order.productName = document.getElementById('dummyName').value;
-        order.quantity = document.getElementById('dummyQuantity').value;
-        order.buyingPrice = document.getElementById('dummyBuyer').value;
-        order.SellingPrice = document.getElementById('dummyPhone').value;
-        order.StockAddeed = moment(new Date()).format("MM-DD-YYYY")
+    // AddDummyOrder = () => {
+    //     var order = {};
+    //     order.productName = document.getElementById('dummyName').value;
+    //     order.quantity = document.getElementById('dummyQuantity').value;
+    //     order.buyingPrice = document.getElementById('dummyBuyer').value;
+    //     order.SellingPrice = document.getElementById('dummyPhone').value;
+    //     order.StockAddeed = moment(new Date()).format("MM-DD-YYYY")
 
 
-        DummyOrders.push(order);
-        this.CalculateStock();
-    }
+    //     DummyOrders.push(order);
+    //     this.CalculateStock();
+    // }
     CalculateStock() {
         this.setState({
             totalProducts: DummyOrders.length
@@ -111,6 +112,9 @@ class Inventory extends React.Component {
             }
         }
         catch (error) { console.log(error) }
+    }
+    componentDidMount(){
+        this.getAllProductsOfStore(this.state.User_Id, this.state.Shop_id);
     }
     componentDidUpdate() {
         this.SclaeTableHeader();
@@ -173,11 +177,11 @@ class Inventory extends React.Component {
                             <tbody id="tableData">
                                 <tr />
                                 <tr />
-                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                {this.state.productList && (this.state.productList.map((order, index) =>
                                     (<tr className="table-warning">
-                                        <td>{order.productName}</td>
-                                        <td>{order.quantity}</td>
-                                        <td>{order.buyingPrice}</td>
+                                        <td>{order.Name}</td>
+                                        <td>{order.Quantity}</td>
+                                        <td>{order.Unit_price}</td>
                                         <td>{order.SellingPrice}</td>
                                         <td>{order.StockAddeed}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
@@ -197,7 +201,16 @@ class Inventory extends React.Component {
         })
     }
 
+    getAllProductsOfStore(userId,shopId){
+        Axios.get('https://localhost:44304/api/Product/GetAllProductsOfStore?userId='+userId+'&shopId='+shopId)
+        .then(res => {
+          const productList = res.data;
+          this.setState({ productList });
+        })
+    }
+
     AddNewProduct(){
+        let productList = this.state.productList;
         var self = this.state;
         var today = new Date();
         let productData = {
@@ -210,21 +223,24 @@ class Inventory extends React.Component {
             Created_date: moment(today).format('MM-DD-YYYY'),            
             is_delete: false,
             Expire_date: moment(today).format('MM-DD-YYYY'),
-            User_Id: 1
+            User_Id: 1,
+            Quantity: self.productQuantity
         }
 
-        console.log('data is here', productData)
-        Axios.post('https://localhost:44304/api/Product/CreateProduct/', productData)
-        .then(res => {
-            if(res.status == 201){
-                //successful
-            }
-            else{
-                //unsuccessful
-            }
-        })
-        //this.props.addProduct(productData);
+        productList.push(productData);
+        // Axios.post('https://localhost:44304/api/Product/CreateProduct/', productData)
+        // .then(res => {
+        //     if(res.status == 201){
+        //         //successful
+        //         productList.push(productData);
+        //     }
+        //     else{
+        //         //unsuccessful
+        //     }
+        // })
+        this.setState({productList});
     }
+   
 }
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
