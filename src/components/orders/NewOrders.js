@@ -179,7 +179,7 @@ class NewOrder extends Component {
     }
     ConfirmOrder() {
         this.openModal();
-        setTimeout(this.closeModal, 1300);
+        //setTimeout(this.closeModal, 1300);
 
         this.setState({
             dummyOrderArray: [],
