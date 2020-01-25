@@ -128,7 +128,8 @@ class NewOrder extends Component {
                         }
 
                     </div>
-                    {this.state.confirmClicked && <Invoice dummyOrderArray={this.state.dummyOrderArray} />}
+                    {this.state.confirmClicked && <Invoice dummyOrderArray={this.state.dummyOrderArray}
+                        buyerName={this.state.buyerName} buyerPhone={this.state.buyerPhone} buyerAddress={this.state.buyerAddress} />}
                 </Modal>
 
                 {/* Modal ends here */}

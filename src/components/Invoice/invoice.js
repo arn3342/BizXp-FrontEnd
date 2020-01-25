@@ -17,7 +17,7 @@ class Invoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+
         }
     }
 
@@ -28,20 +28,20 @@ class Invoice extends React.Component {
         })
         return (
             <div id="content">
-                <div className='container-fluid'>                    
+                <div className='container-fluid'>
                     <br />
-                    <h2 className='pull-left' style={{color: '#04be1a'}}>Order Added Successfully!</h2>
+                    <h2 className='pull-left' style={{ color: '#04be1a' }}>Order Added Successfully!</h2>
                     <div className='row'>
                         <div className='col-sm-6'>
                             <h2>Purchased By</h2>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Name</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerName}</label>
                             </div>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Phone</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerPhone}</label>
                             </div>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Phone</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerAddress}</label>
                             </div>
                         </div>
                         <div className='col-sm-6'>

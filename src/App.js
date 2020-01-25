@@ -90,10 +90,7 @@ class App extends Component {
                   </li>
 
                   {/* dummy */}
-                  <li>
-                    <img src={clientIcon}></img>
-                    <a onClick={() => this.ShowInvoice()}>Invoice</a>
-                  </li>
+               
                   <li className="bottom-content">
                     {/* <img src={clientIcon}></img> */}
                     <a onClick={() => this.ShowClients()}>Support: +8801611416466</a>
@@ -111,7 +108,7 @@ class App extends Component {
           {this.state.showOrders && <Orders showPDF={this.showPDF} />}
           {this.state.showDashboard && <Dashboard />}
           {this.state.showClients && <Clients />}
-          {this.state.showInvoice && <Invoice/>}
+          {/* {this.state.showInvoice && <Invoice/>} */}
         </div>
       </div>
         </div>
