@@ -7,6 +7,7 @@ import { validateLogin, fetchUserById, fetchEmployees } from '../../actions/logi
 import { bindActionCreators } from 'redux';
 import bizxpLogo from '../../Images/bizxp_logo.png'
 import loginBg from "../../Images/login_bg.png";
+import Axios from 'axios';
 
 class Login extends React.Component {
     constructor(props) {
@@ -42,13 +43,17 @@ class Login extends React.Component {
         )
     }
 
-    ValidateLogin() {
-        var self = this.state;
+    async ValidateLogin() {
         this.setState({
             loginState: 'fetching'
         })
-
-        this.props.validateLogin(self.username,self.password);
+        const response = await Axios.get('https://localhost:44304/api/userdetails/getuser?email=admin&pass=admin')
+        if(response.data.user_Id > 0){
+            this.setState({
+                loginState: 'success'
+            })
+            this.props.loginSuccess();
+        }
     }
 
     onChange(e) {

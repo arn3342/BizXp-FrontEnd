@@ -53,10 +53,8 @@ class NewOrder extends Component {
                     onRequestClose={this.closeModal}
                     style={customStyles}
                     contentLabel="Example Modal">
-
-                        <Invoice dummyOrderArray={this.state.dummyOrderArray}/>
                     {/* Main modal starts here */}
-                    {/* <h2 ref={subtitle => this.subtitle = subtitle}>{!this.state.confirmClicked ? 'Confirm Order?' : 'Success'}</h2>
+                    <h2 ref={subtitle => this.subtitle = subtitle}>{!this.state.confirmClicked ? 'Confirm Order?' : 'Success'}</h2>
                     <div><h4>{!this.state.confirmClicked ? 'Order Details' : 'Order added successfully'}</h4></div>
                     <br />
                     <div style={{ display: !this.state.confirmClicked ? 'block' : 'none' }}>
@@ -125,7 +123,7 @@ class NewOrder extends Component {
                             </div>
                         }
 
-                    </div> */}
+                    </div>
                 </Modal>
 
                 {/* Modal ends here */}
@@ -190,24 +188,7 @@ class NewOrder extends Component {
                 {/* table ends here */}
 
                 <div id="finalizeOrderContainer row" className="bottom-div div-shadow">
-                    {/* <div className='col-md-2 inline-fields' style={{ float: 'right' }}> */}
-                    {/* <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Total price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalSellingPrice" value={this.state.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div>
-                    <div id="discountDiv" className="col-sm-2 inline-fields hidden-div" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDiscountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div>
-                    <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input placeholder="Discount" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
-                    </div>
-                    <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input placeholder="Paid amount" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
-                    </div>
-                    <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDue} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div> */}
                     <button className="btn-Blue-active col-md-4 ml-auto" onClick={() => this.ConfirmOrder()} style={{ width: '150px' }}>Confirm order</button>
-                    {/* </div> */}
                 </div>
 
             </div>
@@ -266,19 +247,6 @@ class NewOrder extends Component {
     closeModal = () => {
         this.setState({ modalIsOpen: false });
     }
-    SclaeTableHeader(index) {
-        try {
-            var columnHeaders = document.getElementById("columnHeaders");
-            var columnCells = document.getElementById("tableData");
-            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
-                var col = columnHeaders.rows[0].cells[i];
-                console.log("Header Column Width:" + col.offsetWidth)
-                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
-            }
-        }
-        catch (error) { console.log(error) }
-    }
 
     removeOrder(index) {
         DummyOrders.splice(index, 1);
@@ -286,11 +254,7 @@ class NewOrder extends Component {
     }
     ConfirmOrder() {
         this.openModal();
-<<<<<<< HEAD
-        //setTimeout(this.closeModal, 1300);
-=======
         // setTimeout(this.closeModal, 1300);
->>>>>>> 9882f2468728868e5250e75e0a97cb8f28017d49
 
         this.setState({
             showFinalizeModal: false,
@@ -322,7 +286,6 @@ class NewOrder extends Component {
         var discountPercent = e.target.value;
 
         if (discountPercent != '' && discountPercent) {
-            //var discountPercentage = document.getElementById('discountInput').value;
             var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercent)
 
             this.setState({
@@ -349,34 +312,8 @@ class NewOrder extends Component {
             this.setState({
                 totalPrice: 0
             })
-            // this.EnableElements();
             return 0;
         }
     }
-    componentDidUpdate() {
-        this.SclaeTableHeader();
-    }
-
-    // EnableElements = () => {
-    //     document.getElementById('dummyBuyer').disabled = false;
-    // }
-
-    SclaeTableHeader() {
-        try {
-            var columnHeaders = document.getElementById("columnHeaders");
-            var columnCells = document.getElementById("tableData");
-            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
-                var col = columnHeaders.rows[0].cells[i];
-                console.log(col.offsetWidth)
-                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("New column width: " + columnCells.rows[2].cells[i].width)
-            }
-        }
-        catch (error) { console.log(error) }
-    }
-    componentDidUpdate() {
-        //this.SclaeTableHeader();
-    }
-
 }
 export default NewOrder;

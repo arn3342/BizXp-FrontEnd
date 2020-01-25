@@ -7,6 +7,7 @@ import '../../App.css'
 import Calendar from 'react-calendar'
 import moment from 'moment'
 import image from '../../Images/PdfDemo.gif'
+import Axios from 'axios';
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -99,35 +100,19 @@ class OrderList extends React.Component {
             </div>
         )
     }
-    SclaeTableHeader() {
+    async GetOrdersOfShop() {
         try {
-            var columnHeaders = document.getElementById("columnHeaders");
-            var columnCells = document.getElementById("tableData");
-            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
-                var col = columnHeaders.rows[0].cells[i];
-                console.log(col.offsetWidth)
-                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("New column width: " + columnCells.rows[2].cells[i].width)
-            }
+          const response = await Axios.get('https://localhost:44304/api/payment/GetPaymentsByDate?startdate=' + moment(this.state.startDate).format('MM-DD-YYYY') + '&enddate=' + moment(this.state.endDate).format('MM-DD-YYYY') + '&shopId=1');
+          this.setState({
+              
+          })
+        } catch (error) {
+          console.error(error);
         }
-        catch (error) { console.log(error) }
-    }
-    componentDidMount() {
-        this.SclaeTableHeader();
-    }
-    pdfDownload = () =>
-    {
-        console.log("inside the pdfDownload");
-        var data = pdf(<OrderReport/>).toBlob();
-        console.log(data);
-        data.then(function(value)
-        {
-            console.log(value)
-            //FileSaver.saveAs(value,'OrderReport.pdf');
-        })
-
-    }
-    
+      }
+      componentDidMount(){
+         this.GetOrdersOfShop();
+      }
     DisplayCalendar(e, keyName) {
         this.setState({
             showStartCalendar: false,
