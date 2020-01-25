@@ -21,7 +21,8 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Products from './components/Products/products';
 import Shops from './components/Shops/shops';
-import shops from './components/Shops/shops';
+
+import Invoice from './components/Invoice/invoice';
 
 var IsCollapsed = false;
 class App extends Component {
@@ -87,6 +88,12 @@ class App extends Component {
                     <img src={clientIcon}></img>
                     <a onClick={() => this.ShowClients()}>Clients</a>
                   </li>
+
+                  {/* dummy */}
+                  <li>
+                    <img src={clientIcon}></img>
+                    <a onClick={() => this.ShowInvoice()}>Invoice</a>
+                  </li>
                   <li className="bottom-content">
                     {/* <img src={clientIcon}></img> */}
                     <a onClick={() => this.ShowClients()}>Support: +8801611416466</a>
@@ -104,6 +111,7 @@ class App extends Component {
           {this.state.showOrders && <Orders showPDF={this.showPDF} />}
           {this.state.showDashboard && <Dashboard />}
           {this.state.showClients && <Clients />}
+          {this.state.showInvoice && <Invoice/>}
         </div>
       </div>
         </div>
@@ -120,7 +128,19 @@ class App extends Component {
       showPDF: true
     })
   }
-
+  ShowInvoice = () => {
+    this.setState({
+      showInventory: false,
+      showOrders: false,
+      showPayments: false,
+      showDashboard: false,
+      showPDF: false,
+      showClients: false,
+      showProducts: false,
+      showShops: false,
+      showInvoice: true
+    })
+  }
   ShowShops = () => {
     this.setState({
       showInventory: false,
@@ -130,7 +150,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: false,
-      showShops: true
+      showShops: true,
+      showInvoice: false
     })
   }
 
@@ -143,7 +164,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: true,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
   }
 
@@ -156,7 +178,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: false,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
   }
 
@@ -169,7 +192,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: false,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
   }
   ShowClients = () => {
@@ -181,7 +205,8 @@ class App extends Component {
       showPDF: false,
       showClients: true,
       showProducts: false,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
   }
 
@@ -194,7 +219,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: false,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
   }
 
@@ -207,7 +233,8 @@ class App extends Component {
       showPDF: false,
       showClients: false,
       showProducts: false,
-      showShops: false
+      showShops: false,
+      showInvoice: false
     })
 
   }
