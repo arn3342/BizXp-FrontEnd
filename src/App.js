@@ -14,15 +14,20 @@ import orderIcon from '../src/Images/order_icon.png'
 import clientIcon from '../src/Images/client_icon.png'
 import Dashboard from './components/Dashboard/dashboard';
 import Clients from './components/Clients/clients';
+import warehouseicon from '../src/Images/warehouse_icon.png'
+import shopicon from '../src/Images/shop_icon.png'
 
 import { Provider } from 'react-redux';
 import store from './store';
+import Products from './components/Products/products';
+import Shops from './components/Shops/shops';
+import shops from './components/Shops/shops';
 
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false }
+    this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false, showProducts: false, showShops: false }
   }
 
   componentDidMount(){
@@ -62,8 +67,16 @@ class App extends Component {
                     <img src={dashboardIcon}></img>
                     <a onClick={() => this.ShowDashboard()}>Dashboard</a>
                   </li>
+                  <li className="active">
+                    <img src={shopicon}></img>
+                    <a onClick={() => this.ShowShops()}>My shops</a>
+                  </li>
                   <li>
                     <img src={inventoryIcon}></img>
+                    <a onClick={() => this.ShowProducts()}>Products</a>
+                  </li>
+                  <li>
+                    <img src={warehouseicon}></img>
                     <a onClick={() => this.ShowInventory()}>Inventory</a>
                   </li>
                   <li>
@@ -86,6 +99,8 @@ class App extends Component {
 
         <div id="content" className="componentContainer p-md-3">
           {this.state.showInventory && <Inventory />}
+          {this.state.showShops && <Shops/>}
+          {this.state.showProducts && <Products/>}
           {this.state.showOrders && <Orders showPDF={this.showPDF} />}
           {this.state.showDashboard && <Dashboard />}
           {this.state.showClients && <Clients />}
@@ -106,6 +121,31 @@ class App extends Component {
     })
   }
 
+  ShowShops = () => {
+    this.setState({
+      showInventory: false,
+      showOrders: false,
+      showPayments: false,
+      showDashboard: false,
+      showPDF: false,
+      showClients: false,
+      showProducts: false,
+      showShops: true
+    })
+  }
+
+  ShowProducts = () => {
+    this.setState({
+      showInventory: false,
+      showOrders: false,
+      showPayments: false,
+      showDashboard: false,
+      showPDF: false,
+      showClients: false,
+      showProducts: true,
+      showShops: false
+    })
+  }
 
   ShowInventory = () => {
     this.setState({
@@ -114,7 +154,9 @@ class App extends Component {
       showPayments: false,
       showDashboard: false,
       showPDF: false,
-      showClients: false
+      showClients: false,
+      showProducts: false,
+      showShops: false
     })
   }
 
@@ -125,7 +167,9 @@ class App extends Component {
       showPayments: false,
       showDashboard: false,
       showPDF: false,
-      showClients: false
+      showClients: false,
+      showProducts: false,
+      showShops: false
     })
   }
   ShowClients = () => {
@@ -135,7 +179,9 @@ class App extends Component {
       showPayments: false,
       showDashboard: false,
       showPDF: false,
-      showClients: true
+      showClients: true,
+      showProducts: false,
+      showShops: false
     })
   }
 
@@ -146,7 +192,9 @@ class App extends Component {
       showPayments: true,
       showDashboard: false,
       showPDF: false,
-      showClients: false
+      showClients: false,
+      showProducts: false,
+      showShops: false
     })
   }
 
@@ -157,7 +205,9 @@ class App extends Component {
       showPayments: false,
       showDashboard: true,
       showPDF: false,
-      showClients: false
+      showClients: false,
+      showProducts: false,
+      showShops: false
     })
 
   }

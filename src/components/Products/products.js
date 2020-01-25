@@ -22,7 +22,7 @@ const customStyles = {
 };
 
 Modal.setAppElement('#root')
-class NewOrder extends Component {
+class Products extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -40,36 +40,37 @@ class NewOrder extends Component {
             //#region 'Add New Order' component
             <div className="content">
 
-                {/* Modal starts here */}
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal">
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Success</h2>
-                    <div><h4>New order added successfully</h4></div>
-                </Modal>
-
-                {/* Modal ends here */}
+                <div className="row component-header-container">
+                    <h2 className="component-header-title">Products</h2>
+                </div>
 
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
-                    <div className="col-md-4 inline-fields">
-                        <select id="dummyProduct" name="products" className="input-fields">
-                            <option value="volvo">Select product...</option>
-                            {/* below has to be mapped */}
-                            <option value="Passenger Car Battery">Passenger Car Battery</option>
-                            <option value="Optima Battery">Optima Battery</option>
-                            <option value="Maxima Battery">Maxima Battery</option>
-                            <option value="audi">Other products will be shown here....</option>
-
-                        </select>
+                    <div className="col-md-3 inline-fields">
+                        <input placeholder="Product name" name="name" value={this.state.quantity} className="input-fields"></input>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <input placeholder="Quantity" name="quantity" value={this.state.quantity} className="input-fields"></input>
+                        <select name="category" className="input-fields">
+                            <option value="volvo">Select category...</option>
+                            <option value="Passenger Car Battery">Car Battery</option>
+                            <option value="Optima Battery">AAA Battery</option>
+                        </select>
+                    </div>
+                    <div className="col-md-4 inline-fields">
+                        <select name="vendor" className="input-fields">
+                            <option value="volvo">Select vendor...</option>
+                            {/* below has to be mapped */}
+                            <option value="Passenger Car Battery">Rangs</option>
+                            <option value="Optima Battery">Rahimafrooz</option>
+                        </select>
+                    </div>
+                    <div className="col-md-4 inline-fields">
+                        <input placeholder="Unit price(৳)" className="input-fields"></input>
+                    </div>
+                    <div className="col-md-4 inline-fields">
+                        <input placeholder="Description" className="input-fields"></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewOrder()}>Add Order</button>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewOrder()}>Add Product</button>
                     </div>
                 </div>
                 <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
@@ -77,9 +78,11 @@ class NewOrder extends Component {
                         <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                             <tbody>
                                 <tr className="column-container" style={{ paddingTop: '8px' }}>
-                                    <th>Product<img className="sortIcon" /></th>
-                                    <th>Quantity<img className="sortIcon" /></th>
-                                    <th></th>
+                                    <th>Product Name<img className="sortIcon" /></th>
+                                    <th>Category</th>
+                                    <th>Vendor<img className="sortIcon" /></th>
+                                    <th>Unit price(৳)<img className="sortIcon" /></th>
+                                    <th>Description<img className="sortIcon" /></th>
                                 </tr>
                             </tbody>
                             <tbody id="dummyTableToAdd">
@@ -87,65 +90,32 @@ class NewOrder extends Component {
                                 <tr />
                                 {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
                                     (<tr className="table-warning">
+                                        <td>{order.buyer}</td>
+                                        <td>{order.buyerPhone}</td>
                                         <td>{order.product}</td>
                                         <td>{order.quantity}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
-                                        {/* <td style={{ background: this.rowColor }}>
-                                    <div className="status-button">
-                                        {projectItem.projectionsRunStatus === 'error' && <img src={errorIcon} />}
-                                        {projectItem.projectionsRunStatus === 'done' && <img src={doneIcon} />}
-                                        {projectItem.projectionsRunStatus === 'inProgress' && <img src={progressIcon} />}
-                                        <span>{UppercaseFirst(projectItem.projectionsRunStatus)}</span>
-                                    </div>
-                                </td> */}
                                     </tr>)
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
-                        <table id="tableData" className="table table-hover table-borderless">
-                            
-                        </table>
-                    </div>
                 </div>
                 {/* table ends here */}
-
-                <div id="finalizeOrderContainer row" className="bottom-div div-shadow">
-                    {/* <div className='col-md-2 inline-fields' style={{ float: 'right' }}> */}
-                    {/* <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Total price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalSellingPrice" value={this.state.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div>
-                    <div id="discountDiv" className="col-sm-2 inline-fields hidden-div" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDiscountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div>
-                    <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input placeholder="Discount" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
-                    </div>
-                    <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input placeholder="Paid amount" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
-                    </div>
-                    <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDue} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div> */}
-                    <button className="btn-Blue-active col-md-4 ml-auto" onClick={() => this.ConfirmOrder()} style={{ width: '150px' }}>Confirm order</button>
-                    {/* </div> */}
-                </div>
-
             </div>
             //#endregion
         )
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //this.state.products
     }
 
     AddNewOrder = () => {
-        Axios.post('https://localhost:44304/api/order/createorder/', )
+        Axios.post('https://localhost:44304/api/order/createorder/')
     }
     openModal = () => {
-        
+
         this.setState({ modalIsOpen: true });
         console.log(this.state.modalIsOpen)
         DummyOrders = [];
@@ -269,4 +239,4 @@ class NewOrder extends Component {
     }
 
 }
-export default NewOrder;
+export default Products;

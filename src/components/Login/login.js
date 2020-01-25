@@ -23,7 +23,7 @@ class Login extends React.Component {
     componentDidUpdate(prevProps) {
         console.log("outside check",this.props.user.id);
         if (this.props.user.id && this.props.user.id != '0') {
-            console.log("inside check",this.props.user.id);
+            console.log(this.props.user);
             this.props.loginSuccess();
         }
     }

@@ -14,15 +14,15 @@ class Orders extends Component {
         this.state = {
             showAddOrders: true,
             ShowOrderList: false,
-            ShowReport:false,
+            ShowReport: false,
         }
     }
     render() {
         return (
             <div id="content">
                 <div className="row component-header-container">
-                        <h2 className="component-header-title">Order &amp; payments</h2>
-                    </div>
+                    <h2 className="component-header-title">Order &amp; payments</h2>
+                </div>
                 <div className="row leftSpace  pt-3">
                     {/* <div className="col-md-2">
                     <button className="btn-Blue btn-full-width" onClick={()=> ShowNewOrderFields()}><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
@@ -35,8 +35,8 @@ class Orders extends Component {
                     </nav>
                 </div>
                 {/* table starts here */}
-                {this.state.showAddOrders && <NewOrder/>}
-                {this.state.ShowOrderList && <OrderList showPDF={this.props.showPDF}/>}
+                {this.state.showAddOrders && <NewOrder />}
+                {this.state.ShowOrderList && <OrderList showPDF={this.props.showPDF} />}
             </div >
         );
     }
@@ -63,7 +63,7 @@ class Orders extends Component {
         this.setState({
             showAddOrders: true,
             ShowOrderList: false,
-            ShowReport:false,
+            ShowReport: false,
         })
     }
 
@@ -74,7 +74,7 @@ class Orders extends Component {
         this.setState({
             showAddOrders: false,
             ShowOrderList: true,
-            ShowReport:false,
+            ShowReport: false,
         })
     }
 
