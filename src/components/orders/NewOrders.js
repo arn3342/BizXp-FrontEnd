@@ -42,6 +42,10 @@ class NewOrder extends Component {
         }
     }
     render() {
+        let totalPrice = 0;
+        this.state.dummyOrderArray.map((order, index) => {
+            totalPrice = totalPrice + parseInt(order.price);
+        })
         return (
             //#region 'Add New Order' component
             <div className="content">
@@ -53,9 +57,11 @@ class NewOrder extends Component {
                     onRequestClose={this.closeModal}
                     style={customStyles}
                     contentLabel="Example Modal">
+
+                    {/* <Invoice dummyOrderArray={this.state.dummyOrderArray}/> */}
                     {/* Main modal starts here */}
-                    <h2 ref={subtitle => this.subtitle = subtitle}>{!this.state.confirmClicked ? 'Confirm Order?' : 'Success'}</h2>
-                    <div><h4>{!this.state.confirmClicked ? 'Order Details' : 'Order added successfully'}</h4></div>
+                    <h2 ref={subtitle => this.subtitle = subtitle}>Confirm Order?</h2>
+                    {!this.state.confirmClicked && <div><h4>Order Details</h4></div>}
                     <br />
                     <div style={{ display: !this.state.confirmClicked ? 'block' : 'none' }}>
                         <div className="container-fluid">
@@ -84,13 +90,13 @@ class NewOrder extends Component {
                                         <td>{order.quantity}</td>
                                         <td>{order.price}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
-                                
+
                                     </tr>)
                                 ))}
                                 <tr style={{ borderTop: 'solid 1px #000' }}>
                                     <td>Total Price</td>
                                     <td></td>
-                                    <td></td>
+                                    <td>{totalPrice}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -114,16 +120,16 @@ class NewOrder extends Component {
 
                         </div>
                     </div>
-
                     <div className='col-md-4 ml-auto'>
                         {!this.state.confirmClicked ? <button className="btn-Blue btn-full-width" onClick={() => this.onConfirmClick()}>Confirm</button> :
                             <div>
-                                <button onClick={() => this.onCloseClick()} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></button>
-                                <button className="btn-Blue btn-full-width" onClick={() => this.onShowInvoiceClick()}>Show Invoise</button>
+
                             </div>
                         }
 
                     </div>
+                    {this.state.confirmClicked && <Invoice dummyOrderArray={this.state.dummyOrderArray}
+                        buyerName={this.state.buyerName} buyerPhone={this.state.buyerPhone} buyerAddress={this.state.buyerAddress} />}
                 </Modal>
 
                 {/* Modal ends here */}
@@ -131,7 +137,7 @@ class NewOrder extends Component {
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
                         <select id="dummyProduct" onChange={(e) => this.onChange(e)} name="product"
-                            value={this.state.product}  className="input-fields" >
+                            value={this.state.product} className="input-fields" >
                             <option value="volvo">Select product...</option>
                             {/* below has to be mapped */}
                             <option value="Passenger Car Battery">Passenger Car Battery</option>
@@ -240,12 +246,12 @@ class NewOrder extends Component {
     }
     afterOpenModal = () => {
         // references are now sync'd and can be accessed.
-        // this.subtitle.style.color = '#04be1a';
-        // this.subtitle.style.width = '700px';
+        this.subtitle.style.color = '#04be1a';
+        this.subtitle.style.width = '700px';
     }
 
     closeModal = () => {
-        this.setState({ modalIsOpen: false });
+        this.setState({ modalIsOpen: false, confirmClicked: false });
     }
 
     removeOrder(index) {

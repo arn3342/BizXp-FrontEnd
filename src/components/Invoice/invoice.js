@@ -12,55 +12,12 @@ import moment from 'moment';
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
 
-var DummyOrders = [
-    {
-        product: 'Maxima Battery',
-        quantity: '500',
-        buyingPrice: '3000',
-        SellingPrice: '4000',
-        StockAddeed: '1-17-2020'
-    },
-    {
-        product: 'Passenger Battery',
-        quantity: '100',
-        buyingPrice: '4000',
-        SellingPrice: '6000',
-        StockAddeed: '1-17-2020'
-    },
-    {
-        product: 'Maxima Battery',
-        quantity: '200',
-        buyingPrice: '2000',
-        SellingPrice: '3500',
-        StockAddeed: '1-17-2020'
-    }
-
-]
 var IsShowingOutOfStock = false;
 class Invoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: [],
-            product: {
-                productName: "",
-                productQuantity: "",
-                productBuyingPrice: "",
-                productSellingPrice: "",
-                dummyStateSet: false,
-                totalProducts: DummyOrders.length,
-                totalOutOfStock: 0
 
-            },
-            dummyOrderArray: DummyOrders,
-
-            productName: '',
-            productQuantity: '',
-            productBuyingPrice: '',
-            productSellingPrice: '',
-            dummyStateSet: false,
-            totalProducts: DummyOrders.length,
-            totalOutOfStock: 0
         }
     }
 
@@ -73,17 +30,18 @@ class Invoice extends React.Component {
             <div id="content">
                 <div className='container-fluid'>
                     <br />
+                    <h2 className='pull-left' style={{ color: '#04be1a' }}>Order Added Successfully!</h2>
                     <div className='row'>
                         <div className='col-sm-6'>
                             <h2>Purchased By</h2>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Name</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerName}</label>
                             </div>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Phone</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerPhone}</label>
                             </div>
                             <div className='form-group row'>
-                                <label className='control-label col-sm-12'>Buyer Phone</label>
+                                <label className='control-label col-sm-12'>{this.props.buyerAddress}</label>
                             </div>
                         </div>
                         <div className='col-sm-6'>
@@ -117,7 +75,7 @@ class Invoice extends React.Component {
                                 </tr>
                             </thead>
                             <tbody id="dummyTableToAdd">
-                                {this.state.dummyOrderArray && (this.props.dummyOrderArray.map((order, index) =>
+                                {this.props.dummyOrderArray && (this.props.dummyOrderArray.map((order, index) =>
                                     (<tr className="table-warning">
                                         <td>{order.product}</td>
                                         <td>{order.quantity}</td>

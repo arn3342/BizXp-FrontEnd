@@ -1,0 +1,26 @@
+/* li {
+    white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+} */
+/* .table .text {
+    position: relative;
+  }
+  
+  .table .text span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    width: 100%;
+  }
+  
+  .text:before {
+    content: '';
+    display: inline-block;
+  } */
+  .text-truncate{
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
