@@ -98,13 +98,9 @@ class OrderList extends React.Component {
                             </tr>
                         </tbody>
                         <tbody id="dummyTableToAdd">
-<<<<<<< HEAD
-                            {/* {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
-=======
                             <tr />
                             <tr />
                             {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
->>>>>>> d561d918ae72ce00814f1948d522ca7408d226bb
                                 (<tr className="table-warning">
                                     <td>{order.orderDate}</td>
                                     <td>{order.buyer}</td>
