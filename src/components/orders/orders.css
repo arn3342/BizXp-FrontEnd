@@ -399,11 +399,6 @@ input:focus, select:focus, textarea:focus, button:focus {
   color: #fff !important;
 }
 
-<<<<<<< HEAD
-
-/* Table styles start from here */
-=======
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3
 table tr:nth-child(2) td:first-child {
   border-top-left-radius: 16px;
 }
@@ -416,68 +411,6 @@ table tr:last-child td:first-child {
   border-bottom-left-radius: 16px;
 }
 
-<<<<<<< HEAD
-  .table-warning{
-    background-color: #fff !important;
-    /* background-color: #cdcdcd !important; */
-    font-size: 1.1em !important;
-    font-weight: 400 !important;
-    
-  }
-  .table-warning td{
-    /* background-color: #9bc86a !important; */
-    background-color: #fff !important;
-  }
-
-  table tr:last-child td:first-child{
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-  }
-  table tr:last-child td:last-child{
-    border-bottom-right-radius: 0px !important;
-  }
-
-  #tableContainer thead th {
-    position: sticky;
-  }
-  #tableContainer{
-    border: 1px solid #ececec;
-    border-top: 0px;
-  }
-  .status-button{
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
-    min-width: 110px;
-    font-size: 15px;
-    height: 35px;
-    border: 0;
-    text-align: center;
-    width: auto;
-    max-width: 130px;
-    padding: 4px 0px 4px 10px;
-    box-shadow: 0px 1px 1px #888888;
-  }
-  .status-button img{
-    height: 20px;
-    widows: 20px;
-    margin-right: 10px;
-  }
-  .searchBox{
-    display: inline-block;
-    float: right;
-    border-radius: 8px;
-    border: 0;
-    color: #0080ff;
-    font-size: 14px;
-    padding: 8px 0px 8px 15px;
-    background: #ececec;   
-    min-width: 300px;
-    outline: none;
-}
-.searchIcon{
-=======
 table tr:last-child td:last-child {
   border-bottom-right-radius: 16px;
 }
@@ -571,7 +504,6 @@ table tr:last-child td:last-child {
 }
 
 .searchIcon {
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3
   float: left;
   opacity: 0.5;
   width: 18px;
@@ -586,32 +518,6 @@ table tr:last-child td:last-child {
   opacity: 0;
 }
 
-<<<<<<< HEAD
-  .headerContainer{
-    border: 1px solid #ececec;
-    border-bottom: 0px;
-  }
-  .checkmark{
-    pointer-events: none;
-    margin:3px -15px 0px 4px;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0px 1px 1px #888888;
-    padding-right: 10px;
-    border-radius: 5px;
-    border-width: 5px;
-    border: 1px solid #d0d0d0;
-  }
-  .checkboxContainer input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 30px;
-    width: 55px;
-  }
-=======
 #tableContainer thead th {
   position: sticky;
 }
@@ -647,7 +553,6 @@ table tr:last-child td:last-child {
   height: 30px;
   width: 55px;
 }
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3
 
 /* On mouse-over, add a grey background color */
 
@@ -715,14 +620,6 @@ table tr:last-child td:last-child {
 
 /* Handle */
 
-<<<<<<< HEAD
-  /* Handle on hover */
-  #tableContainer::-webkit-scrollbar-thumb:hover {
-    background: #2398fb;
-    width: 12px;
-  }
-/* Table styles end here */
-=======
 #tableContainer::-webkit-scrollbar-thumb {
   background: #6cbcff;
   border-radius: 5px;
@@ -734,4 +631,3 @@ table tr:last-child td:last-child {
   background: #2398fb;
   width: 12px;
 }
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3

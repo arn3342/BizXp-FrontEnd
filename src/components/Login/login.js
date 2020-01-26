@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-=======
 import { connect } from 'react-redux';
 import userIcon from '../../Images/user_icon.png'
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3
 import '../Login/login.css'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { validateLogin, fetchUserById, fetchEmployees } from '../../actions/loginActions';
@@ -22,10 +19,6 @@ class Login extends React.Component {
         }
         this.ValidateLogin = this.ValidateLogin.bind(this);
     }
-<<<<<<< HEAD
-    
-    render() {
-=======
 
     componentDidUpdate(prevProps) {
         console.log("outside check",this.props.user.id);
@@ -35,7 +28,6 @@ class Login extends React.Component {
         }
     }
     render() {        
->>>>>>> 4dc152a8dd7a9dc3a39b0d3cb253f5ef350c1ff3
         return (
             <div className="login-card" style={{ backgroundImage: loginBg }}>
                 <img style={{ width: '80%' }} src={bizxpLogo}></img>
