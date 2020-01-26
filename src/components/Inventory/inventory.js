@@ -50,14 +50,15 @@ class Inventory extends React.Component {
                 dummyStateSet: false,
                 totalProducts: DummyOrders.length,
                 totalOutOfStock: 0
-                
-              },
-            dummyOrderArray: DummyOrders,
 
+            },
+            dummyOrderArray: DummyOrders,
+            productArray: [],
+            Shop_id: 1,
             productName: '',
             productQuantity: '',
             productBuyingPrice: '',
-            productSellingPrice:'',
+            productUnitPrice: '',
             dummyStateSet: false,
             totalProducts: DummyOrders.length,
             totalOutOfStock: 0
@@ -113,8 +114,8 @@ class Inventory extends React.Component {
         }
         catch (error) { console.log(error) }
     }
-    componentDidMount(){
-        this.getAllProductsOfStore(this.state.User_Id, this.state.Shop_id);
+    componentDidMount() {
+        this.GetAllProductsOfShop();
     }
     componentDidUpdate() {
         this.SclaeTableHeader();
@@ -142,20 +143,21 @@ class Inventory extends React.Component {
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
-                    <select name="category" className="input-fields">
+                        <select name="category" className="input-fields">
                             <option value="volvo">Select product...</option>
-                            <option value="Passenger Car Battery">Maxima Battery</option>
-                            <option value="Optima Battery">Passenger Car Battery</option>
+                            {this.state.productArray && this.state.productArray.map((product) =>
+                                <option value={product.productCategory_Id}>{product.name}</option>
+                            )}
                         </select>
                     </div>
                     <div className="col-md-3 inline-fields">
                         <input onChange={(e) => this.onCHange(e)} placeholder="Quantity" className="input-fields" name="productQuantity" value={this.state.productQuantity}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Total Buying Price(৳)" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
+                        <input onChange={(e) => { this.CalculateUnitPrice(e); this.onCHange(e)}} placeholder="Total Buying Price(৳)" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Unit Price(৳)" className="input-fields" name="productSellingPrice" value={this.state.productSellingPrice}></input>
+                        <input onChange={(e) => this.onCHange(e)} placeholder="Unit Buying Price(৳)" className="input-fields" name="productSellingPrice" value={this.state.productUnitPrice}></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
                         <button className="btn-Blue btn-full-width" onClick={() => this.AddNewProduct()}>Add stock</button>
@@ -199,52 +201,31 @@ class Inventory extends React.Component {
             </div>
         )
     }
-    onCHange(e){
+    onCHange(e) {
         this.setState({
-            [e.target.name] : [e.target.value]
+            [e.target.name]: [e.target.value]
         })
     }
-
-    getAllProductsOfStore(userId,shopId){
-        Axios.get('https://localhost:44304/api/Product/GetAllProductsOfStore?userId=' + userId+'&shopId=' + shopId)
-        .then(res => {
-          const productList = res.data;
-          this.setState({ productList });
-        })
-    }
-
-    AddNewProduct(){
-        let productList = this.state.productList;
-        var self = this.state;
-        var today = new Date();
-        let productData = {
-            Product_Id : 1,
-            Name: self.productName.toString(),
-            ProductCategory_Id : 1,
-            Vendor_id: 1,
-            Shop_id: 1,
-            Unit_price : self.productSellingPrice.toString(),
-            Created_date: moment(today).format('MM-DD-YYYY'),            
-            is_delete: false,
-            Expire_date: moment(today).format('MM-DD-YYYY'),
-            User_Id: 1,
-            Quantity: self.productQuantity
+    CalculateUnitPrice(e){
+        if(e.target.value && e.target.value != 0 && e.target.value != ''){
+            this.setState({
+                productUnitPrice: (e.target.value / this.state.productQuantity).toFixed(2)
+            })
         }
-
-        productList.push(productData);
-        Axios.post('https://localhost:44304/api/Product/CreateProduct/', productData)
-        .then(res => {
-            if(res.status == 201){
-                //successful
-                productList.push(productData);
-            }
-            else{
-                //unsuccessful
-            }
-        })
-        this.setState({productList});
     }
-   
+    async GetAllProductsOfShop() {
+        try {
+            const response = await Axios.get('https://localhost:44304/api/Product/GetProductsByV_S_Id?shopId=' + this.state.Shop_id)
+            this.setState({
+                productArray: response.data
+            })
+            console.log(this.state.productArray)
+        }
+        catch (e) {
+
+        }
+    }
+
 }
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
