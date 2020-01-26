@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../orders/orders.css'
@@ -25,12 +25,13 @@ class Dashboard extends Component {
         return (
             <div id="content">
                 <div id="content">
-                    <div className="row leftSpace topSpace">
-                        <h2 className="mb-4" onClick={() => this.addDummyProduct()}>Dashboard</h2>
+                    <div className="row component-header-container">
+                        <h2 className="component-header-title">Dashboard</h2>
                     </div>
-                    <div className="row leftSpace">
-                        <div className="col-md-3">
-                            <button id="showStartCalendar" className="btn-Blue" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>Start date: {moment(this.state.startDate).format("MM-DD-YYYY")}</button>
+                    <div className="row leftSpace pt-3">
+                        <div id="dateContainer" className="col-md-3">
+                            <h4>Start date</h4>
+                            <button id="showStartCalendar" className="btn-Blue  btn-date" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>{moment(this.state.startDate).format("MM-DD-YYYY")}</button>
                             <div className="topSpace" style={{ display: this.state.showStartCalendar ? 'block' : 'none' }}>
                                 <Calendar id="showStartCalendar" value={this.state.startDate}
                                     //  onChange={(e) => {this.onChange()}}
@@ -38,8 +39,9 @@ class Dashboard extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-3">
-                            <button id="showEndCalendar" className="btn-Blue" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>End date: {moment(this.state.endDate).format("MM-DD-YYYY")}</button>
+                        <div id="dateContainer" className="col-md-3">
+                            <h4>End date</h4>
+                            <button id="showEndCalendar" className="btn-Blue btn-date" onClick={(e) => this.DisplayCalendar(e)} style={{ fontSize: '16px', padding: '0px 20px' }}>{moment(this.state.endDate).format("MM-DD-YYYY")}</button>
                             <div className="topSpace" style={{ display: this.state.showEndCalendar ? 'block' : 'none' }}>
                                 <Calendar id="showEndCalendar" value={this.state.startDate}
                                     onChange={(e) => { this.onChange(e, 'showEndCalendar'); this.DisplayCalendar('', 'showEndCalendar') }}
@@ -47,50 +49,54 @@ class Dashboard extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row leftSpace pt-4">
-                        <h4>Showing summary {this.state.summaryFrom}</h4>
-                    </div>
+                    {/* <div className="row leftSpace pt-4">
+                        <h4>Showing summary {this.state.summaryFrom} </h4>
+                    </div> */}
                     <div className="row leftSpace pt-2">
-                        <div className="boxContainer col-md-3">
-                            <h4 className="mb-3">Total sales</h4>
-                            <h4 className="fontBold">0</h4>
+                        <div className="box-Container col-md-4">
+                            <h4 className="mb-3 box-title">Total sales</h4>
+                            <h4 className="fontBold box-content">0</h4>
+                            <button className="box-button">Show Orders</button>
                         </div>
-                        <div id="outOfStockBtn" className="boxContainer col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Total profit</h4>
-                            <h4 className="fontBold">0</h4>
+                        <div id="outOfStockBtn" className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
+                            <h4 id="" className="mb-3 box-title">Total profit</h4>
+                            <h4 className="fontBold box-content">50,000 BDT</h4>
                         </div>
-                        <div id="outOfStockBtn" className="boxContainer col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Due pending</h4>
-                            <h4 className="fontBold">0</h4>
+                        <div id="outOfStockBtn" className="box-Container col-md-4" style={{ marginLeft: '15px', background: '#ff3b3b' }}>
+                            <h4 id="" className="mb-3 box-title">Total due</h4>
+                            <h4 className="fontBold box-content">10,000 BDT</h4>
+                            <button className="box-button" style={{color: '#ff3b3b'}}>Show due payments</button>
                         </div>
                     </div>
-                    <div className="row leftSpace pt-3">
+                    <div className="row leftSpace pt-5">
                         <h4 className="mb-4">Top 3 products</h4>
                     </div>
                     <div className="row leftSpace">
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
                             <h4 id="" className="mb-3">Maxima Battery</h4>
                             <h4 className="fontBold">300 units sold</h4>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '100%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
                             <h4 id="" className="mb-3">Passenger Battery</h4>
-                            <h4 className="fontBold">300 units sold</h4>
+                            <h4 className="fontBold">200 units sold</h4>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '80%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                         <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                            <h4 id="" className="mb-3">Ultra Battery</h4>
-                            <h4 className="fontBold">300 units sold</h4>
+                            <h4 className="mb-3">Ultra Battery</h4>
+                            <h4 className="fontBold">140 units sold</h4>
+                            <div className="progress topSpace">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '65%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                     </div>
-                    
+
                 </div>
-                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
-                    <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
-                    {/* </div> */}
-                </div>
-                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
-                    <button className="btn-Blue rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '180px' }}>Show all orders</button>
-                    {/* </div> */}
-                </div>
+
             </div >
         );
     }
@@ -154,4 +160,5 @@ class Dashboard extends Component {
         }
     }
 }
+
 export default Dashboard;

@@ -20,10 +20,10 @@ class Orders extends Component {
     render() {
         return (
             <div id="content">
-                <div className="row leftSpace topSpace">
-                    <h2 className="mb-4">Orders & Payments</h2>
-                </div>
-                <div className="row leftSpace">
+                <div className="row component-header-container">
+                        <h2 className="component-header-title">Order &amp; payments</h2>
+                    </div>
+                <div className="row leftSpace  pt-3">
                     {/* <div className="col-md-2">
                     <button className="btn-Blue btn-full-width" onClick={()=> ShowNewOrderFields()}><FontAwesomeIcon icon={faPlus} style={{ fontSize: '14px', marginRight: '8px' }} />Add order</button>
                 </div> */}

@@ -15,15 +15,23 @@ import clientIcon from '../src/Images/client_icon.png'
 import Dashboard from './components/Dashboard/dashboard';
 import Clients from './components/Clients/clients';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false }
   }
+
+  componentDidMount(){
+    document.body.style.background = 'none'
+  }
   render() {
     return (
-      <div className="wrapper d-flex align-items-stretch">
+        <div className="App">
+        <div className="wrapper d-flex align-items-stretch">
         <div id="sidebar" className="col-md-2.5" style={{padding: 'opx', width: '300px'}}>
           <nav id="sidebar" className="full-height" style={{position: 'fixed'}}>
             <div className="custom-menu">
@@ -83,6 +91,8 @@ class App extends Component {
           {this.state.showClients && <Clients />}
         </div>
       </div>
+        </div>
+      
     );
   }
 
@@ -135,7 +145,8 @@ class App extends Component {
       showOrders: false,
       showPayments: true,
       showDashboard: false,
-      showPDF: false
+      showPDF: false,
+      showClients: false
     })
   }
 
@@ -145,7 +156,8 @@ class App extends Component {
       showOrders: false,
       showPayments: false,
       showDashboard: true,
-      showPDF: false
+      showPDF: false,
+      showClients: false
     })
 
   }
