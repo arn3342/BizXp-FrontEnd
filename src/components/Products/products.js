@@ -1,15 +1,21 @@
 import React, { Component, useState } from 'react';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../orders/orders.css'
+import '../Products/products.css'
 import '../../App.css'
 import NumberFormat from 'react-number-format';
 import Modal from 'react-modal';
 import closeIcon from '../../Images/close_icon.png'
 import Axios from 'axios';
+import moment from 'moment';
 
-var DummyOrders = []
-
-
+var AllProducts = []
+var newProduct = {
+    name: '',
+    productCategory_Id: 0,
+    vendor_id: 0,
+    unit_price: 0,
+    overView: ''
+}
 const customStyles = {
     content: {
         top: '50%',
@@ -26,56 +32,55 @@ class Products extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dummyOrderArray: [
-            ],
-            showFinalizeModal: false,
-            totalPrice: 0,
-            totalDiscountPrice: 0,
-            totalDue: 0,
+            productArray: [],
+            newProduct: {},
+            Shop_id: 1,
+            User_Id: 1,
+            Vendor_id: 1,
             modalIsOpen: false
         }
     }
     render() {
         return (
-            //#region 'Add New Order' component
+            //#region 'Add New Product' component
             <div className="content">
 
                 <div className="row component-header-container">
                     <h2 className="component-header-title">Products</h2>
                 </div>
 
-                <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
+                <div id="addProductFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-3 inline-fields">
-                        <input placeholder="Product name" name="name" value={this.state.quantity} className="input-fields"></input>
+                        <input placeholder="Product name" name="name" onChange={(e) => this.onChange(e)} className="input-fields"></input>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <select name="category" className="input-fields">
-                            <option value="volvo">Select category...</option>
-                            <option value="Passenger Car Battery">Car Battery</option>
-                            <option value="Optima Battery">AAA Battery</option>
+                        <select name="category" className="input-fields" name="productCategory_Id" onChange={(e) => this.onChange(e)}>
+                            <option value="">Select category...</option>
+                            <option value="1">Car Battery</option>
+                            <option value="2">AAA Battery</option>
                         </select>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <select name="vendor" className="input-fields">
-                            <option value="volvo">Select vendor...</option>
+                        <select name="vendor" className="input-fields" name="vendor_id" onChange={(e) => this.onChange(e)}>
+                            <option value="">Select vendor...</option>
                             {/* below has to be mapped */}
-                            <option value="Passenger Car Battery">Rangs</option>
-                            <option value="Optima Battery">Rahimafrooz</option>
+                            <option value="1">Rangs</option>
+                            <option value="2">Rahimafrooz</option>
                         </select>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input placeholder="Unit price(৳)" className="input-fields"></input>
+                        <input placeholder="Unit price(৳)" className="input-fields" name="unit_price" onChange={(e) => this.onChange(e)}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input placeholder="Description" className="input-fields"></input>
+                        <input placeholder="Description" className="input-fields" name="overView" onChange={(e) => this.onChange(e)}></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewOrder()}>Add Product</button>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewProduct()}>Add Product</button>
                     </div>
                 </div>
                 <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
                     <div className="headerContainer" style={{ marginTop: '20px' }}>
-                        <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                        <table id="columnHeaders" className="table table-hover table-bProductless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', bProductRadius: '0' }}>
                             <tbody>
                                 <tr className="column-container" style={{ paddingTop: '8px' }}>
                                     <th>Product Name<img className="sortIcon" /></th>
@@ -88,13 +93,14 @@ class Products extends Component {
                             <tbody id="dummyTableToAdd">
                                 <tr />
                                 <tr />
-                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                {this.state.productArray && (this.state.productArray.map((Product, index) =>
                                     (<tr className="table-warning">
-                                        <td>{order.buyer}</td>
-                                        <td>{order.buyerPhone}</td>
-                                        <td>{order.product}</td>
-                                        <td>{order.quantity}</td>
-                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
+                                        <td>{Product.name}</td>
+                                        <td>{Product.productCategory_Id}</td>
+                                        <td>{Product.vendor_id}</td>
+                                        <td>{Product.unit_price}</td>
+                                        <td>{Product.overView}</td>
+                                        <td onClick={() => this.removeProduct(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
                                     </tr>)
                                 ))}
                             </tbody>
@@ -111,132 +117,52 @@ class Products extends Component {
         //this.state.products
     }
 
-    AddNewOrder = () => {
-        Axios.post('https://localhost:44304/api/order/createorder/')
-    }
-    openModal = () => {
-
-        this.setState({ modalIsOpen: true });
-        console.log(this.state.modalIsOpen)
-        DummyOrders = [];
-    }
-
-    afterOpenModal = () => {
-        // references are now sync'd and can be accessed.
-        this.subtitle.style.color = '#04be1a';
-    }
-
-    closeModal = () => {
-        this.setState({ modalIsOpen: false });
-    }
-    SclaeTableHeader(index) {
+    async AddNewProduct() {
+        var newProduct = this.state.newProduct;
+        newProduct.Shop_id = this.state.Shop_id
+        newProduct.User_Id = this.state.User_Id
+        newProduct.Created_date = moment(new Date()).format('MM-DD-YYYY')
+        newProduct.is_delete = false
+        newProduct.Expire_date = moment(new Date()).format('MM-DD-YYYY')
+        console.log(newProduct)
         try {
-            var columnHeaders = document.getElementById("columnHeaders");
-            var columnCells = document.getElementById("tableData");
-            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
-                var col = columnHeaders.rows[0].cells[i];
-                console.log("Header Column Width:" + col.offsetWidth)
-                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("Row column width: " + columnCells.rows[2].cells[i].width)
-            }
+            const response = await Axios.post('https://localhost:44304/api/Product/CreateProduct/', newProduct);
+            var allProducts = this.state.productArray;
+            allProducts.push(newProduct);
+            this.setState({
+                productArray: allProducts
+            })
+            console.log(response)
         }
-        catch (error) { console.log(error) }
+        catch (exception) {
+            console.log(exception)
+        }
+    }
+    async GetAllProductsOfShop(){
+        try{
+            const response = await Axios.get('https://localhost:44304/api/Product/GetProductsByV_S_Id?shopId=' + this.state.Shop_id)
+            this.setState({
+                productArray: response.data
+            })
+            console.log(this.state.productArray)
+        }
+        catch(e){
+
+        }
     }
 
-    removeOrder(index) {
-        DummyOrders.splice(index, 1);
+    componentDidMount(){
+        this.GetAllProductsOfShop();
+    }
+    onChange(e) {
+        newProduct[e.target.name] = e.target.value
+        this.setState({
+            newProduct: newProduct
+        })
+    }
+    removeProduct(index) {
+        AllProducts.splice(index, 1);
         this.CalculateTotalPrice();
     }
-    ConfirmOrder() {
-        this.openModal();
-        setTimeout(this.closeModal, 1300);
-
-        this.setState({
-            dummyOrderArray: [],
-            showFinalizeModal: false,
-            totalPrice: 0,
-            totalDiscountPrice: 0,
-            totalDue: 0
-        })
-    }
-
-    CalculateDue(e) {
-        var paidAmount = e.target.value;
-
-        if (paidAmount != '' && paidAmount) {
-            if (this.state.totalDiscountPrice && this.state.totalDiscountPrice != 0 && this.state.totalDiscountPrice != '') {
-                var dueAmount = this.state.totalDiscountPrice - paidAmount;
-                this.setState({
-                    totalDue: dueAmount
-                })
-            }
-            else {
-                var dueAmount = this.state.totalPrice - paidAmount;
-                this.setState({
-                    totalDue: dueAmount
-                })
-            }
-        }
-    }
-    CalculateDiscount(e) {
-        var discountPercent = e.target.value;
-
-        if (discountPercent != '' && discountPercent) {
-            var discountPercentage = document.getElementById('discountInput').value;
-            var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercentage)
-
-            this.setState({
-                totalDiscountPrice: discount
-            })
-            document.getElementById('discountDiv').classList.remove('hidden-div')
-        }
-        else {
-            document.getElementById('discountDiv').classList.add('hidden-div')
-        }
-    }
-
-    CalculateTotalPrice() {
-        this.setState({
-            dummyOrderArray: DummyOrders
-        })
-        if (DummyOrders.length != 0) {
-            this.setState({
-                totalPrice: DummyOrders.map(data => data.price).reduce((a, b) => a + b)
-            })
-            return 1;
-        }
-        else {
-            this.setState({
-                totalPrice: 0
-            })
-            this.EnableElements();
-            return 0;
-        }
-    }
-    componentDidUpdate() {
-        this.SclaeTableHeader();
-    }
-
-    EnableElements = () => {
-        document.getElementById('dummyBuyer').disabled = false;
-    }
-
-    SclaeTableHeader() {
-        try {
-            var columnHeaders = document.getElementById("columnHeaders");
-            var columnCells = document.getElementById("tableData");
-            for (var i = 0; i < columnHeaders.rows[0].cells.length; i++) {
-                var col = columnHeaders.rows[0].cells[i];
-                console.log(col.offsetWidth)
-                columnCells.rows[2].cells[i].width = col.offsetWidth + "px"
-                console.log("New column width: " + columnCells.rows[2].cells[i].width)
-            }
-        }
-        catch (error) { console.log(error) }
-    }
-    componentDidUpdate() {
-        //this.SclaeTableHeader();
-    }
-
 }
 export default Products;

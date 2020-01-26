@@ -8,12 +8,13 @@ import Calendar from 'react-calendar'
 import moment from 'moment'
 import image from '../../Images/PdfDemo.gif'
 import './orderList.css'
+import Axios from 'axios';
 
 class OrderList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dummyOrderArray: [
+            paymentArray: [
                 {
                     orderDate: '18-1-2020',
                     buyer: 'Kamrul Hasan',
@@ -45,18 +46,18 @@ class OrderList extends React.Component {
     }
     render() {
 
-        // let productName = this.state.dummyOrderArray.map((item,index)=>{
+        // let productName = this.state.paymentArray.map((item,index)=>{
         //     let product = item.product.map((itemOfItem,i)=>{
         //         return ( <li>{itemOfItem}</li>)
         //     })
         // })
 
-        // const productName = this.state.dummyOrderArray.map((item)=>{           
+        // const productName = this.state.paymentArray.map((item)=>{           
         //     item.product.map((itemOfItem)=>{
         //     <li>{itemOfItem}</li>
         //     })
         // })
-        // const productQuantity = this.state.dummyOrderArray.map((item)=>{
+        // const productQuantity = this.state.paymentArray.map((item)=>{
         //     item.productQuantity.map((itemOfItem)=>{
         //     return(<li>{itemOfItem}</li>)
         //     })
@@ -100,25 +101,25 @@ class OrderList extends React.Component {
                         <tbody id="dummyTableToAdd">
                             <tr />
                             <tr />
-                            {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                            {this.state.paymentArray && (this.state.paymentArray.map((payment, index) =>
                                 (<tr className="table-warning">
-                                    <td>{order.orderDate}</td>
-                                    <td>{order.buyer}</td>
-                                    <td>{order.buyerPhone}</td>
-                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.dummyOrderArray[index].product.map((product) =>
-                                        <li><span>{product}</span></li>
+                                    <td>{moment(payment.created_date).format('MM-DD-YYYY')}</td>
+                                    <td>Aousaf Rashid</td>
+                                    <td>{payment.payee_ContactNo}</td>
+                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.paymentArray[index].products && this.state.paymentArray[index].products.map((product) =>
+                                        <li><span>{product.name}</span></li>
                                     )}</td>
-                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.dummyOrderArray[index].quantity.map((quantity) =>
-                                        <li><span>{quantity}</span></li>
+                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.paymentArray[index].orders && this.state.paymentArray[index].orders.map((order) =>
+                                        <li><span>{order.quantity}</span></li>
                                     )}</td>
-                                    <td>{order.paid}</td>
-                                    <td>{order.due}</td>
-                                    <td> {this.state.dummyOrderArray[index].status === 'not settled' ?
+                                    <td>{payment.actual_Payment}</td>
+                                    <td>{payment.due_Amount}</td>
+                                    <td> {this.state.paymentArray[index].is_settled == false ?
                                         <div>
-                                            <span>{this.state.dummyOrderArray[index].status}</span>
-                                            <button className="btn-Blue-active btn-sm" onClick={() => this.onAddPaymentClick()}
-                                                style={{ fontSize: '15px' }} >Add Payment</button>
-                                    </div> : <span>{this.state.dummyOrderArray[index].status}</span>} </td>
+                                            <span>Not settled</span>
+                                            <button className="btn-Blue-active-small btn-sm" onClick={() => this.onAddPaymentClick()}
+                                                style={{ fontSize: '15px', padding: '4px 10px' }} >Add Payment</button>
+                                        </div> : <span>Settled</span>} </td>
                                 </tr>)
                             ))}
                             {/* <tr className="table-warning">
@@ -149,19 +150,60 @@ class OrderList extends React.Component {
             </div>
         )
     }
-    async GetOrdersOfShop() {
+    async GetPaymentsOfShopInDateRange() {
         try {
-          const response = await Axios.get('https://localhost:44304/api/payment/GetPaymentsByDate?startdate=' + moment(this.state.startDate).format('MM-DD-YYYY') + '&enddate=' + moment(this.state.endDate).format('MM-DD-YYYY') + '&shopId=1');
-          this.setState({
-              
-          })
+            var payments = []
+            var products = []
+            const paymentResponse = await Axios.get('https://localhost:44304/api/payment/GetPaymentsByDate?startdate=' + moment('1/25/2020').format('MM-DD-YYYY') + '&enddate=' + moment('1/25/2020').format('MM-DD-YYYY') + '&shopId=1');
+            console.log(paymentResponse.data)
+            for (var i = 0; i < paymentResponse.data.length; i++) {
+                var payment = paymentResponse.data[i];
+                const orderResponse = await Axios.get('https://localhost:44304/api/order/GetOrdersByPaymentId?paymentId=' + payment.payment_Id)
+                var orders = orderResponse.data;
+                console.log('order', orders)
+                for(var i = 0; i < orders.length; i++){
+                    var product_Id = orders[i].product_Id;
+                    var quantity = orders[i].quantity;
+                    console.log('product_Id', product_Id)
+                    const productResponse = await Axios.get('https://localhost:44304/api/product/GetProductById?id=' + product_Id);
+                    console.log('getting product', productResponse.data)
+                    var product = productResponse.data;
+                    products.push(product);
+                    //console.log('products', productResponse.data)
+                    // for(var i = 0; i < products.length; i++){
+                    //     var product = {
+                    //         name: products[i].name,
+                    //         quantity: quantity
+                    //     }
+                    //     console.log(product)
+                    // }
+                    // payment.products = products;
+                }
+                payment.orders = orders;
+                payment.products = products
+                payments.push(payment)
+                this.setState({
+                    paymentArray: payments
+                })
+                console.log('Payment comes at the end', payment)
+                
+            }
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      }
-      componentDidMount(){
-         this.GetOrdersOfShop();
-      }
+    }
+    async GetOrdersFromPayments(paymnet_id) {
+        try {
+            const response = await Axios.get('' + paymnet_id);
+            return response.data
+        }
+        catch (error) {
+            console.log('Failed to get order from payment id', error)
+        }
+    }
+    componentDidMount() {
+        this.GetPaymentsOfShopInDateRange();
+    }
     DisplayCalendar(e, keyName) {
         this.setState({
             showStartCalendar: false,

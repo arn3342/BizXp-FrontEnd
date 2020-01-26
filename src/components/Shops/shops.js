@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../Inventory/inventory.css'
 import '../orders/orders.css'
 import moment from 'moment';
-
+import dummyShopPic from '../../Images/dummyShop.jpg'
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
 
@@ -25,8 +25,8 @@ class Shops extends React.Component {
                 productSellingPrice: "",
                 dummyStateSet: false,
                 totalOutOfStock: 0
-                
-              }
+
+            }
         }
     }
     EnableElements = () => {
@@ -45,7 +45,7 @@ class Shops extends React.Component {
         }
         catch (error) { console.log(error) }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.getAllProductsOfStore(this.state.User_Id, this.state.Shop_id);
     }
     componentDidUpdate() {
@@ -57,40 +57,39 @@ class Shops extends React.Component {
                 <div className="row component-header-container">
                     <h2 className="component-header-title">My shops</h2>
                 </div>
-                <div className="row leftSpace pt-3">
-                    <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
-                        <h4 id="" className="mb-3 box-title">In stock</h4>
-                        <h4 className="fontBold box-content">0</h4>
-                    </div>
-                    <div id="outOfStockBtn" className="box-Container col-md-4" style={{ marginLeft: '15px', background: '#ff3b3b' }}>
-                        <h4 id="" className="mb-3 box-title">Out of stock</h4>
-                        <div className="row">
-                            <h4 className="fontBold box-content col-md-3">0</h4>
-                            <button className="box-button col-md-8" style={{ color: '#ff3b3b', marginTop: '0' }}>Show products</button>
+
+                <div className="row p-3">
+                        <div className="col-md-3">
+                            <button className="btn-Blue">Add new shop</button>
                         </div>
                     </div>
-                </div>
-
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
-                    <div className="col-md-4 inline-fields">
-                    <select name="category" className="input-fields">
-                            <option value="volvo">Select product...</option>
-                            <option value="Passenger Car Battery">Maxima Battery</option>
-                            <option value="Optima Battery">Passenger Car Battery</option>
-                        </select>
+                    <div className="row leftSpace">
+                        <h1>Rangs Traders Bd</h1>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Quantity" className="input-fields" name="productQuantity" value={this.state.productQuantity}></input>
+                        <img className="shopImage" style={{ width: '100%', borderRadius: '15px' }} src={dummyShopPic}></img>
                     </div>
-                    <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Total Buying Price(৳)" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
+                    <div className="col-md-8 inline-fields leftSpace">
+                        {/* <div className="row"> */}
+                        <div className="col-md-12">
+                            <h4>1/3, Mirpu DOHS Colony
+                            <br />
+                                Mirpur-2
+                            <br />
+                                Dhaka
+                            <br />
+                            </h4>
+                        </div>
+
+                        {/* </div> */}
+
                     </div>
-                    <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Unit Price(৳)" className="input-fields" name="productSellingPrice" value={this.state.productSellingPrice}></input>
-                    </div>
-                    <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewProduct()}>Add stock</button>
+                    <div className="row">
+                        <div className="col-md-3">
+                            <button className="btn-Blue">Add employee</button>
+                        </div>
                     </div>
                 </div>
                 {/* Add Product Section Ends  here*/}
@@ -131,18 +130,18 @@ class Shops extends React.Component {
             </div>
         )
     }
-    onCHange(e){
+    onCHange(e) {
         this.setState({
-            [e.target.name] : [e.target.value]
+            [e.target.name]: [e.target.value]
         })
     }
 
-    getAllProductsOfStore(userId,shopId){
-        Axios.get('https://localhost:44304/api/Product/GetAllProductsOfStore?userId=' + userId+'&shopId=' + shopId)
-        .then(res => {
-          const productList = res.data;
-          this.setState({ productList });
-        })
+    getAllProductsOfStore(userId, shopId) {
+        Axios.get('https://localhost:44304/api/Product/GetAllProductsOfStore?userId=' + userId + '&shopId=' + shopId)
+            .then(res => {
+                const productList = res.data;
+                this.setState({ productList });
+            })
     }
 }
 function ShowOutOfStock() {
