@@ -6,6 +6,7 @@ import {
 
 } from '../actions/types';
 import { fetchUserById } from '../actions/loginActions';
+import {addProduct} from '../actions/inventoryActions';
 
 export default function* rootWatcher() {
     yield takeEvery(VALIDATE_LOGIN, validateLoginAsync);
@@ -71,12 +72,11 @@ function* fetchUserByIdAsync(action) {
 }
 function* addProductAsync(action) {
     console.log(action.payload);
-    //https://localhost:44304/api/product/createproduct
     const apiResult = yield fetch('http://localhost:44304/api/Product/CreateProduct', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            'Accept': "application/json"
+            'Accept': 'application/json',
         },
         body: JSON.stringify({
             name: 'Hubot',

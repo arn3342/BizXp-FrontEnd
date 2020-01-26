@@ -5,7 +5,8 @@ import '../../App.css'
 import NumberFormat from 'react-number-format';
 import Modal from 'react-modal';
 import closeIcon from '../../Images/close_icon.png'
-
+import Axios from 'axios';
+import Invoice from '../Invoice/invoice'
 var DummyOrders = []
 
 
@@ -31,10 +32,20 @@ class NewOrder extends Component {
             totalPrice: 0,
             totalDiscountPrice: 0,
             totalDue: 0,
-            modalIsOpen: false
+            modalIsOpen: false,
+            quantity: '',
+            product: '',
+            buyerName: '',
+            buyerPhone: '',
+            buyerAddress: '',
+            confirmClicked: false,
         }
     }
     render() {
+        let totalPrice = 0;
+        this.state.dummyOrderArray.map((order, index) => {
+            totalPrice = totalPrice + parseInt(order.price);
+        })
         return (
             //#region 'Add New Order' component
             <div className="content">
@@ -46,15 +57,87 @@ class NewOrder extends Component {
                     onRequestClose={this.closeModal}
                     style={customStyles}
                     contentLabel="Example Modal">
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Success</h2>
-                    <div><h4>New order added successfully</h4></div>
+
+                    {/* <Invoice dummyOrderArray={this.state.dummyOrderArray}/> */}
+                    {/* Main modal starts here */}
+                    <h2 ref={subtitle => this.subtitle = subtitle}>Confirm Order?</h2>
+                    {!this.state.confirmClicked && <div><h4>Order Details</h4></div>}
+                    <br />
+                    <div style={{ display: !this.state.confirmClicked ? 'block' : 'none' }}>
+                        <div className="container-fluid">
+                            <div className="col-sm-12 row form-group">
+                                <input placeholder="Buyer Name" onChange={(e) => this.onChange(e)} name="buyerName" value={this.state.buyerName}
+                                    className="input-fields col-sm-3"></input>
+                                <input placeholder="Buyer Phone" onChange={(e) => this.onChange(e)} name="buyerPhone" value={this.state.buyerPhone}
+                                    className="input-fields col-sm-3"></input>
+                                <input placeholder="Buyer Address" onChange={(e) => this.onChange(e)} name="buyerAddress" value={this.state.buyerAddress}
+                                    className="input-fields col-sm-3"></input>
+                            </div>
+                        </div>
+                        <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                            <thead>
+                                <tr className="column-container" style={{ paddingTop: '8px' }}>
+                                    <th>Product<img className="sortIcon" /></th>
+                                    <th>Quantity<img className="sortIcon" /></th>
+                                    <th>Price<img className="sortIcon" /></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="dummyTableToAdd">
+                                {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+                                    (<tr className="table-warning">
+                                        <td>{order.product}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{order.price}</td>
+                                        <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
+
+                                    </tr>)
+                                ))}
+                                <tr style={{ borderTop: 'solid 1px #000' }}>
+                                    <td>Total Price</td>
+                                    <td></td>
+                                    <td>{totalPrice}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div className="container-fluid">
+                            <div className="col-md-4 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                                <input placeholder="Discount(%)" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
+                            </div>
+                            <div className="col-md-6 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                                <label>Total price(after discount):  <br /><b>{this.state.totalDiscountPrice}</b></label>
+                            </div>
+
+                        </div>
+                        <div className="container-fluid">
+                            <div className="col-md-4 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                                <input placeholder="Paid" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
+                            </div>
+                            <div className="col-md-6 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                                <label>Total due(after payment):  <br /><b>{this.state.totalDue}</b></label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className='col-md-4 ml-auto'>
+                        {!this.state.confirmClicked ? <button className="btn-Blue btn-full-width" onClick={() => this.onConfirmClick()}>Confirm</button> :
+                            <div>
+
+                            </div>
+                        }
+
+                    </div>
+                    {this.state.confirmClicked && <Invoice dummyOrderArray={this.state.dummyOrderArray}
+                        buyerName={this.state.buyerName} buyerPhone={this.state.buyerPhone} buyerAddress={this.state.buyerAddress} />}
                 </Modal>
 
                 {/* Modal ends here */}
 
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
-                        <select id="dummyProduct" name="products" className="input-fields">
+                        <select id="dummyProduct" onChange={(e) => this.onChange(e)} name="product"
+                            value={this.state.product} className="input-fields" >
                             <option value="volvo">Select product...</option>
                             {/* below has to be mapped */}
                             <option value="Passenger Car Battery">Passenger Car Battery</option>
@@ -65,16 +148,10 @@ class NewOrder extends Component {
                         </select>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <input id="dummyQuantity" placeholder="Quantity" className="input-fields"></input>
-                    </div>
-                    <div className="col-md-4 inline-fields">
-                        <input id="dummyBuyer" placeholder="Buyer Name" className="input-fields"></input>
-                    </div>
-                    <div className="col-md-4 inline-fields">
-                        <input id="dummyPhone" placeholder="Buyer Phone No." className="input-fields"></input>
+                        <input placeholder="Quantity" onChange={(e) => this.onChange(e)} name="quantity" value={this.state.quantity} className="input-fields"></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
-                        <button className="btn-Blue btn-full-width" onClick={() => this.AddDummyOrder()}>Add Order</button>
+                        <button className="btn-Blue btn-full-width" onClick={() => this.AddNewOrder()}>Add Order</button>
                     </div>
                 </div>
                 <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
@@ -82,8 +159,6 @@ class NewOrder extends Component {
                         <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                             <tbody>
                                 <tr className="column-container" style={{ paddingTop: '8px' }}>
-                                    <th>Buyer Name<img className="sortIcon" /></th>
-                                    <th>Buyer Number</th>
                                     <th>Product<img className="sortIcon" /></th>
                                     <th>Quantity<img className="sortIcon" /></th>
                                     <th></th>
@@ -94,8 +169,6 @@ class NewOrder extends Component {
                                 <tr />
                                 {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
                                     (<tr className="table-warning">
-                                        <td>{order.buyer}</td>
-                                        <td>{order.buyerPhone}</td>
                                         <td>{order.product}</td>
                                         <td>{order.quantity}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
@@ -114,30 +187,30 @@ class NewOrder extends Component {
                     </div>
                     <div id='tableContainer' style={{ overflowX: 'hidden', overflowY: 'auto', position: 'relative' }}>
                         <table id="tableData" className="table table-hover table-borderless">
-                            
+
                         </table>
                     </div>
                 </div>
                 {/* table ends here */}
 
-                <div id="finalizeOrderContainer" className="bottom-div div-shadow">
+                <div id="finalizeOrderContainer row" className="bottom-div div-shadow">
                     {/* <div className='col-md-2 inline-fields' style={{ float: 'right' }}> */}
-                    <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Total price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalSellingPrice" value={this.state.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
+                    {/* <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
+                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Total price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalSellingPrice" value={this.state.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
                     </div>
                     <div id="discountDiv" className="col-sm-2 inline-fields hidden-div" style={{ marginRight: '20px', float: 'left' }}>
-                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDiscountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
+                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Discount price: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDiscountPrice} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
                     </div>
                     <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input id="discountInput" placeholder="Discount" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
+                        <input placeholder="Discount" className="input-fields" onChange={(e) => this.CalculateDiscount(e)}></input>
                     </div>
                     <div className="col-md-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <input id="dummyQuantity" placeholder="Paid amount" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
+                        <input placeholder="Paid amount" className="input-fields" onChange={(e) => this.CalculateDue(e)}></input>
                     </div>
                     <div className="col-sm-2 inline-fields" style={{ marginRight: '20px', float: 'left' }}>
-                        <label id="dummyQuantity" className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDue} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
-                    </div>
-                    <button className="btn-Blue-active rightSpace" onClick={() => this.ConfirmOrder()} style={{ width: '150px' }}>Finalize</button>
+                        <label className="input-fields" style={{ border: 'none', textAlign: 'left' }}>Due: <b style={{ fontSize: '18px' }}><NumberFormat id="totalDiscountPrice" value={this.state.totalDue} displayType={'text'} thousandSeparator={true} prefix={'৳'} /></b></label>
+                    </div> */}
+                    <button className="btn-Blue-active col-md-4 ml-auto" onClick={() => this.ConfirmOrder()} style={{ width: '150px' }}>Confirm order</button>
                     {/* </div> */}
                 </div>
 
@@ -146,24 +219,56 @@ class NewOrder extends Component {
         )
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //this.state.products
     }
 
-    openModal = () => {
-        
-        this.setState({ modalIsOpen: true });
-        console.log(this.state.modalIsOpen)
-        DummyOrders = [];
+    onChange(e) {
+        this.setState({
+            [e.target.name]: [e.target.value]
+        })
     }
 
+    AddNewOrder = () => {
+        let order = {
+            product: this.state.product,
+            quantity: this.state.quantity,
+            price: 50
+        }
+        DummyOrders.push(order);
+        this.setState({
+            dummyOrderArray: DummyOrders,
+            product: 'volvo',
+            quantity: ''
+        })
+        // Axios.post('https://localhost:44304/api/order/createorder/', )
+    }
+    openModal = () => {
+        console.log(this.state.dummyOrderArray);
+        this.setState({ modalIsOpen: true });
+        console.log(this.state.modalIsOpen)
+    }
+
+    onConfirmClick = () => {
+        console.log(this.state);
+        this.setState({
+            confirmClicked: !this.state.confirmClicked
+        })
+    }
+
+    onShowInvoiceClick = () => {
+        this.setState({
+            confirmClicked: !this.state.confirmClicked
+        })
+    }
     afterOpenModal = () => {
         // references are now sync'd and can be accessed.
         this.subtitle.style.color = '#04be1a';
+        this.subtitle.style.width = '700px';
     }
 
     closeModal = () => {
-        this.setState({ modalIsOpen: false });
+        this.setState({ modalIsOpen: false, confirmClicked: false });
     }
     SclaeTableHeader(index) {
         try {
@@ -185,10 +290,9 @@ class NewOrder extends Component {
     }
     ConfirmOrder() {
         this.openModal();
-        setTimeout(this.closeModal, 1300);
+        // setTimeout(this.closeModal, 1300);
 
         this.setState({
-            dummyOrderArray: [],
             showFinalizeModal: false,
             totalPrice: 0,
             totalDiscountPrice: 0,
@@ -218,16 +322,16 @@ class NewOrder extends Component {
         var discountPercent = e.target.value;
 
         if (discountPercent != '' && discountPercent) {
-            var discountPercentage = document.getElementById('discountInput').value;
-            var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercentage)
+            //var discountPercentage = document.getElementById('discountInput').value;
+            var discount = this.state.totalPrice - Math.round((this.state.totalPrice / 100) * discountPercent)
 
             this.setState({
                 totalDiscountPrice: discount
             })
-            document.getElementById('discountDiv').classList.remove('hidden-div')
+
         }
         else {
-            document.getElementById('discountDiv').classList.add('hidden-div')
+
         }
     }
 
@@ -245,29 +349,17 @@ class NewOrder extends Component {
             this.setState({
                 totalPrice: 0
             })
-            this.EnableElements();
+            // this.EnableElements();
             return 0;
         }
     }
     componentDidUpdate() {
         this.SclaeTableHeader();
     }
-    AddDummyOrder = () => {
-        document.getElementById('dummyBuyer').setAttribute('disabled', true);
-        var order = {};
-        order.product = document.getElementById('dummyProduct').value;
-        order.quantity = document.getElementById('dummyQuantity').value;
-        order.buyer = document.getElementById('dummyBuyer').value;
-        order.buyerPhone = document.getElementById('dummyPhone').value;
-        order.price = 10000;
 
-        DummyOrders.push(order);
-        this.CalculateTotalPrice();
-    }
-
-    EnableElements = () => {
-        document.getElementById('dummyBuyer').disabled = false;
-    }
+    // EnableElements = () => {
+    //     document.getElementById('dummyBuyer').disabled = false;
+    // }
 
     SclaeTableHeader() {
         try {

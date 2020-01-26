@@ -7,12 +7,34 @@ import '../../App.css'
 import Calendar from 'react-calendar'
 import moment from 'moment'
 import image from '../../Images/PdfDemo.gif'
+import './orderList.css'
 
 class OrderList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dummyOrderArray: [],
+            dummyOrderArray: [
+                {
+                    orderDate: '18-1-2020',
+                    buyer: 'Kamrul Hasan',
+                    buyerPhone: '01611416466',
+                    product: ['Optima Battery sfdsfd dfgfgr sd', 'Maxima Battery'],
+                    quantity: [5, 2],
+                    paid: '20000',
+                    due: '5000',
+                    status: 'not settled'
+                },
+                {
+                    orderDate: '18-1-2020',
+                    buyer: 'Hasan',
+                    buyerPhone: '01611416466',
+                    product: ['Optima Battery', 'Maxima Battery'],
+                    quantity: [15, 22],
+                    paid: '2000',
+                    due: '500',
+                    status: 'settled'
+                }
+            ],
             showAddOrders: true,
             ShowOrderList: false,
             startDate: new Date(),
@@ -22,6 +44,24 @@ class OrderList extends React.Component {
         }
     }
     render() {
+
+        // let productName = this.state.dummyOrderArray.map((item,index)=>{
+        //     let product = item.product.map((itemOfItem,i)=>{
+        //         return ( <li>{itemOfItem}</li>)
+        //     })
+        // })
+
+        // const productName = this.state.dummyOrderArray.map((item)=>{           
+        //     item.product.map((itemOfItem)=>{
+        //     <li>{itemOfItem}</li>
+        //     })
+        // })
+        // const productQuantity = this.state.dummyOrderArray.map((item)=>{
+        //     item.productQuantity.map((itemOfItem)=>{
+        //     return(<li>{itemOfItem}</li>)
+        //     })
+        // })
+
         return (
             <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
                 <div className="row">
@@ -54,23 +94,38 @@ class OrderList extends React.Component {
                                 <th>Quantity<img className="sortIcon" alt="sortIcon" /></th>
                                 <th id="allOrderFields">Paid<img className="sortIcon" alt="sortIcon" /></th>
                                 <th id="allOrderFields">Due<img className="sortIcon" alt="sortIcon" /></th>
-                                <th></th>
+                                <th>Payment Status</th>
                             </tr>
                         </tbody>
                         <tbody id="dummyTableToAdd">
+<<<<<<< HEAD
                             {/* {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+=======
+                            <tr />
+                            <tr />
+                            {this.state.dummyOrderArray && (this.state.dummyOrderArray.map((order, index) =>
+>>>>>>> d561d918ae72ce00814f1948d522ca7408d226bb
                                 (<tr className="table-warning">
                                     <td>{order.orderDate}</td>
                                     <td>{order.buyer}</td>
                                     <td>{order.buyerPhone}</td>
-                                    <td>{order.product}</td>
-                                    <td>{order.quantity}</td>
+                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.dummyOrderArray[index].product.map((product) =>
+                                        <li><span>{product}</span></li>
+                                    )}</td>
+                                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{this.state.dummyOrderArray[index].quantity.map((quantity) =>
+                                        <li><span>{quantity}</span></li>
+                                    )}</td>
                                     <td>{order.paid}</td>
                                     <td>{order.due}</td>
-                                    <td><button className="btn-blue">Report</button></td>
+                                    <td> {this.state.dummyOrderArray[index].status === 'not settled' ?
+                                        <div>
+                                            <span>{this.state.dummyOrderArray[index].status}</span>
+                                            <button className="btn-Blue-active btn-sm" onClick={() => this.onAddPaymentClick()}
+                                                style={{ fontSize: '15px' }} >Add Payment</button>
+                                    </div> : <span>{this.state.dummyOrderArray[index].status}</span>} </td>
                                 </tr>)
-                            ))} */}
-                            <tr className="table-warning">
+                            ))}
+                            {/* <tr className="table-warning">
                                 <td>18-1-2020</td>
                                 <td>Kamrul Hasan</td>
                                 <td>01611416466</td>
@@ -88,15 +143,21 @@ class OrderList extends React.Component {
                                 </td>
                                 <td>20,000</td>
                                 <td>5,000</td>
-                                {/* <td><button className="btn-blue" onClick={() =>this.props.showPDF()}>Report</button></td> */}
+                                <td><button className="btn-Blue-active btn-sm" onClick={() => this.onAddPaymentClick()}
+                                    style={{ fontSize: '15px' }} >Add Payment</button></td>
                                 <td><a href="https://images.examples.com/wp-content/uploads/2017/05/Order-Receipt-Sample.jpg" type="button" target="_blank" className="btn btn-primary">Report</a></td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                 </div>
             </div>
         )
     }
+
+    onAddPaymentClick() {
+
+    }
+
     SclaeTableHeader() {
         try {
             var columnHeaders = document.getElementById("columnHeaders");
@@ -113,19 +174,17 @@ class OrderList extends React.Component {
     componentDidMount() {
         this.SclaeTableHeader();
     }
-    pdfDownload = () =>
-    {
+    pdfDownload = () => {
         console.log("inside the pdfDownload");
-        var data = pdf(<OrderReport/>).toBlob();
+        var data = pdf(<OrderReport />).toBlob();
         console.log(data);
-        data.then(function(value)
-        {
+        data.then(function (value) {
             console.log(value)
             //FileSaver.saveAs(value,'OrderReport.pdf');
         })
 
     }
-    
+
     DisplayCalendar(e, keyName) {
         this.setState({
             showStartCalendar: false,

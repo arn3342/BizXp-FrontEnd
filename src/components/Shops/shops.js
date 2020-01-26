@@ -12,91 +12,23 @@ import moment from 'moment';
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
 
-var DummyOrders = [
-    {
-        productName: 'Maxima Battery',
-        quantity: '500',
-        buyingPrice: '3000',
-        SellingPrice: '4000',
-        StockAddeed: '1-17-2020'
-    },
-    {
-        productName: 'Passenger Battery',
-        quantity: '100',
-        buyingPrice: '4000',
-        SellingPrice: '6000',
-        StockAddeed: '1-17-2020'
-    },
-    {
-        productName: 'Maxima Battery',
-        quantity: '200',
-        buyingPrice: '2000',
-        SellingPrice: '3500',
-        StockAddeed: '1-17-2020'
-    }
-
-]
 var IsShowingOutOfStock = false;
-class Inventory extends React.Component {
+class Shops extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             productList: [],
-            product: {
+            myshop: {
                 productName: "",
                 productQuantity: "",
                 productBuyingPrice: "",
                 productSellingPrice: "",
                 dummyStateSet: false,
-                totalProducts: DummyOrders.length,
                 totalOutOfStock: 0
                 
-              },
-            dummyOrderArray: DummyOrders,
-
-            productName: '',
-            productQuantity: '',
-            productBuyingPrice: '',
-            productSellingPrice:'',
-            dummyStateSet: false,
-            totalProducts: DummyOrders.length,
-            totalOutOfStock: 0
+              }
         }
     }
-
-    // AddDummyOrder = () => {
-    //     var order = {};
-    //     order.productName = document.getElementById('dummyName').value;
-    //     order.quantity = document.getElementById('dummyQuantity').value;
-    //     order.buyingPrice = document.getElementById('dummyBuyer').value;
-    //     order.SellingPrice = document.getElementById('dummyPhone').value;
-    //     order.StockAddeed = moment(new Date()).format("MM-DD-YYYY")
-
-
-    //     DummyOrders.push(order);
-    //     this.CalculateStock();
-    // }
-    CalculateStock() {
-        this.setState({
-            totalProducts: DummyOrders.length
-        })
-    }
-    removeOrder(index) {
-        DummyOrders.splice(index, 1);
-        this.CalculateTotalPrice();
-    }
-    // CalculateOutOfStock = () => {
-    //     var productInState = this.state.dummyOrderArray;
-    //     var outOfStockCount = 0;
-    //     for(var i = 0; i < productInState.length; i++){
-    //         var product = productInState[i];
-    //         if(product.quantity === 0){
-    //             outOfStockProcuts += 1;
-    //         }
-    //     }
-
-    //     //const distictProducts = [..new Set[array.mapx => )]
-    // }
     EnableElements = () => {
         document.getElementById('dummyBuyer').disabled = false;
     }
@@ -123,12 +55,12 @@ class Inventory extends React.Component {
         return (
             <div id="content">
                 <div className="row component-header-container">
-                    <h2 className="component-header-title">Inventory</h2>
+                    <h2 className="component-header-title">My shops</h2>
                 </div>
                 <div className="row leftSpace pt-3">
                     <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
                         <h4 id="" className="mb-3 box-title">In stock</h4>
-                        <h4 className="fontBold box-content">{this.state.dummyOrderArray.length}</h4>
+                        <h4 className="fontBold box-content">0</h4>
                     </div>
                     <div id="outOfStockBtn" className="box-Container col-md-4" style={{ marginLeft: '15px', background: '#ff3b3b' }}>
                         <h4 id="" className="mb-3 box-title">Out of stock</h4>
@@ -167,7 +99,7 @@ class Inventory extends React.Component {
                 {/* table starts here */}
                 <div className='dataContainer row leftSpace rightSpace' style={{ display: 'inherit', paddingLeft: '0px' }}>
                     <div className="headerContainer" style={{ marginTop: '20px' }}>
-                        <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
+                        {/* <table id="columnHeaders" className="table table-hover table-borderless" style={{ marginBottom: '0px', background: '#f1f1f1', userSelect: 'none', borderRadius: '0' }}>
                             <tbody>
                                 <tr className="column-container" style={{ paddingTop: '8px' }}>
                                     <th>Product<img className="sortIcon" /></th>
@@ -192,7 +124,7 @@ class Inventory extends React.Component {
                                     </tr>)
                                 ))}
                             </tbody>
-                        </table>
+                        </table> */}
                     </div>
                     {/* table ends here */}
                 </div >
@@ -212,39 +144,6 @@ class Inventory extends React.Component {
           this.setState({ productList });
         })
     }
-
-    AddNewProduct(){
-        let productList = this.state.productList;
-        var self = this.state;
-        var today = new Date();
-        let productData = {
-            Product_Id : 1,
-            Name: self.productName.toString(),
-            ProductCategory_Id : 1,
-            Vendor_id: 1,
-            Shop_id: 1,
-            Unit_price : self.productSellingPrice.toString(),
-            Created_date: moment(today).format('MM-DD-YYYY'),            
-            is_delete: false,
-            Expire_date: moment(today).format('MM-DD-YYYY'),
-            User_Id: 1,
-            Quantity: self.productQuantity
-        }
-
-        productList.push(productData);
-        Axios.post('https://localhost:44304/api/Product/CreateProduct/', productData)
-        .then(res => {
-            if(res.status == 201){
-                //successful
-                productList.push(productData);
-            }
-            else{
-                //unsuccessful
-            }
-        })
-        this.setState({productList});
-    }
-   
 }
 function ShowOutOfStock() {
     var outOfStockBtn = document.getElementById('outOfStockBtn');
@@ -263,4 +162,4 @@ const mapStateToProps = state => ({
     isSuccess: state.inventoryReducer.isSuccess,
 })
 
-export default connect(mapStateToProps, { addProduct })(Inventory);
+export default connect(mapStateToProps, { addProduct })(Shops);
