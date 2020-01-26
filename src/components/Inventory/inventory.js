@@ -12,6 +12,7 @@ import moment from 'moment';
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
 
+var inventoryArray = []
 var DummyOrders = [
     {
         productName: 'Maxima Battery',
@@ -41,7 +42,7 @@ class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: [],
+            inventoryArray: [],
             product: {
                 productName: "",
                 productQuantity: "",
@@ -55,6 +56,7 @@ class Inventory extends React.Component {
             dummyOrderArray: DummyOrders,
             productArray: [],
             Shop_id: 1,
+            User_Id: 1,
             productName: '',
             productQuantity: '',
             productBuyingPrice: '',
@@ -115,10 +117,7 @@ class Inventory extends React.Component {
         catch (error) { console.log(error) }
     }
     componentDidMount() {
-        this.GetAllProductsOfShop();
-    }
-    componentDidUpdate() {
-        this.SclaeTableHeader();
+        this.GetInventory();
     }
     render() {
         return (
@@ -129,7 +128,7 @@ class Inventory extends React.Component {
                 <div className="row leftSpace pt-3">
                     <div className="box-Container col-md-3" style={{ marginLeft: '15px' }}>
                         <h4 id="" className="mb-3 box-title">In stock</h4>
-                        <h4 className="fontBold box-content">{this.state.dummyOrderArray.length}</h4>
+                        <h4 className="fontBold box-content">{this.state.inventoryArray.length}</h4>
                     </div>
                     <div id="outOfStockBtn" className="box-Container col-md-4" style={{ marginLeft: '15px', background: '#ff3b3b' }}>
                         <h4 id="" className="mb-3 box-title">Out of stock</h4>
@@ -183,13 +182,13 @@ class Inventory extends React.Component {
                             <tbody id="tableData">
                                 <tr />
                                 <tr />
-                                {this.state.productList && (this.state.productList.map((order, index) =>
+                                {this.state.inventoryArray && (this.state.inventoryArray.map((inventoryItem, index) =>
                                     (<tr className="table-warning">
-                                        <td>{order.Name}</td>
-                                        <td>{order.Quantity}</td>
-                                        <td>{order.Unit_price}</td>
-                                        <td>{order.SellingPrice}</td>
-                                        <td>{order.StockAddeed}</td>
+                                        <td>{inventoryItem.productName}</td>
+                                        <td>{inventoryItem.quantity}</td>
+                                        <td>{inventoryItem.total_price}</td>
+                                        <td>{inventoryItem.unit_price}</td>
+                                        <td>{moment(inventoryItem.created_date).format('MM-DD-YYYY')}</td>
                                         <td onClick={() => this.removeOrder(index)} style={{ cursor: 'pointer' }}><img style={{ width: '20px' }} src={closeIcon}></img></td>
                                     </tr>)
                                 ))}
@@ -213,13 +212,24 @@ class Inventory extends React.Component {
             })
         }
     }
-    async GetAllProductsOfShop() {
+    async GetInventory() {
         try {
-            const response = await Axios.get('https://localhost:44304/api/Product/GetProductsByV_S_Id?shopId=' + this.state.Shop_id)
+            
+            const inventoryResponse = await Axios.get('https://localhost:44304/api/productpurchase/GetProductPurchaseByUserIdandShopId?userId=' + this.state.User_Id + '&shopId=' + this.state.Shop_id)
+            var inventory = inventoryResponse.data;
+            for(var i = 0; i < inventory.length; i++){
+                var inventoryItem = inventory[i]
+                const productResponse =  await Axios.get('https://localhost:44304/api/product/GetProductById?id=' + inventoryItem.product_Id);
+                var product = productResponse.data;
+
+                inventoryItem.productName = product.name
+                console.log('Inventory Item', inventoryItem)
+                inventoryArray.push(inventoryItem);
+            }
+            
             this.setState({
-                productArray: response.data
+                inventoryArray: inventoryArray
             })
-            console.log(this.state.productArray)
         }
         catch (e) {
 
