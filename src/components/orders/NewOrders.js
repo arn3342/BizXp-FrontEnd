@@ -231,7 +231,15 @@ class NewOrder extends Component {
         this.setState({ modalIsOpen: true });
         console.log(this.state.modalIsOpen)
     }
+    afterOpenModal = () => {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#04be1a';
+        this.subtitle.style.width = '700px';
+    }
 
+    closeModal = () => {
+        this.setState({ modalIsOpen: false, confirmClicked: false });
+    }
     onConfirmClick = () => {
         console.log(this.state);
         this.setState({
@@ -244,15 +252,7 @@ class NewOrder extends Component {
             confirmClicked: !this.state.confirmClicked
         })
     }
-    afterOpenModal = () => {
-        // references are now sync'd and can be accessed.
-        this.subtitle.style.color = '#04be1a';
-        this.subtitle.style.width = '700px';
-    }
-
-    closeModal = () => {
-        this.setState({ modalIsOpen: false, confirmClicked: false });
-    }
+    
 
     removeOrder(index) {
         DummyOrders.splice(index, 1);

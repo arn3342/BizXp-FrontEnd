@@ -68,7 +68,7 @@ class App extends Component {
                     <img src={dashboardIcon}></img>
                     <a onClick={() => this.ShowDashboard()}>Dashboard</a>
                   </li>
-                  <li className="active">
+                  <li>
                     <img src={shopicon}></img>
                     <a onClick={() => this.ShowShops()}>My shops</a>
                   </li>
