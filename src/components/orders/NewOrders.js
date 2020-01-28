@@ -29,10 +29,10 @@ class NewOrder extends Component {
             dummyOrderArray: [
             ],
             showFinalizeModal: false,
+            modalIsOpen: false,
             totalPrice: 0,
             totalDiscountPrice: 0,
             totalDue: 0,
-            modalIsOpen: false,
             quantity: '',
             product: '',
             buyerName: '',

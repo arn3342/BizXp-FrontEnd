@@ -28,91 +28,104 @@ var IsCollapsed = false;
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { showInventory: false, showOrders: false, showPayments: false, showDashboard: true, showClients: false, showProducts: false, showShops: false }
+    this.state = {
+      showInventory: false,
+      showOrders: false,
+      showPayments: false,
+      showDashboard: true,
+      showClients: false,
+      showProducts: false,
+      showShops: false
+    }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.body.style.background = 'none'
   }
   render() {
     return (
-        <div className="App">
+      <div className="App">
         <div className="wrapper d-flex align-items-stretch">
-        <div id="sidebar" className="col-md-2.5" style={{padding: 'opx', width: '300px'}}>
-          <nav id="sidebar" className="full-height" style={{position: 'fixed'}}>
-            <div className="custom-menu">
-              <button type="button" id="sidebarCollapse" onClick={() => this.ExpandCollapseMenu()} className="btn btn-primary">
-                {/* <i className="fa fa-bars"></i> */}
-                <FontAwesomeIcon icon={faBars} style={{ fontSize: '14px', marginRight: '8px' }} />
-                <span className="sr-only">Toggle Menu</span>
-              </button>
-            </div>
-            <div className="menuContainer full-height">
-              <div className="logoContainer">
-                <h4><a href="index.html" className="logo">Business<b>Expert</b></a></h4>
+          <div id="sidebar" className="col-md-2.5" style={{ padding: 'opx', width: '300px' }}>
+            <nav id="sidebar" className="full-height" style={{ position: 'fixed' }}>
+              <div className="custom-menu">
+                <button type="button" id="sidebarCollapse" onClick={() => this.ExpandCollapseMenu()} className="btn btn-primary">
+                  {/* <i className="fa fa-bars"></i> */}
+                  <FontAwesomeIcon icon={faBars} style={{ fontSize: '14px', marginRight: '8px' }} />
+                  <span className="sr-only">Toggle Menu</span>
+                </button>
               </div>
-              <div className="user-box row">
-                <div className="col-md-2">
-                  <img className="user-image-round inline-item" src={model} alt="User image" />
+              <div className="menuContainer full-height">
+                <div className="logoContainer">
+                  <h4><a href="index.html" className="logo">Business<b>Expert</b></a></h4>
                 </div>
-                <div className="col-md-8 user-box-name">
-                  <div>
-                    <h4>Md.Alamin Hossain</h4>
-                    Rangs Traders BD
+                <div className="user-box row">
+                  <div className="col-md-2">
+                    <img className="user-image-round inline-item" src={model} alt="User image" />
+                  </div>
+                  <div className="col-md-8 user-box-name">
+                    <div>
+                      <h4>Md.Alamin Hossain</h4>
+                      Rangs Traders BD
                 </div>
+                  </div>
                 </div>
-              </div>
-              <div className="p-4 full-height">
-                <ul className="list-unstyled components mb-5 full-height">
-                  <li className="active">
-                    <img src={dashboardIcon}></img>
-                    <a onClick={() => this.ShowDashboard()}>Dashboard</a>
-                  </li>
-                  <li>
-                    <img src={shopicon}></img>
-                    <a onClick={() => this.ShowShops()}>My shops</a>
-                  </li>
-                  <li>
-                    <img src={inventoryIcon}></img>
-                    <a onClick={() => this.ShowProducts()}>Products</a>
-                  </li>
-                  <li>
-                    <img src={warehouseicon}></img>
-                    <a onClick={() => this.ShowInventory()}>Inventory</a>
-                  </li>
-                  <li>
-                    <img src={orderIcon}></img>
-                    <a onClick={() => this.ShowOrders()}>Orders & Payments</a>
-                  </li>
-                  <li>
-                    <img src={clientIcon}></img>
-                    <a onClick={() => this.ShowClients()}>Clients</a>
-                  </li>
+                <div className="nav-Container full-height">
+                  <ul className="list-unstyled components mb-5 full-height" style={{ cursor: 'pointer' }}>
+                    <li onClick={() => this.ShowDashboard()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showDashboard ? 'active' : ''}>
+                      <img src={dashboardIcon}></img>
+                      <a>Dashboard</a>
+                    </li>
+                    <li onClick={() => this.ShowShops()} style={{ paddingLeft: '10px' }} className={this.state.showShops ? 'active' : ''}>
+                      <img src={shopicon}></img>
+                      <a>My shops</a>
+                    </li>
+                    <li onClick={() => this.ShowProducts()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showProducts ? 'active' : ''}>
+                      <img src={inventoryIcon}></img>
+                      <a>Products</a>
+                    </li>
+                    <li onClick={() => this.ShowInventory()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showInventory ? 'active' : ''}>
+                      <img src={warehouseicon}></img>
+                      <a>Inventory</a>
+                    </li>
+                    <li onClick={() => this.ShowOrders()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showOrders ? 'active' : ''}>
+                      <img src={orderIcon}></img>
+                      <a>Orders & Payments</a>
+                    </li>
+                    <li onClick={() => this.ShowClients()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showClients ? 'active' : ''}>
+                      <img src={clientIcon}></img>
+                      <a>Clients</a>
+                    </li>
 
-                  {/* dummy */}
-               
-                  <li className="bottom-content">
-                    {/* <img src={clientIcon}></img> */}
-                    <a onClick={() => this.ShowClients()}>Support: +8801611416466</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
+                    {/* dummy */}
 
-        <div id="content" className="componentContainer p-md-3">
-          {this.state.showInventory && <Inventory />}
-          {this.state.showShops && <Shops/>}
-          {this.state.showProducts && <Products/>}
-          {this.state.showOrders && <Orders showPDF={this.showPDF} />}
-          {this.state.showDashboard && <Dashboard />}
-          {this.state.showClients && <Clients />}
-          {/* {this.state.showInvoice && <Invoice/>} */}
+                    <li className="bottom-content"  onClick={() => this.ShowClients()}>
+                      {/* <img src={clientIcon}></img> */}
+                      <a>Support: +8801611416466</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+
+          <div id="content" className="componentContainer p-md-3">
+            {this.state.showInventory && <Inventory />}
+            {this.state.showShops && <Shops />}
+            {this.state.showProducts && <Products />}
+            {this.state.showOrders && <Orders showPDF={this.showPDF} />}
+            {this.state.showDashboard && <Dashboard />}
+            {this.state.showClients && <Clients />}
+            {/* {this.state.showInvoice && <Invoice/>} */}
+          </div>
         </div>
       </div>
-        </div>
-      
+
     );
   }
 

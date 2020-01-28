@@ -113,10 +113,6 @@ class Products extends Component {
         )
     }
 
-    componentDidMount() {
-        //this.state.products
-    }
-
     async AddNewProduct() {
         var newProduct = this.state.newProduct;
         newProduct.Shop_id = this.state.Shop_id
