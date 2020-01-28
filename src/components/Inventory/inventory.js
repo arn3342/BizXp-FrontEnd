@@ -57,6 +57,7 @@ class Inventory extends React.Component {
             productArray: [],
             Shop_id: 1,
             User_Id: 1,
+            productId: '',
             productName: '',
             productQuantity: '',
             productBuyingPrice: '',
@@ -142,7 +143,7 @@ class Inventory extends React.Component {
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="col-md-4 inline-fields">
-                        <select name="category" className="input-fields">
+                        <select onChange={(e) => this.onChange(e)} value={this.state.productId} name="category" className="input-fields">
                             <option value="volvo">Select product...</option>
                             {this.state.productArray && this.state.productArray.map((product) =>
                                 <option value={product.productCategory_Id}>{product.name}</option>
@@ -150,13 +151,13 @@ class Inventory extends React.Component {
                         </select>
                     </div>
                     <div className="col-md-3 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Quantity" className="input-fields" name="productQuantity" value={this.state.productQuantity}></input>
+                        <input onChange={(e) => this.onChange(e)} placeholder="Quantity" className="input-fields" name="productQuantity" value={this.state.productQuantity}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => { this.CalculateUnitPrice(e); this.onCHange(e)}} placeholder="Total Buying Price(৳)" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
+                        <input onChange={(e) => { this.CalculateUnitPrice(e); this.onChange(e)}} placeholder="Total Buying Price(৳)" className="input-fields" name="productBuyingPrice" value={this.state.productBuyingPrice}></input>
                     </div>
                     <div className="col-md-4 inline-fields">
-                        <input onChange={(e) => this.onCHange(e)} placeholder="Unit Buying Price(৳)" className="input-fields" name="productSellingPrice" value={this.state.productUnitPrice}></input>
+                        <input onChange={(e) => this.onChange(e)} placeholder="Unit Buying Price(৳)" className="input-fields" name="productSellingPrice" value={this.state.productUnitPrice}></input>
                     </div>
                     <div className='col-md-2 inline-fields' style={{ float: 'right' }}>
                         <button className="btn-Blue btn-full-width" onClick={() => this.AddNewProduct()}>Add stock</button>
@@ -200,7 +201,7 @@ class Inventory extends React.Component {
             </div>
         )
     }
-    onCHange(e) {
+    onChange(e) {
         this.setState({
             [e.target.name]: [e.target.value]
         })
@@ -211,6 +212,30 @@ class Inventory extends React.Component {
                 productUnitPrice: (e.target.value / this.state.productQuantity).toFixed(2)
             })
         }
+    }
+
+    AddNewProduct(){
+        let purchaseProductData = {
+            Purchase_Id : 0,
+            Product_Id : this.state.productId,
+            Quantity : this.state.productQuantity,
+            Total_price : this.state.total_price,
+            Unit_price : 0,
+            User_id : 0,
+            Vendor_id : 0,
+            Shop_id : 0,
+            Created_date : new Date(),
+            Is_delete : false
+        }
+        console.log(purchaseProductData)
+        this.props.addProduct(purchaseProductData);
+        // try {
+        //     const response = Axios.post('https://localhost:5001/api/ProductPurchase/CreateProductPurchase',purchaseProductData);
+        //     console.log(response);
+        // }
+        // catch (e) {
+
+        // }
     }
     async GetInventory() {
         try {

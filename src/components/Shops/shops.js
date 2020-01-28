@@ -25,8 +25,8 @@ class Shops extends React.Component {
                 productSellingPrice: "",
                 dummyStateSet: false,
                 totalOutOfStock: 0
-
-            }
+            },
+            ownerId: Number = 1
         }
     }
     EnableElements = () => {
@@ -47,10 +47,17 @@ class Shops extends React.Component {
     }
     componentDidMount() {
         this.getAllProductsOfStore(this.state.User_Id, this.state.Shop_id);
+        this.getShopDetails(this.state.ownerId);
     }
     componentDidUpdate() {
         this.SclaeTableHeader();
     }
+
+    getShopDetails(ownerId){
+        const response = Axios.get('https://localhost:5001/api/ShopDetail/GetShopDetails?owner_Id='+ownerId)
+        console.log(response);
+    }
+
     render() {
         return (
             <div id="content">

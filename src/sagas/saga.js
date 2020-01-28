@@ -72,16 +72,13 @@ function* fetchUserByIdAsync(action) {
 }
 function* addProductAsync(action) {
     console.log(action.payload);
-    const apiResult = yield fetch('http://localhost:44304/api/Product/CreateProduct', {
+    const apiResult = yield fetch('https://localhost:5001/api/ProductPurchase/CreateProductPurchase', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
             'Accept': 'application/json',
         },
-        body: JSON.stringify({
-            name: 'Hubot',
-            login: 'hubot',
-        }),
+        body: JSON.stringify(action.payload),
     })
         .then(response => response.json())
         .then((product) => { return product })
