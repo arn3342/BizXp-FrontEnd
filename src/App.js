@@ -70,38 +70,43 @@ class App extends Component {
                 </div>
                   </div>
                 </div>
-                <div className="p-4 full-height">
-                  <ul className="list-unstyled components mb-5 full-height">
-                    <li style={{paddingLeft: '10px'}} className={this.state.showDashboard?'active':''}>
+                <div className="nav-Container full-height">
+                  <ul className="list-unstyled components mb-5 full-height" style={{ cursor: 'pointer' }}>
+                    <li onClick={() => this.ShowDashboard()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showDashboard ? 'active' : ''}>
                       <img src={dashboardIcon}></img>
-                      <a onClick={() => this.ShowDashboard()}>Dashboard</a>
+                      <a>Dashboard</a>
                     </li>
-                    <li style={{paddingLeft: '10px'}} className={this.state.showShops?'active':''}>
+                    <li onClick={() => this.ShowShops()} style={{ paddingLeft: '10px' }} className={this.state.showShops ? 'active' : ''}>
                       <img src={shopicon}></img>
-                      <a onClick={() => this.ShowShops()}>My shops</a>
+                      <a>My shops</a>
                     </li>
-                    <li style={{paddingLeft: '10px'}} className={this.state.showProducts?'active':''}>
+                    <li onClick={() => this.ShowProducts()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showProducts ? 'active' : ''}>
                       <img src={inventoryIcon}></img>
-                      <a onClick={() => this.ShowProducts()}>Products</a>
+                      <a>Products</a>
                     </li>
-                    <li style={{paddingLeft: '10px'}} className={this.state.showInventory?'active':''}>
+                    <li onClick={() => this.ShowInventory()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showInventory ? 'active' : ''}>
                       <img src={warehouseicon}></img>
-                      <a onClick={() => this.ShowInventory()}>Inventory</a>
+                      <a>Inventory</a>
                     </li>
-                    <li style={{paddingLeft: '10px'}} className={this.state.showOrders?'active':''}>
+                    <li onClick={() => this.ShowOrders()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showOrders ? 'active' : ''}>
                       <img src={orderIcon}></img>
-                      <a onClick={() => this.ShowOrders()}>Orders & Payments</a>
+                      <a>Orders & Payments</a>
                     </li>
-                    <li style={{paddingLeft: '10px'}} className={this.state.showClients?'active':''}> 
+                    <li onClick={() => this.ShowClients()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showClients ? 'active' : ''}>
                       <img src={clientIcon}></img>
-                      <a onClick={() => this.ShowClients()}>Clients</a>
+                      <a>Clients</a>
                     </li>
 
                     {/* dummy */}
 
-                    <li className="bottom-content">
+                    <li className="bottom-content"  onClick={() => this.ShowClients()}>
                       {/* <img src={clientIcon}></img> */}
-                      <a onClick={() => this.ShowClients()}>Support: +8801611416466</a>
+                      <a>Support: +8801611416466</a>
                     </li>
                   </ul>
                 </div>

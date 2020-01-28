@@ -53,8 +53,8 @@ class Shops extends React.Component {
         this.SclaeTableHeader();
     }
 
-    getShopDetails(ownerId){
-        const response = Axios.get('https://localhost:5001/api/ShopDetail/GetShopDetails?owner_Id='+ownerId)
+    getShopDetails(ownerId) {
+        const response = Axios.get('https://localhost:5001/api/ShopDetail/GetShopDetails?owner_Id=' + ownerId)
         console.log(response);
     }
 
@@ -65,11 +65,11 @@ class Shops extends React.Component {
                     <h2 className="component-header-title">My shops</h2>
                 </div>
 
-                <div className="row p-3">
-                        <div className="col-md-3">
-                            <button className="btn-Blue">Add new shop</button>
-                        </div>
+                {/* <div className="row p-3">
+                    <div className="col-md-3">
+                        <button className="btn-Blue">Add new shop</button>
                     </div>
+                </div> */}
                 {/* Add Product Section Starts here*/}
                 <div id="addOrderFieldsContainer" className='row field-container div-shadow leftSpace rightSpace' style={{ display: 'inherit' }}>
                     <div className="row leftSpace">
@@ -93,11 +93,11 @@ class Shops extends React.Component {
                         {/* </div> */}
 
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-md-3">
                             <button className="btn-Blue">Add employee</button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {/* Add Product Section Ends  here*/}
 
