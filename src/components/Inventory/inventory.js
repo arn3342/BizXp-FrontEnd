@@ -63,7 +63,7 @@ class Inventory extends React.Component {
     //     //const distictProducts = [..new Set[array.mapx => )]
     // }
     componentDidMount() {
-        // this.GetInventory();
+        this.GetInventory();
     }
     render() {
         let { product, products } = this.state;        
