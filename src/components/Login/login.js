@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import bizxpLogo from '../../Images/bizxp_logo.png'
 import loginBg from "../../Images/login_bg.png";
 import Axios from 'axios';
+import { API_FOR_PROD } from '../../conString';
 
 class Login extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class Login extends React.Component {
         this.setState({
             loginState: 'fetching'
         })
-        const response = await Axios.get('https://localhost:44304/api/userdetails/getuser?email=admin&pass=admin')
+        const response = await Axios.get( API_FOR_PROD + '/userdetails/getuser?email=admin&pass=admin')
         if(response.data.user_Id > 0){
             this.setState({
                 loginState: 'success'

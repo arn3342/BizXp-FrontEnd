@@ -224,7 +224,7 @@ class NewOrder extends Component {
             product: 'volvo',
             quantity: ''
         })
-        // Axios.post('https://localhost:44304/api/order/createorder/', )
+        // Axios.post( API_FOR_PROD + '/order/createorder/', )
     }
     openModal = () => {
         console.log(this.state.dummyOrderArray);

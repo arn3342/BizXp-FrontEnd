@@ -11,6 +11,7 @@ import moment from 'moment';
 
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
+import { API_FOR_DEV, API_FOR_PROD } from '../../conString';
 
 var inventoryArray = []
 var DummyOrders = [
@@ -214,16 +215,16 @@ class Inventory extends React.Component {
     }
     async GetInventory() {
         try {
-            
-            const inventoryResponse = await Axios.get('https://localhost:5001/api/productpurchase/GetProductPurchaseByUserIdandShopId?userId=' + this.state.User_Id + '&shopId=' + this.state.Shop_id)
+            inventoryArray = []
+            const inventoryResponse = await Axios.get( API_FOR_PROD + '/productpurchase/GetProductPurchaseByUserIdandShopId?userId=' + this.state.User_Id + '&shopId=' + this.state.Shop_id)
             var inventory = inventoryResponse.data;
             for(var i = 0; i < inventory.length; i++){
                 var inventoryItem = inventory[i]
-                const productResponse =  await Axios.get('https://localhost:5001/api/product/GetProductById?id=' + inventoryItem.product_Id);
+                const productResponse =  await Axios.get( API_FOR_PROD + '/product/GetProductById?id=' + inventoryItem.product_Id);
                 var product = productResponse.data;
 
                 inventoryItem.productName = product.name
-                console.log('Inventory Item', inventoryItem)
+                console.log('Inventory Item', inventory[i])
                 inventoryArray.push(inventoryItem);
             }
             

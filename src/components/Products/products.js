@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import closeIcon from '../../Images/close_icon.png'
 import Axios from 'axios';
 import moment from 'moment';
+import { API_FOR_PROD, API_FOR_DEV } from '../../conString';
 
 var AllProducts = []
 var newProduct = {
@@ -122,7 +123,7 @@ class Products extends Component {
         newProduct.Expire_date = moment(new Date()).format('MM-DD-YYYY')
         console.log(newProduct)
         try {
-            const response = await Axios.post('https://localhost:44304/api/Product/CreateProduct/', newProduct);
+            const response = await Axios.post( API_FOR_PROD + '/Product/CreateProduct/', newProduct);
             var allProducts = this.state.productArray;
             allProducts.push(newProduct);
             this.setState({
@@ -136,7 +137,7 @@ class Products extends Component {
     }
     async GetAllProductsOfShop(){
         try{
-            const response = await Axios.get('https://localhost:44304/api/Product/GetProductsByV_S_Id?shopId=' + this.state.Shop_id)
+            const response = await Axios.get( API_FOR_PROD + '/Product/GetProductsByV_S_Id?shopId=' + this.state.Shop_id)
             this.setState({
                 productArray: response.data
             })

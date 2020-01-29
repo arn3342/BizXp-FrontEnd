@@ -8,6 +8,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import '../Dashboard/dashboard.css'
 import Axios from 'axios';
+import { API_FOR_PROD } from '../../conString';
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -104,7 +105,7 @@ class Dashboard extends Component {
     }
 
     async GetSellAndProfit(){
-        const profitSellResponse = await Axios.get('https://localhost:44304/api/dashboard/GetDashboard?shopId=' + this.state.shopId + '&startdate=1/25/2020&enddate=1/25/2020' )
+        const profitSellResponse = await Axios.get( API_FOR_PROD + '/dashboard/GetDashboard?shopId=' + this.state.shopId + '&startdate='+ moment(new Date()).format('1/28/2020') + '&enddate='+ moment(new Date()).format('1/28/2021') )
         console.log(profitSellResponse)
     }
 

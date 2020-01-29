@@ -9,33 +9,13 @@ import moment from 'moment'
 import image from '../../Images/PdfDemo.gif'
 import './orderList.css'
 import Axios from 'axios';
+import { API_FOR_PROD, API_FOR_DEV } from '../../conString';
 
 class OrderList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            paymentArray: [
-                {
-                    orderDate: '18-1-2020',
-                    buyer: 'Kamrul Hasan',
-                    buyerPhone: '01611416466',
-                    product: ['Optima Battery sfdsfd dfgfgr sd', 'Maxima Battery'],
-                    quantity: [5, 2],
-                    paid: '20000',
-                    due: '5000',
-                    status: 'not settled'
-                },
-                {
-                    orderDate: '18-1-2020',
-                    buyer: 'Hasan',
-                    buyerPhone: '01611416466',
-                    product: ['Optima Battery', 'Maxima Battery'],
-                    quantity: [15, 22],
-                    paid: '2000',
-                    due: '500',
-                    status: 'settled'
-                }
-            ],
+            paymentArray: [],
             showAddOrders: true,
             ShowOrderList: false,
             startDate: new Date(),
@@ -154,18 +134,18 @@ class OrderList extends React.Component {
         try {
             var payments = []
             var products = []
-            const paymentResponse = await Axios.get('https://localhost:44304/api/payment/GetPaymentsByDate?startdate=' + moment('1/25/2020').format('MM-DD-YYYY') + '&enddate=' + moment('1/25/2020').format('MM-DD-YYYY') + '&shopId=1');
-            console.log(paymentResponse.data)
+            const paymentResponse = await Axios.get( API_FOR_PROD + '/payment/GetPaymentsByDate?startdate=' + moment('1/25/2020').format('MM-DD-YYYY') + '&enddate=' + moment('1/29/2021').format('MM-DD-YYYY') + '&shopId=1');
+            console.log('Retrieved payments in date range', paymentResponse.data[0])
             for (var i = 0; i < paymentResponse.data.length; i++) {
                 var payment = paymentResponse.data[i];
-                const orderResponse = await Axios.get('https://localhost:44304/api/order/GetOrdersByPaymentId?paymentId=' + payment.payment_Id)
+                const orderResponse = await Axios.get( API_FOR_PROD + '/order/GetOrdersByPaymentId?paymentId=' + payment.payment_Id)
                 var orders = orderResponse.data;
-                console.log('order', orders)
+                console.log('Orders come here', orders)
                 for(var i = 0; i < orders.length; i++){
                     var product_Id = orders[i].product_Id;
                     var quantity = orders[i].quantity;
                     console.log('product_Id', product_Id)
-                    const productResponse = await Axios.get('https://localhost:44304/api/product/GetProductById?id=' + product_Id);
+                    const productResponse = await Axios.get( API_FOR_PROD + '/product/GetProductById?id=' + product_Id);
                     console.log('getting product', productResponse.data)
                     var product = productResponse.data;
                     products.push(product);

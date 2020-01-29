@@ -11,6 +11,7 @@ import moment from 'moment';
 import dummyShopPic from '../../Images/dummyShop.jpg'
 import { addProduct } from '../../actions/inventoryActions';
 import Axios from 'axios';
+import { API_FOR_PROD } from '../../conString';
 
 var IsShowingOutOfStock = false;
 class Shops extends React.Component {
@@ -36,7 +37,7 @@ class Shops extends React.Component {
     }
 
     getShopDetails(ownerId) {
-        const response = Axios.get('https://localhost:5001/api/ShopDetail/GetShopDetails?owner_Id=' + ownerId)
+        const response = Axios.get( API_FOR_PROD + '/ShopDetail/GetShopDetails?owner_Id=' + ownerId)
         console.log(response);
     }
 
