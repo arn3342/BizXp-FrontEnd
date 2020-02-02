@@ -42,7 +42,8 @@
 }
 
 .active{
-  background-color: #0071b8;
+  background: #023c5f;
+  border-left: 3px solid #0071b8;
 }
 .nav-Container li:hover{
   background-color: #009dff;
@@ -113,6 +114,7 @@ address {
 
 .componentContainer {
   padding: 20px 0px !important;
+  
 }
 
 ol, ul, dl {
@@ -309,8 +311,7 @@ legend {
 .user-box-name {
   padding-right: 0px;
   padding-left: 0px;
-  margin-left: 30px;
-  margin-top: 10px;
+  margin-left: 15px;
 }
 
 .user-box-name h4 {
@@ -10119,19 +10120,18 @@ h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
   
 }
 #sidebar ul li{
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 45px;
 }
 #sidebar ul li a {
-  padding: 10px 0;
+  padding: 10px 0px 10px 5px;
   margin: 3px 10px;
   display: inline-block;
   color: rgba(255, 255, 255, 0.8);
-  
+  font-size: 0.85rem;
 }
 #sidebar ul li img{
   width: 20px;
   display: inline-block;
-  margin-bottom: 3px;
 }
 #sidebar ul li a:hover {
   color: #fff;
@@ -10159,28 +10159,39 @@ h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
   color: #fff;
 }
 
-.logoContainer {
-  text-align: center;
-  background: #0176bc;
-  padding: 20px 30px;
-}
-
-.user-box {
-  padding: 20px 10px;
+.app-header {
   text-align: left;
+  background: #0176bc;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  right: 0;
+}
+.sidebar-menu{
+  top: 75px;
+}
+.sidebar-header{
+  background: #0176bc !important;
+}
+.user-box {
+  padding: 15px 30px;
+  text-align: left;
+  min-width: 250px;
 }
 
 .inline-item {
   display: inline;
 }
-
+.inline-div{
+  display: inline-block;
+}
 .user-image-round {
   border-radius: 50%;
-  width: 60px;
-  border-width: 10px;
-  border: solid #0098ff;
+  width: 40px;
 }
-
+img{
+  vertical-align: sub !important;
+}
 #sidebar .custom-menu {
   display: inline-block;
   position: absolute;
