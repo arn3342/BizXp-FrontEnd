@@ -41,10 +41,13 @@ class App extends Component {
 
   componentDidMount() {
     document.body.style.background = '#f4f7fa'
+    this.resizeComponent();
+    window.addEventListener('resize', this.resizeComponent);
+  }
+  resizeComponent = () => {
     var header = document.getElementById('header');
     var contents = document.getElementById('component-body');
-    contents.style.marginTop = header.offsetHeight + 'px'
-    console.log(contents.style.marginTop)
+    contents.style.height = (window.innerHeight - header.offsetHeight) + 'px'
   }
   render() {
     return (
@@ -132,7 +135,7 @@ class App extends Component {
           </div>
 
           <div id="content" className="componentContainer p-md-3">
-            <div id="component-body">
+            <div id="component-body" style={{marginTop: '75px'}}>
               {this.state.showInventory && <Inventory />}
               {this.state.showShops && <Shops />}
               {this.state.showProducts && <Products />}

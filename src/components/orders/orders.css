@@ -9,9 +9,11 @@
 .leftSpace {
   margin-left: 10px;
 }
-.leftSpace-wide{
+
+.leftSpace-wide {
   margin-left: 25px;
 }
+
 .rightSpace {
   margin-right: 20px;
 }
@@ -19,44 +21,74 @@
 .topSpace {
   margin-top: 10px;
 }
-
-.box-Container {
-  padding: 20px 30px;
-    border-color: #d7d7d7;
-    border-style: none;
-    border-width: 2px;
-    display: inline-block;
-    background: #fff;
-    box-shadow: 2px 2px 15px #d3dbeb;
-    border-radius: 5px;
+.bottomSpace{
+  margin-bottom: 10px;
 }
-.box-Container h4, h3{
+.bottomSpace-wide{
+  margin-bottom: 25px;
+}
+.box-Container, .box-Container-big {
+  padding: 20px 30px;
+  border-color: #d7d7d7;
+  border-style: none;
+  border-width: 2px;
+  display: inline-block;
+  background: #fff;
+  box-shadow: 2px 2px 15px #e1e7f2;
+  border-radius: 5px;
+}
+
+.box-Container-big {
+  padding: 20px 0px;
+}
+
+.box-Container-big .title {
+  padding-left: 26px;
+  border-left: solid 4px #1f93ff;
+}
+
+.box-Container-big .seperator {
+  height: 1px;
+  background: #f0f0f0;
+  width: 100%;
+  margin: 15px 0px;
+}
+
+.box-Container h4, h3, .box-Container-big h4, h3 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.box-Container h4{
+
+.box-Container h4, .box-Container-big h4 {
   font-size: 1.1rem !important;
   font-weight: 400;
 }
-.box-Container h3 {
+
+.box-Container h3, .box-Container-big h3 {
   font-size: 1.7rem !important;
   font-weight: lighter;
 }
-.box-contents-div{
+.box-Container-big .small-title{
+  font-size: 0.95rem !important;
+  margin-top: 10px;
+}
+.box-contents-div {
   padding-top: 0.5rem !important;
 }
-.contents{
+
+.contents {
   padding: 0;
 }
-.box-Container .icon{
+
+.box-Container .icon {
   font-size: 1.5rem !important;
   margin-top: 1px;
   font-weight: 400;
 }
-.contents-2{
+
+.contents-2 {
   margin-left: 5px;
   padding-left: 0 !important;
 }
-
 
 .box-button {
   margin-top: 20px;
@@ -70,23 +102,27 @@
   box-shadow: 2px 2px 15px #a8a8a8 !important;
   transition: all .2s ease-in-out;
 }
+
 .box-button-narrow {
   margin-top: 20px;
-    width: 45%;
-    background-image: linear-gradient(to right, #4c58fc, #4cc7fc);
-    padding: 10px 0px;
-    font-weight: 600;
-    border: none;
-    color: #fff;
-    border-radius: 8px;
-    transition: all .2s ease-in-out;
+  width: 45%;
+  background-image: linear-gradient(to right, #4c58fc, #4cc7fc);
+  padding: 10px 0px;
+  font-weight: 600;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
 }
-.box-button:hover,.box-button-narrow:hover {
+
+.box-button:hover, .box-button-narrow:hover {
   transform: scale(1.05);
 }
-.box-button-narrow:hover{
-  box-shadow: 2px 2px 10px #86a5d1 !important;  
+
+.box-button-narrow:hover {
+  box-shadow: 2px 2px 10px #86a5d1 !important;
 }
+
 .hoverShadow {
   transition: .400s;
   cursor: pointer;
@@ -390,6 +426,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 }
 
 #content {
+  height: auto;
   width: 100%;
   padding: 0px !important;
   min-height: 100vh;
@@ -400,13 +437,16 @@ input:focus, select:focus, textarea:focus, button:focus {
   background: #f2f2f2 !important;
   padding: 25px 50px !important;
 }
-#dateContainer h4{
+
+#dateContainer h4 {
   font-size: 1rem !important;
 }
-.btn-date{
+
+.btn-date {
   border-radius: 10px !important;
   padding: 0px !important;
 }
+
 .component-header-title {
   font-weight: 500;
   margin-bottom: 0px !important;

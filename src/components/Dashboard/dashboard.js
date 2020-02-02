@@ -9,6 +9,11 @@ import moment from 'moment';
 import '../Dashboard/dashboard.css'
 import Axios from 'axios';
 import { API_FOR_PROD } from '../../conString';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+
+am4core.useTheme(am4themes_animated);
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -75,36 +80,49 @@ class Dashboard extends Component {
                                 <h3>$2,909</h3>
                             </div>
                         </div>
-                        <div className="progress  topSpace">
+                        <div className="progress topSpace">
                             <div className="progress-bar" role="progressbar" style={{ width: '55%', backgroundColor: '#15e87b' }} aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         {/* <button className="box-button-narrow">Show Orders</button> */}
                     </div>
+                </div>
+                <div className="row leftSpace pt-4 bottomSpace-wide">
+                    <div className="box-Container-big col-md-8">
+                        <div className="title">
+                            <h4 className="mb-3">Yearly summary</h4>
+                        </div>
+                        <div className="seperator" />
+                        <div className="row box-contents-div p-3" style={{ textAlign: 'center' }}>
+                            <div className="col-md-4">
+                                <h3>$2,909</h3>
+                                <h4 className="small-title">Invoiced</h4>
+                            </div>
+                            <div className="col-md-4">
+                                <h3>$2,909</h3>
+                                <h4 className="small-title">Profit</h4>
+                            </div>
+                            <div className="col-md-4">
+                                <h3>$2,909</h3>
+                                <h4 className="small-title">Expense</h4>
+                            </div>
+                        </div>
+                        <div className="topSpace">
+                            <div id="chartdiv" style={{ width: "95%", height: "350px"}}></div>
+                        </div>
+                        {/* <button className="box-button-narrow">Show Orders</button> */}
+                    </div>
 
-                </div>
-                <div className="row leftSpace pt-5">
-                    <h4 className="mb-4">Top 3 products</h4>
-                </div>
-                <div className="row leftSpace">
-                    <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                        <h4 id="" className="mb-3">Maxima Battery</h4>
-                        <h4 className="fontBold">300 units sold</h4>
-                        <div className="progress topSpace">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: '100%' }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                        <h4 id="" className="mb-3">Passenger Battery</h4>
-                        <h4 className="fontBold">200 units sold</h4>
-                        <div className="progress topSpace">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: '80%' }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div className="top-product-container col-md-3" style={{ marginLeft: '15px' }}>
-                        <h4 className="mb-3">Ultra Battery</h4>
-                        <h4 className="fontBold">140 units sold</h4>
-                        <div className="progress topSpace">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: '65%' }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="box-Container col-md-3 leftSpace-wide">
+                        <h4 className="mb-3">Sales this month</h4>
+                        <div className="row box-contents-div p-3">
+                            <div className="contents col-md-2 pt-1">
+                                <span style={{ color: '#15e87b' }}>
+                                    <FontAwesomeIcon className="icon" icon={faArrowUp} />
+                                </span>
+                            </div>
+                            <div className="contents-2 col-md-9">
+                                <h3>$2,909</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,6 +137,44 @@ class Dashboard extends Component {
 
     componentDidMount() {
         this.GetSellAndProfit();
+
+        let chart = am4core.create("chartdiv", am4charts.XYChart);
+
+        //chart.paddingRight = 20;
+
+        let data = [];
+        let visits = 10;
+        for (let i = 1; i < 366; i++) {
+            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+            data.push({ date: new Date(2018, 0, i), name: "name" + i, value: visits });
+        }
+
+        chart.data = data;
+
+        let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.grid.template.location = 0;
+
+        let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.tooltip.disabled = true;
+        valueAxis.renderer.minWidth = 35;
+
+        let series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.dateX = "date";
+        series.dataFields.valueY = "value";
+
+        series.tooltipText = "{valueY.value}";
+        chart.cursor = new am4charts.XYCursor();
+
+        let scrollbarX = new am4charts.XYChartScrollbar();
+        scrollbarX.series.push(series);
+        chart.scrollbarX = scrollbarX;
+
+        this.chart = chart;
+    }
+    componentWillUnmount() {
+        if (this.chart) {
+            this.chart.dispose();
+        }
     }
     DisplayCalendar(e, keyName) {
         this.setState({

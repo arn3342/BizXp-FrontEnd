@@ -43,7 +43,7 @@
 
 .active{
   background: #023c5f;
-  border-left: 3px solid #0071b8;
+  border-left: 3px solid #a9b7d0;
 }
 .nav-Container li:hover{
   background-color: #009dff;
@@ -10158,7 +10158,9 @@ h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
 .logo {
   color: #fff;
 }
-
+.component-body{
+  overflow-y: auto;
+}
 .app-header {
   text-align: left;
   background: #0176bc;
@@ -10254,8 +10256,11 @@ a[data-toggle="collapse"] {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  overflow: hidden;
 }
-
+#component-body{
+  overflow: auto;
+}
 .btn.btn-primary {
   background: #0747a6;
   border-color: #0747a6;
