@@ -99,6 +99,16 @@ class App extends Component {
                     <li onClick={() => this.ShowClients()}
                       style={{ paddingLeft: '10px' }} className={this.state.showClients ? 'active' : ''}>
                       <img src={clientIcon}></img>
+                      <a>Reports</a>
+                    </li>
+                    <li onClick={() => this.ShowClients()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showClients ? 'active' : ''}>
+                      <img src={clientIcon}></img>
+                      <a>Reports</a>
+                    </li>
+                    <li onClick={() => this.ShowClients()}
+                      style={{ paddingLeft: '10px' }} className={this.state.showClients ? 'active' : ''}>
+                      <img src={clientIcon}></img>
                       <a>Clients</a>
                     </li>
 
