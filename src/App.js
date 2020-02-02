@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCog } from '@fortawesome/free-solid-svg-icons';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Inventory from './components/Inventory/inventory';
@@ -40,14 +40,35 @@ class App extends Component {
   }
 
   componentDidMount() {
-    document.body.style.background = 'none'
+    document.body.style.background = '#f4f7fa'
+    var header = document.getElementById('header');
+    var contents = document.getElementById('component-body');
+    contents.style.marginTop = header.offsetHeight + 'px'
+    console.log(contents.style.marginTop)
   }
   render() {
     return (
       <div className="App">
+        <div id="header" className="app-header row">
+          {/* <h4><a href="index.html" className="logo">Business<b>Expert</b></a></h4> */}
+          <div className="user-box ml-auto">
+            <div className="inline-div">
+              <img className="user-image-round inline-item" src={model} alt="User image" />
+            </div>
+            <div className="user-box-name inline-div">
+              <div>
+                <h4>Md.Alamin Hossain</h4>
+                <a style={{ color: '#fff' }}>
+                  <FontAwesomeIcon icon={faCog} style={{ marginRight: '5px' }} />
+                  Settings
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="wrapper d-flex align-items-stretch">
-          <div id="sidebar" className="col-md-2.5" style={{ padding: 'opx', width: '300px' }}>
-            <nav id="sidebar" className="full-height" style={{ position: 'fixed' }}>
+          <div id="sidebar" className="col-md-2.5 sidebar-header" style={{ padding: 'opx', width: '300px' }}>
+            <nav id="sidebar" className="full-height sidebar-menu" style={{ position: 'fixed' }}>
               <div className="custom-menu">
                 <button type="button" id="sidebarCollapse" onClick={() => this.ExpandCollapseMenu()} className="btn btn-primary">
                   {/* <i className="fa fa-bars"></i> */}
@@ -56,20 +77,6 @@ class App extends Component {
                 </button>
               </div>
               <div className="menuContainer full-height">
-                <div className="logoContainer">
-                  <h4><a href="index.html" className="logo">Business<b>Expert</b></a></h4>
-                </div>
-                <div className="user-box row">
-                  <div className="col-md-2">
-                    <img className="user-image-round inline-item" src={model} alt="User image" />
-                  </div>
-                  <div className="col-md-8 user-box-name">
-                    <div>
-                      <h4>Md.Alamin Hossain</h4>
-                      Rangs Traders BD
-                </div>
-                  </div>
-                </div>
                 <div className="nav-Container full-height">
                   <ul className="list-unstyled components mb-5 full-height" style={{ cursor: 'pointer' }}>
                     <li onClick={() => this.ShowDashboard()}
@@ -114,7 +121,7 @@ class App extends Component {
 
                     {/* dummy */}
 
-                    <li className="bottom-content"  onClick={() => this.ShowClients()}>
+                    <li className="bottom-content" onClick={() => this.ShowClients()}>
                       {/* <img src={clientIcon}></img> */}
                       <a>Support: +8801611416466</a>
                     </li>
@@ -125,13 +132,15 @@ class App extends Component {
           </div>
 
           <div id="content" className="componentContainer p-md-3">
-            {this.state.showInventory && <Inventory />}
-            {this.state.showShops && <Shops />}
-            {this.state.showProducts && <Products />}
-            {this.state.showOrders && <Orders showPDF={this.showPDF} />}
-            {this.state.showDashboard && <Dashboard />}
-            {this.state.showClients && <Clients />}
-            {/* {this.state.showInvoice && <Invoice/>} */}
+            <div id="component-body">
+              {this.state.showInventory && <Inventory />}
+              {this.state.showShops && <Shops />}
+              {this.state.showProducts && <Products />}
+              {this.state.showOrders && <Orders showPDF={this.showPDF} />}
+              {this.state.showDashboard && <Dashboard />}
+              {this.state.showClients && <Clients />}
+              {/* {this.state.showInvoice && <Invoice/>} */}
+            </div>
           </div>
         </div>
       </div>

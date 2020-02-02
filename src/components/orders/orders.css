@@ -9,7 +9,9 @@
 .leftSpace {
   margin-left: 10px;
 }
-
+.leftSpace-wide{
+  margin-left: 25px;
+}
 .rightSpace {
   margin-right: 20px;
 }
@@ -20,24 +22,41 @@
 
 .box-Container {
   padding: 20px 30px;
-  border-color: #d7d7d7;
-  border-style: none;
-  border-width: 2px;
-  display: inline-block;
-  background: #1990ff;
-  box-shadow: 2px 2px 15px #a8a8a8;
-  border-radius: 5px;
+    border-color: #d7d7d7;
+    border-style: none;
+    border-width: 2px;
+    display: inline-block;
+    background: #fff;
+    box-shadow: 2px 2px 15px #d3dbeb;
+    border-radius: 5px;
+}
+.box-Container h4, h3{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.box-Container h4{
+  font-size: 1.1rem !important;
+  font-weight: 400;
+}
+.box-Container h3 {
+  font-size: 1.7rem !important;
+  font-weight: lighter;
+}
+.box-contents-div{
+  padding-top: 0.5rem !important;
+}
+.contents{
+  padding: 0;
+}
+.box-Container .icon{
+  font-size: 1.5rem !important;
+  margin-top: 1px;
+  font-weight: 400;
+}
+.contents-2{
+  margin-left: 5px;
+  padding-left: 0 !important;
 }
 
-.box-title {
-  font-size: 1.2rem !important;
-  color: #fff !important;
-}
-
-.box-content {
-  color: #fff !important;
-  font-size: 2rem !important;
-}
 
 .box-button {
   margin-top: 20px;
@@ -47,15 +66,27 @@
   font-weight: 600;
   border: none;
   color: #077cf0;
-  border-radius: 35px;
+  border-radius: 8px;
   box-shadow: 2px 2px 15px #a8a8a8 !important;
   transition: all .2s ease-in-out;
 }
-
-.box-button:hover {
+.box-button-narrow {
+  margin-top: 20px;
+    width: 45%;
+    background-image: linear-gradient(to right, #4c58fc, #4cc7fc);
+    padding: 10px 0px;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+}
+.box-button:hover,.box-button-narrow:hover {
   transform: scale(1.05);
 }
-
+.box-button-narrow:hover{
+  box-shadow: 2px 2px 10px #86a5d1 !important;  
+}
 .hoverShadow {
   transition: .400s;
   cursor: pointer;
