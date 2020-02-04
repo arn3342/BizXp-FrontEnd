@@ -250,7 +250,7 @@ class NewOrder extends Component {
         console.log("console.log", this.state.dummyOrderArray)
         var orderIds = [];
         var paymentId;
-        var payment ={}
+        var payment = {}
         payment.Payment_Id = 0
         payment.Payment_Amount = 1000;
         payment.Total_discount = 500;
@@ -261,32 +261,30 @@ class NewOrder extends Component {
         payment.Due_Amount = 100;
         payment.Shop_id = 1;
         payment.Created_date = new Date();
-        
-        Axios.post(API_FOR_DEV+'/Payment/CreatePayment/',payment).then(res =>
-        {
-                paymentId = res.data;
+
+        Axios.post(API_FOR_DEV + '/Payment/CreatePayment/', payment).then(res => {
+            console.log("response", res.data)
+            paymentId = res.data;
+            this.state.dummyOrderArray.map((value, index) => {
+
+
+                var order = {}
+                order.Product_Id = 1;
+                order.Quantity = parseInt(value.quantity);
+                order.Discount = 0;
+                order.Total_price = 0;
+                order.Actual_price = 0;
+                order.User_Id = 1;
+                order.Created_date = new Date();
+                order.Payment_Id = paymentId;
+                console.log("payment Id", paymentId)
+                order.Is_delete = false;
+                order.Order_note = "NA";
+                order.Shop_Id = 1;
+                Axios.post(API_FOR_DEV + '/Order/CreateOrder/', order);
+            })
         })
 
-
-        this.state.dummyOrderArray.map((value, index) => {
-
-            
-            var order = {}
-            order.Product_Id = 1;
-            order.Quantity = parseInt(value.quantity);
-            order.Discount = 0;
-            order.Total_price = 0;
-            order.Actual_price = 0;
-            order.User_Id = 1;
-            order.Created_date = new Date();
-            order.Payment_Id = paymentId;
-            order.Is_delete = false;
-            order.Order_note = "NA";
-            order.Shop_Id = 1;
-            Axios.post(API_FOR_DEV+'/Order/CreateOrder/',order);
-        })
-
-        
     }
 
     onShowInvoiceClick = () => {
