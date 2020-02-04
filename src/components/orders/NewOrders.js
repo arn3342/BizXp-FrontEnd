@@ -8,6 +8,7 @@ import closeIcon from '../../Images/close_icon.png'
 import Axios from 'axios';
 import Invoice from '../Invoice/invoice';
 import { API_FOR_PROD, API_FOR_DEV } from '../../conString';
+import OrderList from './OrderList';
 var DummyOrders = []
 
 
@@ -242,15 +243,50 @@ class NewOrder extends Component {
         this.setState({ modalIsOpen: false, confirmClicked: false });
     }
     onConfirmClick = () => {
-        console.log(this.state);
+        //console.log(this.state);
         this.setState({
             confirmClicked: !this.state.confirmClicked
         })
-        console.log("console.log",this.state.dummyOrderArray[0])
-        for(var i=0;i<this.state.dummyOrderArray.length;i++)
+        console.log("console.log", this.state.dummyOrderArray)
+        var orderIds = [];
+        var paymentId;
+        var payment ={}
+        payment.Payment_Id = 0
+        payment.Payment_Amount = 1000;
+        payment.Total_discount = 500;
+        payment.Actual_Payment = 1500;
+        payment.Payment_process = "cheque";
+        payment.Payee_Address = this.state.buyerAddress.toString();
+        payment.Payee_ContactNo = this.state.buyerPhone.toString();
+        payment.Due_Amount = 100;
+        payment.Shop_id = 1;
+        payment.Created_date = new Date();
+        
+        Axios.post(API_FOR_DEV+'/Payment/CreatePayment/',payment).then(res =>
         {
-            Axios.post( API_FOR_DEV + '/Order/CreateOrder/',this.state.dummyOrderArray[i] );
-        }
+                paymentId = res.data;
+        })
+
+
+        this.state.dummyOrderArray.map((value, index) => {
+
+            
+            var order = {}
+            order.Product_Id = 1;
+            order.Quantity = parseInt(value.quantity);
+            order.Discount = 0;
+            order.Total_price = 0;
+            order.Actual_price = 0;
+            order.User_Id = 1;
+            order.Created_date = new Date();
+            order.Payment_Id = paymentId;
+            order.Is_delete = false;
+            order.Order_note = "NA";
+            order.Shop_Id = 1;
+            Axios.post(API_FOR_DEV+'/Order/CreateOrder/',order);
+        })
+
+        
     }
 
     onShowInvoiceClick = () => {
@@ -258,7 +294,7 @@ class NewOrder extends Component {
             confirmClicked: !this.state.confirmClicked
         })
     }
-    
+
 
     removeOrder(index) {
         DummyOrders.splice(index, 1);
@@ -274,7 +310,7 @@ class NewOrder extends Component {
             totalDiscountPrice: 0,
             totalDue: 0
         })
-         //Axios.post( API_FOR_PROD + '/order/CreateOrder/', )
+        //Axios.post( API_FOR_PROD + '/order/CreateOrder/', )
     }
 
     CalculateDue(e) {
