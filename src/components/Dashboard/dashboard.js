@@ -26,10 +26,21 @@ class Dashboard extends Component {
             endDate: new Date(),
             showEndCalendar: false,
             summaryFrom: 'of ' + moment(new Date()).format('MM-DD-YYYY'),
-            shopId: 1
+            shopId: 1,
+            dashBoardData:{
+
+            }
         }
     }
+
+    // componentDidMount()
+    // {
+    //     const getDashboard = Axios.get( API_FOR_PROD + '/Dashboard/GetDashboard?shopid=' + this.state.shopId + '&startdate=' +moment('1/25/2020').format('MM-DD-YYYY')+'&enddate='+moment('1/29/2021').format('MM-DD-YYYY'));
+    //     var dashboardDataval = getDashboard.data;
+    //     this.setState({dashBoardData:dashboardDataval})
+    // }
     render() {
+        console.log("Dashboard Data:",this.state.dashBoardData)
         return (
             <div id="content">
                 <div className="row leftSpace pt-4">
@@ -42,7 +53,7 @@ class Dashboard extends Component {
                                 </span>
                             </div>
                             <div className="contents-2 col-md-9">
-                                <h3>$2,909</h3>
+                                <h3>{this.state.dashBoardData.total_Sales}</h3>
                             </div>
                         </div>
                         <div className="progress topSpace">
@@ -132,7 +143,8 @@ class Dashboard extends Component {
 
     async GetSellAndProfit() {
         const profitSellResponse = await Axios.get(API_FOR_PROD + '/dashboard/GetDashboard?shopId=' + this.state.shopId + '&startdate=' + moment(new Date()).format('1/28/2020') + '&enddate=' + moment(new Date()).format('1/28/2021'))
-        console.log(profitSellResponse)
+        console.log(profitSellResponse.data)
+        this.setState({dashBoardData:profitSellResponse.data})
     }
 
     componentDidMount() {

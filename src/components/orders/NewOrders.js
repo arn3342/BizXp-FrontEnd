@@ -6,7 +6,8 @@ import NumberFormat from 'react-number-format';
 import Modal from 'react-modal';
 import closeIcon from '../../Images/close_icon.png'
 import Axios from 'axios';
-import Invoice from '../Invoice/invoice'
+import Invoice from '../Invoice/invoice';
+import { API_FOR_PROD, API_FOR_DEV } from '../../conString';
 var DummyOrders = []
 
 
@@ -224,7 +225,7 @@ class NewOrder extends Component {
             product: 'volvo',
             quantity: ''
         })
-        // Axios.post( API_FOR_PROD + '/order/createorder/', )
+        //Axios.post( API_FOR_PROD + '/order/CreateOrder/', )
     }
     openModal = () => {
         console.log(this.state.dummyOrderArray);
@@ -245,6 +246,11 @@ class NewOrder extends Component {
         this.setState({
             confirmClicked: !this.state.confirmClicked
         })
+        console.log("console.log",this.state.dummyOrderArray[0])
+        for(var i=0;i<this.state.dummyOrderArray.length;i++)
+        {
+            Axios.post( API_FOR_DEV + '/Order/CreateOrder/',this.state.dummyOrderArray[i] );
+        }
     }
 
     onShowInvoiceClick = () => {
@@ -268,6 +274,7 @@ class NewOrder extends Component {
             totalDiscountPrice: 0,
             totalDue: 0
         })
+         //Axios.post( API_FOR_PROD + '/order/CreateOrder/', )
     }
 
     CalculateDue(e) {
